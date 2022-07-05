@@ -1,0 +1,38 @@
+@import 'abstract/mixin';
+
+.section--accordion-with-image{
+
+    .accordion {
+        margin-top: 0;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    .section__accordion--max-width{
+        width: 100%;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section__image--max-width{
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include device('desktop'){
+        .grid .grid__item .section__accordion, .grid .grid__item .section__image{
+            padding: 2rem;
+        }
+    }
+    
+
+    .grid__item--accordion{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+}

@@ -1,0 +1,223 @@
+{{ 'section-email-signup-v2-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .email-signup-v2-{{ section.id }} .section__container {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .email-signup-v2-{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="email-signup-v2 email-signup-v2-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <div class="section__bg" style="background-color: beige"></div>
+  <div class="section__container">
+    <div class="page-width">
+
+        {% comment %} For Header Block {% endcomment %}
+        {%- assign header = section.blocks | where: 'type', 'heading' -%}
+        {%- for block in header -%}
+            {%- if block.settings.title != blank or block.settings.subtitle != blank -%}
+            {%- render 'section-header',
+                title: block.settings.title,
+                subtitle: block.settings.subtitle,
+                uppercase: block.settings.title_uppercase
+            -%}
+            {%- endif -%}
+        {%- endfor -%}
+        
+        {%- assign email_signup_form = section.blocks | where: 'type', 'email_signup_form' -%}
+        {%- for block in email_signup_form -%}
+        <div class="section__signup-form">
+            {% form 'customer', class: 'newsletter-form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="newsletter-form__field-wrapper center">
+                <div class="field field--input">
+                    <input
+                        id="NewsletterForm--{{ section.id }}"
+                        type="email"
+                        name="contact[email]"
+                        class="field__input"
+                        value="{{ form.email }}"
+                        aria-required="true"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        autocomplete="email"
+                        {% if form.errors %}
+                        autofocus
+                        aria-invalid="true"
+                        aria-describedby="Newsletter-error--{{ section.id }}"
+                        {% elsif form.posted_successfully? %}
+                        aria-describedby="Newsletter-success--{{ section.id }}"
+                        {% endif %}
+                        placeholder="{{ block.settings.placeholder | escape }}"
+                        required
+                    >
+                    <label class="field__label" for="NewsletterForm--{{ section.id }}">
+                        {{ block.settings.placeholder | escape }}
+                    </label>
+                </div>
+
+                {%- if form.errors -%}
+                    <small class="newsletter-form__message newsletter-form__message--error form__message center" id="Newsletter-error--{{ section.id }}">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</small>
+                {%- endif -%}
+
+                <div class="field">
+                    <button type="submit" data-targetopener="TYPopup-{{ section.id }}" class="field__button field__button--with-ty btn btn--medium btn-he--lighten btn-bs btn--round-corner" name="commit" id="Subscribe">
+                        {{ block.settings.btn_lbl | escape }}
+                    </button>
+                </div>
+
+                {%- if form.posted_successfully? -%}
+                    {%- render 'thank-you-7923216' -%}                       
+                {%- endif -%}
+            </div>
+            {% endform %}
+        </div>
+        {%- endfor -%}
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Email Signup 2",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Join our VIP Club"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "email_signup_form",
+      "name": "Email Signup Form",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder",
+          "default": "Email Address*"
+        },
+        {
+          "type": "text",
+          "id": "btn_lbl",
+          "label": "Button Label",
+          "default": "Yes! Let me in!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Email Signup 2",
+      "category": "Custom Section",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "email_signup_form"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

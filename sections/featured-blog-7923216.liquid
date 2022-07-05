@@ -1,0 +1,224 @@
+{{ 'section-featured-blog-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+        .section--featured-blog .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+        }
+
+        @media screen and (min-width: 750px) {
+            .section--featured-blog .section-{{ section.id }}-padding {
+                padding-top: {{ section.settings.padding_top }}px !important;
+                padding-bottom: {{ section.settings.padding_bottom }}px !important;
+            }
+        }
+    {%- endif -%}
+
+
+    {% case section.settings.color_scheme %}
+        {% when 'background-1' %}
+        .section--featured-blog-{{ section.id }} .section__header--title{
+            color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+        }
+
+        .section--featured-blog-{{ section.id }} .section__article--info h3{
+            color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+        }
+    {% endcase %}
+
+{%- endstyle -%}
+
+<div class="section section--featured-blog section--featured-blog-{{ section.id }} color-{{ section.settings.color_scheme }}">
+    <div class="section__bg-container section-{{ section.id }}-bg-contaier section-{{ section.id }}-padding">
+        <div class="page-width page-width--round-corner">
+            
+            {%- assign header = section.blocks | where: 'type', 'heading' -%}
+            {%- for block in header -%}
+                {%- if block.settings.title != blank or block.settings.subtitle != blank -%}
+                {%- render 'section-header',
+                    title: block.settings.title,
+                    subtitle: block.settings.subtitle,
+                    uppercase: block.settings.title_uppercase
+                -%}
+                {%- endif -%}
+            {%- endfor -%}
+
+            {%- assign blog_blocks = section.blocks | where: 'type', 'blog' -%}
+            {%- for block in blog_blocks -%}
+                {%- if block.settings.blog != blank and block.settings.blog.articles_count > 0 -%}
+                <div class="section__featured-blog grid grid--2-col grid--4-col-desktop">
+                    {%- for article in block.settings.blog.articles limit: block.settings.post_limit -%}
+                        <div class="grid__item">
+                            <a href="{{ article.url }}" class="section__article full-unstyled-link">
+                                <div class="section__article--image">
+                                    {% if article.image != blank %}
+                                        <img
+                                            srcset="{%- if article.image.src.width >= 165 -%}{{ article.image.src | image_url: width: 165 }} 165w,{%- endif -%}
+                                            {%- if article.image.src.width >= 360 -%}{{ article.image.src | image_url: width: 360 }} 360w,{%- endif -%}
+                                            {%- if article.image.src.width >= 533 -%}{{ article.image.src | image_url: width: 533 }} 533w,{%- endif -%}
+                                            {%- if article.image.src.width >= 720 -%}{{ article.image.src | image_url: width: 720 }} 720w,{%- endif -%}
+                                            {%- if article.image.src.width >= 1000 -%}{{ article.image.src | image_url: width: 1000 }} 1000w,{%- endif -%}
+                                            {%- if article.image.src.width >= 1500 -%}{{ article.image.src | image_url: width: 1500 }} 1500w,{%- endif -%}
+                                            {{ article.image.src | image_url }} {{ article.image.src.width }}w"
+                                            src="{{ article.image.src | image_url: width: 533 }}"
+                                            sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
+                                            alt="{{ article.image.src.alt | escape }}"
+                                            class="motion-reduce"
+                                            loading="lazy"
+                                            width="{{ article.image.width }}"
+                                            height="{{ article.image.height }}"
+                                        >
+                                    {%- else -%}
+                                        {% render 'no-image' %}
+                                    {%- endif -%}
+                                </div>
+                                <div class="section__article--info">
+                                    <h3>{{ article.title | truncate: 38 | escape }}</h3>
+                                </div>
+                            </a>
+                        </div>
+                    {%- endfor -%}
+                </div>
+                {%- endif -%}
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Featured Blog",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Check out our most popular blog posts."
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "blog",
+      "name": "Blog",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "Featured Blog"
+        },
+        {
+          "type": "range",
+          "id": "post_limit",
+          "min": 2,
+          "max": 4,
+          "step": 1,
+          "label": "Blog to display",
+          "default": 2
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Featured Blog",
+      "category": "Custom Section",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "blog"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

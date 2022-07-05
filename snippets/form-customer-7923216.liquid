@@ -1,0 +1,143 @@
+{% comment %} 
+
+    Placeholder must be equal to Label
+
+    Accepts:
+    - name_label | text
+    - display_name_input | checkbox
+    - email_label | text
+    - btn_label | text
+    
+
+    Usage:
+    {% render 'form-customer-7923216',
+        name_label: section.settings.name_label,
+        display_name_input: section.settings.display_name_input,
+        email_label: section.settings.email_label,
+        btn_label: section.settings.btn_label
+    %}
+
+{% endcomment %}
+
+{% form 'customer' %}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <div class="field-wrapper">
+        {%- if display_name_input -%}
+        <div class="field field--input field--input-name">
+            <input 
+                id="NewsletterForm--name-{{ section.id }}" 
+                type="first_name"
+                name="contact[first_name]"
+                class="field__input"
+                value="{{ form.first_name }}" 
+                aria-required="true"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="first_name"
+                {% if form.errors %}
+                    aria-invalid="true"
+                    aria-describedby="NewsletterForm-error--{{ section.id }}"
+                {% elsif form.posted_successfully? %}
+                    aria-describedby="NewsletterForm-success--{{ section.id }}"
+                {% endif %}
+                placeholder="{{ name_label | escape | default: 'Name...' }}"
+                required
+            >
+            <label class="field__label" for="NewsletterForm--name-{{ section.id }}">{{ name_label }}</label>
+        </div>
+        {%- endif -%}
+
+        <div class="field field--input field--input-email">
+            <input
+                id="NewsletterForm--{{ section.id }}"
+                type="email"
+                name="contact[email]"
+                class="field__input"
+                value="{{ form.email }}"
+                aria-required="true"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="email"
+                {% if form.errors %}
+                aria-invalid="true"
+                aria-describedby="NewsletterForm-error--{{ section.id }}"
+                {% elsif form.posted_successfully? %}
+                aria-describedby="NewsletterForm-success--{{ section.id }}"
+                {% endif %}
+                placeholder="{{ email_label | escape | default: 'Email...' }}"
+                required
+            >
+            <label class="field__label" for="NewsletterForm--{{ section.id }}">{{ email_label | escape | default: 'Email...' }}</label>
+        </div>
+
+        <div class="field field--input field--input-button">
+            <button type="submit" data-targetopener="TYPopup-{{ section.id }}" class="field__button--with-ty btn btn--default btn-he--lighten" name="commit" id="NewsletterForm-subscribe--{{ section.id }}">
+                {{ btn_label | escape | default: 'Subscribe' }}
+            </button>
+        </div>
+    </div>
+    {%- if form.errors -%}
+    <small class="newsletter-form__message form__message" id="NewsletterForm-error--{{ section.id }}">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-error" viewBox="0 0 13 13">
+            <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+            <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+            <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+            <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+        </svg>
+        {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+    </small>
+    {%- endif -%}
+
+    {%- if form.posted_successfully? -%}
+    <modal-opener class="hidden popupmodal--thankyou__opener-{{ section.id }}" data-modal="#PopupModal-{{ section.id }}">
+        <button id="TYPopup-{{ section.id }}" type="button" aria-haspopup="dialog"></button>
+    </modal-opener>
+    <modal-dialog id="PopupModal-{{ section.id }}" class="popupmodal--thankyou">
+        <div role="dialog" aria-modal="true" class="popupmodal--thankyou__content" tabindex="-1" style="{% unless settings.ty_bg_image == blank %}background-image: url('{{ settings.ty_bg_image | image_url }}');{% endunless %}
+                        {% unless settings.ty_bg_color == blank %}background-color: {{ settings.ty_bg_color }};{% endunless %}
+                        background-blend-mode: {{ settings.ty_bg_blend }};">
+            <button id="ModalClose-{{ section.id }}" type="button" class="popupmodal--thankyou__toggle" aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+            <div class="popupmodal--thankyou__content-info">
+                <div class="popupmodal--thankyou__copy">
+                    
+                    <div class="popupmodal--thankyou__text center">
+                        <h2 class="h1">{{ settings.ty_title }}</h2>
+    
+                        <div>
+                            {{ settings.ty_richtext }}
+                        </div>
+    
+                        <p id="popupmodal--thankyou__discount-code-{{ section.id }}" class="popupmodal--thankyou__discount-code h2">{{ settings.ty_discount_code }}</p>
+                    </div>
+    
+                    <div class="popupmodal--thankyou__button">
+    
+                        <div role="button" class="btn btn--default btn-he--bs btn--round-corner btn--copy" data-targettext="popupmodal--thankyou__discount-code-{{ section.id }}" data-tooltip="✔">
+                            <span>copy</span>
+                        </div>
+    
+                        {% render 'button',
+                            btn_label: settings.ty_btn_label,
+                            btn_link: settings.ty_btn_link,
+                            btn_size: "default",
+                            hover_effect: "lighten",
+                            icon_type: "none",
+                            round_corner: true,
+                            shadow_effect: true,
+                            auto_width: false
+                        %}
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </modal-dialog>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector(`#${localStorage.getItem('activated-ty-modalpopup')}`).click();
+        })
+    </script> 
+    <small class="newsletter-form__message newsletter-form__message--success form__message" id="NewsletterForm-success--{{ section.id }}" tabindex="-1">Thankyou for subscribing!</small>
+    {%- endif -%}
+
+{% endform %}

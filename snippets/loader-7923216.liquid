@@ -1,0 +1,40 @@
+{% comment %}
+    Renders page loader
+
+    **** SETTINGS @ MAIN ******
+
+    To Enable: 
+    - settings.enable_page_loader
+
+    Accepts:
+    - page_loader_image
+    - show_page_loader_image
+    - page_loader
+    
+
+    Usage:
+    {% render 'loader-7923216',
+        page_loader_image: settings.page_loader_image,
+        show_page_loader_image: settings.show_page_loader_image,
+        page_loader: settings.page_loader,
+    %}
+    
+{% endcomment %}
+
+{{ 'component-loader-7923216.css' | asset_url | stylesheet_tag }}
+
+<div class="loading" id="loader">
+    <noscript>You need to enable JavaScript to properly run this app.</noscript>
+    <div class="loader__container">
+        <div class="loader__content">
+            <div class="loading-dots__wrapper">
+                <div class="loading-dots">
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                    <div class="dots"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

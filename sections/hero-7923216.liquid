@@ -1,0 +1,299 @@
+{% comment %} {{ 'section-hero-7923216.css' | asset_url | stylesheet_tag }} {% endcomment %}
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+        .hero--{{ section.id }} .section__container{
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+        }
+
+        @media screen and (min-width: 750px) {
+           .hero--{{ section.id }} .section__container{
+                padding-top: {{ section.settings.padding_top }}px !important;
+                padding-bottom: {{ section.settings.padding_bottom }}px !important;
+            }
+        }
+    {%- endif -%}
+{%- endstyle -%}
+
+{%- assign image_blocks = section.blocks | where: 'type', 'image' -%}
+
+<div class="hero hero--{{ section.id }} section-with-bg">
+  <div class="section__bg"></div>
+  <div class="section__container">
+    <div class="page-width">
+      <div class="grid grid--1-col grid--2-col-desktop grid--2-col-tablet">
+          <div class="grid__item grid__item--copy">
+            <div class="hero__copy">
+              <div class="hero__header">
+                {%- for image_block in image_blocks -%}
+                  {%- assign for_loop_index = forloop.index -%}
+                  <div class="tabcontent tabcontent-{{ section.id }} tabcontent-{{ section.id }}-{{ for_loop_index }}">
+                    <div class="header--wrapper">
+                      <h2 class="title uppercase">{{ image_block.settings.title }}</h2>
+                      <div class="subtitle">{{ image_block.settings.subtitle }}</div>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+
+              <div class="hero__button">
+                {%- for image_block in image_blocks -%}
+                  {%- assign for_loop_index = forloop.index -%}
+                  {%- assign product = image_block.settings.product -%}
+                  <div class="tabcontent tabcontent-{{ section.id }} tabcontent-{{ section.id }}-{{ for_loop_index }}">
+                    <div class="button--wrapper">
+                      {%- liquid
+                        assign btn_label = section.settings.btn_label
+                        assign btn_link =  product.url
+                        assign btn_size = "default"
+                        assign hover_effect = "lighten"
+                        assign icon_type = "none"
+                        assign round_corner = section.settings.round_corner
+                        assign shadow_effect = section.settings.shadow_effect
+                        assign auto_width = section.settings.auto_width
+                      -%}
+                    
+                    {%- liquid
+                        if btn_link contains 'collections'
+                            assign link_title = btn_link | split: '/' | last | append: ' collections' | strip
+                        else
+                            assign link_title = btn_link | split: '/' | last | strip
+                        endif
+                    -%}
+
+                    {% case btn_size %}
+                      {% when "default" %}
+                          {%- assign btn_size_class = "btn--default" -%}
+                      {% when "medium" %}
+                          {%- assign btn_size_class = "btn--medium" -%}
+                      {% when "large" %}
+                          {%- assign btn_size_class = "btn--large" -%}
+                    {% endcase %}
+                  
+                    {% case hover_effect %}
+                        {% when "lighten" %}
+                            {%- assign btn_he_class = "btn-he--lighten" -%}
+                        {% when "color-switch" %}
+                            {%- assign btn_he_class = "btn-he--color-switch" -%}
+                        {% when "slide" %}
+                            {%- assign btn_he_class = "btn-he--slide" -%}
+                        {% when "shine" %}
+                            {%- assign btn_he_class = "btn-he--shine" -%}
+                    {% endcase %}
+
+                    <a class="btn {{ btn_size_class }} {% if round_corner %}btn--round-corner{% endif %} {% if btn_link != blank %}{{ btn_he_class }}{% else %}btn--disbaled{% endif %} {% if shadow_effect %}btn-bs{% endif %} {% if auto_width %}btn-auto-width{% endif %}"
+                        {% if btn_link != blank %}href="{{ btn_link }}" title="{{ link_title }}"{% endif %}
+                        style="background-color: {{ image_block.settings.color_dot }}; border-color: {{ image_block.settings.color_dot }}"
+                        role="button">
+                        {{ btn_label | escape }}
+                        {% render 'icon-button', icon_type: icon_type %}
+                        {% if hover_effect == 'shine' %}
+                        <span></span>
+                        {% endif %}
+                    </a>
+                  </div>
+                </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+          <div class="grid__item grid__item--image">
+            <div class="hero__image">
+              {% capture image_sizes %}
+                (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px))
+              {% endcapture %}
+              {%- for image_block in image_blocks -%}
+              {%- assign for_loop_index = forloop.index -%}
+              <div class="tabcontent tabcontent-{{ section.id }} tabcontent-{{ section.id }}-{{ for_loop_index }}">
+                <div class="image--wrapper">
+                {%- if image_block.settings.image != blank -%}
+                  {%- liquid
+                    if image_block.settings.image.alt == blank
+                      assign image_alt = image_block.settings.product.title
+                    else
+                      assign image_alt = block.settings.image.alt
+                    endif
+                  -%}
+                  <img
+                    srcset="{%- if image_block.settings.image.width >= 165 -%}{{ image_block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if image_block.settings.image.width >= 360 -%}{{ image_block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if image_block.settings.image.width >= 535 -%}{{ image_block.settings.image | image_url: width: 535 }} 535w,{%- endif -%}
+                    {%- if image_block.settings.image.width >= 600 -%}{{ image_block.settings.image | image_url: width: 600 }} 600w,{%- endif -%}
+                    {%- if image_block.settings.image.width >= 800 -%}{{ image_block.settings.image | image_url: width: 800 }} 800w,{%- endif -%}
+                    {%- if image_block.settings.image.width >= 1070 -%}{{ image_block.settings.image | image_url: width: 1070 }} 1070w,{%- endif -%}
+                    {%- if image_block.settings.image.width >= 1500 -%}{{ image_block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                    {{ image_block.settings.image | image_url }} {{ image_block.settings.image.width }}w"
+                    src="{{ image_block.settings.image | image_url: width: 600 }}"
+                    sizes="{{ image_sizes | strip }}"
+                    alt="{{ image_alt | escape }}"
+                    title="{{ image_alt | escape }}"
+                    width="{{ image_block.settings.image.width }}"
+                    height="{{ image_block.settings.image.height }}"
+                    draggable="false"
+                  >
+                {%- else -%}
+                  {%- render 'no-image' -%}
+                {%- endif -%}
+                </div>
+              </div>
+              {%- endfor -%}
+            </div>
+            {% comment %} <div class="hero__controls medium-hide large-up-hide">
+              {%- for image_block in image_blocks -%}
+              {%- assign for_loop_index = forloop.index -%}
+                <div class="tab-control tab-control--single tab-control--single-{{ section.id }} {% if forloop.first %}active{% endif %}"
+                  data-tabcontrolclass='tab-control--single-{{ section.id }}'
+                  data-tabcontentclass='tabcontent-{{ section.id }}'
+                  data-tabtargetclass='tabcontent-{{ section.id }}-{{ for_loop_index }}'
+                  role="button"
+                  style="background-color: {{ image_block.settings.color_dot }}"
+                  title="{{ image_block.settings.product.title | escape }}">
+                </div>
+              {%- endfor -%}
+            </div> {% endcomment %}
+          </div>
+      </div>
+      <div class="hero__controls">
+        {%- for image_block in image_blocks -%}
+        {%- assign for_loop_index = forloop.index -%}
+          <div class="tab-control tab-control--single tab-control--single-{{ section.id }} {% if forloop.first %}active{% endif %}"
+            data-tabcontrolclass='tab-control--single-{{ section.id }}'
+            data-tabcontentclass='tabcontent-{{ section.id }}'
+            data-tabtargetclass='tabcontent-{{ section.id }}-{{ for_loop_index }}'
+            role="button"
+            style="background-color: {{ image_block.settings.color_dot }}"
+            title="{{ image_block.settings.product.title | escape }}">
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "btn_link",
+      "label": "Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "checkbox",
+      "id": "round_corner",
+      "label": "Rounded Corner",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "shadow_effect",
+      "label": "Enable Shadow Effect",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_width",
+      "label": "Enable Auto Width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur</p><p>adipiscing elit.</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "<p>Landjaeger ground round tongue qui in, labore fatback</p><p>brisket prosciutto esse.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "color",
+          "id": "color_dot",
+          "label": "Dot Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 Hero",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

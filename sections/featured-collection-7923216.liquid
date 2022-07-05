@@ -1,0 +1,236 @@
+{% comment %} {{ 'component-card.css' | asset_url | stylesheet_tag }} {% endcomment %}
+{% comment %} {{ 'component-price.css' | asset_url | stylesheet_tag }} {% endcomment %}
+{{ 'section-featured-collection.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .featured-collection--{{ section.id }} .section__container {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .featured-collection--{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="featured-collection featured-collection--{{ section.id }}">
+  <div class="section__container">
+    <div class="page-width">
+
+      {% comment %} For Section Header {% endcomment %}
+      {%- assign header = section.blocks | where: 'type', 'header' -%}
+      {%- for block in header -%}
+        {%- render 'section-header',
+          title: block.settings.title,
+          subtitle: block.settings.subtitle,
+          uppercase: block.settings.title_uppercase
+        -%}
+      {%- endfor -%}
+
+      {% comment %} For Collection Component {% endcomment %}
+      {%- assign fcollection = section.blocks | where: 'type', 'fcollection' -%}
+      {%- for block in fcollection -%}
+        {%- liquid
+          assign products_to_display = block.settings.collection.all_products_count
+
+          if block.settings.collection.all_products_count > block.settings.products_to_show
+            assign products_to_display = block.settings.products_to_show
+          endif
+        -%}
+
+        {% capture grid_device_class %}
+          grid--{{ block.settings.columns_mobile }}-col grid--{{ block.settings.columns_desktop }}-col-desktop grid--{{ block.settings.columns_tablet }}-col-tablet
+        {% endcapture %}
+
+        <ul class="grid {{ grid_device_class | strip }}">
+          {%- for product in block.settings.collection.products limit: products_to_display -%}
+            {%- assign item_number = forloop.index -%}
+          <li class="grid__item">
+              {%- render 'card-product-7923216',
+                product: product,
+                item_number: item_number,
+                show_price: block.settings.show_price,
+                cta_viewproduct: block.settings.cta_viewproduct,
+                columns_desktop: block.settings.columns_desktop,
+                columns_tablet: block.settings.columns_tablet,
+                columns_mobile: block.settings.columns_mobile
+              -%}
+          </li>
+          {%- else -%}
+          {%- for i in (1..4) -%}
+            <li class="grid__item">
+            {% render 'card-product', show_vendor: block.settings.show_vendor %}
+            </li>
+          {%- endfor -%}
+          {%- endfor -%}
+        </ul>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "🍊 Featured Collection",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Featured Collection"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "fcollection",
+      "name": "Collection",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Collection Settings"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "range",
+          "id": "products_to_show",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "default": 4,
+          "label": "Products to show"
+        },
+        {
+          "type": "header",
+          "content": "Grid Settings"
+        },
+        {
+          "type": "range",
+          "id": "columns_desktop",
+          "min": 3,
+          "max": 5,
+          "step": 1,
+          "default": 4,
+          "label": "Columns on Desktop",
+          "info": "Default Value is 4"
+        },
+        {
+          "type": "range",
+          "id": "columns_tablet",
+          "min": 2,
+          "max": 5,
+          "step": 1,
+          "default": 3,
+          "label": "Columns on Tablet",
+          "info": "Default Value is 3"
+        },
+        {
+          "type": "range",
+          "id": "columns_mobile",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 2,
+          "label": "Columns on Mobile",
+          "info": "Default Value is 2"
+        },
+        {
+          "type": "header",
+          "content": "Product Card"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Show Price",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "cta_viewproduct",
+          "label": "View Button",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 Featured Collection",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "fcollection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

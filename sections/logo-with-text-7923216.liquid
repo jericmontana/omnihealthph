@@ -1,0 +1,282 @@
+{{ 'section-logo-with-text-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+        .logo-with-text-{{ section.id }} .section__container{
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+        }
+
+        @media screen and (min-width: 750px) {
+          .logo-with-text-{{ section.id }} .section__container {
+            padding-top: {{ section.settings.padding_top }}px !important;
+            padding-bottom: {{ section.settings.padding_bottom }}px !important;
+            }
+        }
+    {%- endif -%}
+    
+    {%- if section.settings.columns_mobile == 3 -%}
+      @media screen and (max-width: 749px){
+        .section__text--title{
+          --font-heading-scale: 0.6 !important;
+        }
+      }
+    {%- endif -%}
+{%- endstyle -%}
+
+{% capture grid_device_class %}
+    grid--{{ section.settings.columns_mobile }}-col grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_tablet }}-col-tablet
+{% endcapture %}
+
+<div class="logo-with-text logo-with-text-{{ section.id }} color-background-1 section-with-bg">
+  <div class="section__bg" style="background-color: rgb(var(--color-section-bg))"></div>
+  <div class="section__container">
+    <div class="page-width">
+
+      {% comment %} For Section Header {% endcomment %}
+      {%- assign header = section.blocks | where: 'type', 'header' -%}
+      {%- for block in header -%}
+        {%- render 'section-header',
+          title: block.settings.title,
+          subtitle: block.settings.subtitle,
+          uppercase: block.settings.title_uppercase
+        -%}
+      {%- endfor -%}
+
+      {% comment %} For Section Logo With Text {% endcomment %}
+      {%- assign image_with_text_blocks = section.blocks | where: 'type', 'image_with_text' -%}
+      {%- if image_with_text_blocks -%}
+        <ul class="grid {{ grid_device_class }}">
+          {%- for image_with_text_block in image_with_text_blocks -%}
+            <li class="grid__item" title="{{ image_with_text_block.settings.logo_svg }}">
+              <div class="logo-and-text--wrapper">
+                <div class="section__logo">
+                  <div class="logo">
+                    {%- if image_with_text_block.settings.image == blank -%}
+                      {% render 'no-image' %}
+                    {%- else -%}
+                      {%- liquid
+                        if image_with_text_block.settings.image.alt == blank
+                          assign image_alt = image_with_text_block.settings.title
+                        else
+                          assign image_alt = image_with_text_block.settings.image.alt
+                        endif
+                      -%}
+                      <img
+                        srcset="{%- if image_with_text_block.settings.image.width >= 165 -%}{{ image_with_text_block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+                        {%- if image_with_text_block.settings.image.width >= 360 -%}{{ image_with_text_block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                        {%- if image_with_text_block.settings.image.width >= 533 -%}{{ image_with_text_block.settings.image | image_url: width: 533 }} 533w,{%- endif -%}
+                        {%- if image_with_text_block.settings.image.width >= 720 -%}{{ image_with_text_block.settings.image | image_url: width: 720 }} 720w,{%- endif -%}
+                        {%- if image_with_text_block.settings.image.width >= 940 -%}{{ image_with_text_block.settings.image | image_url: width: 940 }} 940w,{%- endif -%}
+                        {%- if image_with_text_block.settings.image.width >= 1066 -%}{{ image_with_text_block.settings.image | image_url: width: 1066 }} 1066w,{%- endif -%}
+                        {{ image_with_text_block.settings.image | image_url }} {{ image_with_text_block.settings.image.width }}w"
+                        src="{{ image_with_text_block.settings.image | image_url: width: 165 }}"
+                        sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+                        alt="{{ image_alt | strip_html | escape }}"
+                        title="{{ image_alt | strip_html | escape }}"
+                        class="motion-reduce"
+                        loading="lazy"
+                        width="{{ image_with_text_block.settings.image.width }}"
+                        height="{{ image_with_text_block.settings.image.height }}"
+                      >
+                    {%- endif -%}
+                  </div>
+                </div>
+                <div class="section__text">
+                  <div class="section__text--title">
+                    <h3 class="h3">{{ image_with_text_block.settings.title }}</h3>
+                  </div>
+                  <div class="section__text--description">
+                    {{ image_with_text_block.settings.description }}
+                  </div>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 Logo with text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "header",
+      "content": "Grid Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 3,
+      "label": "Columns on Desktop",
+      "info": "Default Value is 3"
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "label": "Columns on Tablet",
+      "info": "Default Value is 3"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 1,
+      "label": "Columns on Mobile",
+      "info": "Default Value is 1"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Why Choose Us"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "image_with_text",
+      "name": "Image with text",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "<p>Mus mauris vitae</p><p>ultricies leo</p"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Consectetur letius torquent nunc lacus volutpat</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 Logo with text",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "image_with_text"
+        },
+        {
+          "type": "image_with_text"
+        },
+        {
+          "type": "image_with_text"
+        },
+        {
+          "type": "image_with_text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

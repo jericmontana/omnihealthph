@@ -1,0 +1,26 @@
+@import 'abstract/mixin';
+
+.featured-collection{
+    position: relative;
+    overflow: hidden;
+
+    .grid__item{
+        display: grid;
+
+        &+div{
+            grid-area: 1/1;
+        }
+    }
+
+    @include device('tablet'){
+    .grid--3-col-tablet .grid__item {
+        max-width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+    }
+    }
+
+    // For Specific Styling
+    .section__header{
+        margin-bottom: 2rem;
+    }
+
+}

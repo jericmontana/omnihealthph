@@ -1,0 +1,290 @@
+{{ 'section-image-slider-7923216.css' | asset_url | stylesheet_tag }}
+
+{%- assign header_blocks = section.blocks | where: 'type', 'header' -%}
+{%- assign slider_blocks = section.blocks | where: 'type', 'slider' -%}
+{%- assign image_blocks = section.blocks | where: 'type', 'image' -%}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .image-slider--{{ section.id }} .section__container {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .image-slider--{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="image-slider image-slider--{{ section.id }}">
+    <div class="section__container">
+        <div class="page-width">
+
+            {%- for block in header_blocks -%}
+              {%- render 'section-header',
+                title: block.settings.title,
+                subtitle: block.settings.subtitle,
+                uppercase: block.settings.title_uppercase
+              -%}
+            {%- endfor -%}
+
+            {%- for block in slider_blocks -%}
+                {%- liquid
+
+                assign slider_mode = block.settings.slider
+                case slider_mode
+                    when 'everywhere'
+                    assign slider_class = "slider slider--everywhere"
+
+                    when 'medium-down'
+                    assign slider_class = "slider slider--tablet"
+                endcase
+
+                -%}
+
+                {% capture grid_device_class %}
+                grid--{{ block.settings.columns_mobile }}-col grid--{{ block.settings.columns_desktop }}-col-desktop grid--{{ block.settings.columns_tablet }}-col-tablet
+                {% endcapture %}
+                
+                {% if slider_mode == 'slide-me-not' %}
+                <div class="section__image">
+                    <ul class="grid {{ grid_device_class | strip }}" role="list">
+                {% else %}
+                <slider-component class="section__image">
+                    <ul id="Slider-{{ section.id }}"
+                        class="grid {{ grid_device_class | strip }} {{ slider_class | strip }}"
+                        role="list">
+                {% endif %}
+
+                        {% for image_block in image_blocks %}
+                          {% capture image_sizes %}
+                            (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: block.settings.columns_desktop }}px, (min-width: 990px) calc((100vw - 100px) / {{ block.settings.columns_desktop }}), (min-width: 750px) calc((100vw - 100px) / {{ block.settings.columns_tablet }}), (max-width: 749px) calc((100vw) / {{ block.settings.columns_mobile }})
+                          {% endcapture %}
+
+                        {% if slider_mode == 'slide-me-not' %}
+                        <li class="grid__item">
+                        {% else %}
+                        <li id="Slide-{{ section.id }}-{{ forloop.index }}" class="grid__item slider__slide">
+                        {% endif %}
+                            <div class="image-slider--image">
+                            {%- if image_block.settings.image != blank -%}
+                            <img
+                                srcset="{%- if image_block.settings.image.width >= 165 -%}{{ image_block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+                                {%- if image_block.settings.image.width >= 360 -%}{{ image_block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                                {%- if image_block.settings.image.width >= 535 -%}{{ image_block.settings.image | image_url: width: 535 }} 535w,{%- endif -%}
+                                {%- if image_block.settings.image.width >= 750 -%}{{ image_block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                                {%- if image_block.settings.image.width >= 1070 -%}{{ image_block.settings.image | image_url: width: 1070 }} 1070w,{%- endif -%}
+                                {%- if image_block.settings.image.width >= 1500 -%}{{ image_block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                                {{ image_block.settings.image | image_url }} {{ image_block.settings.image.width }}w"
+                                src="{{ image_block.settings.image | image_url }}"
+                                sizes="{{ image_sizes | strip }}"
+                                alt="{{ image_block.settings.image.alt | escape }}"
+                                title="{{ image_block.settings.image.alt | escape }}"
+                                loading="lazy"
+                                width="{{ image_block.settings.image.width }}"
+                                height="{{ image_block.settings.image.height }}"
+                                draggable="false"
+                            >
+                            {%- else -%}
+                            {%- render 'no-image' -%}
+                            {%- endif -%}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+        
+                    {%- if slider_mode != 'slide-me-not' -%}
+                    <div class="slider-buttons no-js-hidden">
+                        <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'general.slider.previous_slide' | t }}">{% render 'icon-caret' %}</button>
+                        <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'general.slider.next_slide' | t }}">{% render 'icon-caret' %}</button>
+                    </div>
+                    {%- endif -%}
+
+                {% if slider_mode == 'slide-me-not' %}
+                </div>
+                {% else %}
+                </slider-component>
+                {% endif %}
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 ImageSlider",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Proin enim taciti dapibus"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Lacus in dui sollicitudin risus suspendisse sed placerat ad pharetra ipsum letius mattis vel"
+        }
+      ]
+    },
+    {
+      "type": "slider",
+      "name": "Slider",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Slider Settings"
+        },
+        {
+          "type": "header",
+          "content": "Grid Settings"
+        },
+        {
+          "type": "range",
+          "id": "columns_desktop",
+          "min": 2,
+          "max": 6,
+          "step": 1,
+          "default": 3,
+          "label": "Columns on Desktop",
+          "info": "Default Value is 3"
+        },
+        {
+          "type": "range",
+          "id": "columns_tablet",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 3,
+          "label": "Columns on Tablet",
+          "info": "Default Value is 3"
+        },
+        {
+          "type": "range",
+          "id": "columns_mobile",
+          "min": 1,
+          "max": 3,
+          "step": 1,
+          "default": 1,
+          "label": "Columns on Mobile",
+          "info": "Default Value is 1"
+        },
+        {
+          "type": "select",
+          "id": "slider",
+          "label": "Slider",
+          "options": [
+            {
+              "value": "slide-me-not",
+              "label": "None"
+            },
+            {
+              "value": "everywhere",
+              "label": "Everywhere"
+            },
+            {
+              "value": "medium-down",
+              "label": "Medium Down"
+            }
+          ],
+          "default": "slide-me-not"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 ImageSlider",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "slider"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+
+        

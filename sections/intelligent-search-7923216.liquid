@@ -1,0 +1,210 @@
+{{ 'section-intelligent-search-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+        .section--intelligent-search .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+        }
+
+        @media screen and (min-width: 750px) {
+            .section--intelligent-search .section-{{ section.id }}-padding {
+                padding-top: {{ section.settings.padding_top }}px !important;
+                padding-bottom: {{ section.settings.padding_bottom }}px !important;
+            }
+        }
+    {%- endif -%}
+
+    {% case section.settings.color_scheme %}
+        {% when 'background-1' %}
+        .section--intelligent-search-{{ section.id }} .section__header--title{
+            color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+        }
+
+        .section--intelligent-search-{{ section.id }} .search__button{
+            background-color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }}) !important;
+        }
+        .section--intelligent-search-{{ section.id }} .search-form__field-wrapper .field__input{
+            border-color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }}) !important;
+        }
+    {% endcase %}
+
+{%- endstyle -%}
+
+<div class="section section--intelligent-search section--intelligent-search-{{ section.id }} color-{{ section.settings.color_scheme }}">
+    <div class="section__bg-container section-{{ section.id }}-bg-contaier section-{{ section.id }}-padding">
+        <div class="page-width">
+
+        {%- assign header = section.blocks | where: 'type', 'heading' -%}
+        {%- for block in header -%}
+            {%- if block.settings.title != blank or block.settings.subtitle != blank -%}
+            {%- render 'section-header',
+                title: block.settings.title,
+                subtitle: block.settings.subtitle,
+                uppercase: block.settings.title_uppercase
+            -%}
+            {%- endif -%}
+        {%- endfor -%}
+
+        <div class="section__search">
+            <predictive-search data-loading-text="{{ 'accessibility.loading' | t }}">
+                <form action="{{ routes.search_url }}" method="get" role="search" class="search">
+                <div class="search-form__field-wrapper">
+                    <div class="field">
+                        <input
+                        class="search__input field__input"
+                        id="Search-In-Template"
+                        type="search"
+                        name="q"
+                        value="{{ search.terms | escape }}"
+                        placeholder="Type keyword here.."
+                        {%- if settings.predictive_search_enabled -%}
+                            role="combobox"
+                            aria-expanded="false"
+                            aria-owns="predictive-search-results-list"
+                            aria-controls="predictive-search-results-list"
+                            aria-haspopup="listbox"
+                            aria-autocomplete="list" 
+                            autocorrect="off"
+                            autocomplete="off"
+                            autocapitalize="off"
+                            spellcheck="false"
+                        {%- endif -%}
+                        >
+                        <label class="field__label" for="Search-In-Template">Type keyword here..</label>
+                        <input name="options[prefix]" type="hidden" value="last">
+
+                        {%- if settings.predictive_search_enabled -%}
+                        <div class="predictive-search" tabindex="-1" data-predictive-search>
+                            <div class="predictive-search__loading-state">
+                            <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                                <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                            </svg>
+                            </div>
+                        </div>
+            
+                        <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span> 
+                        {%- endif -%}
+                            
+                        <button type="submit" class="search__button field__button">
+                            {% render 'icon-search' %}Search
+                        </button>
+                    </div>
+                </div>
+                </form>
+            </predictive-search>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Intelligent Search",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "What are you looking for?"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Intelligent Search",
+      "blocks": [
+        {
+          "type": "heading"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

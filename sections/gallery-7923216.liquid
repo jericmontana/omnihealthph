@@ -1,0 +1,290 @@
+{{ 'section-gallery-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+      .gallery-{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+      }
+
+      @media screen and (min-width: 750px) {
+        .gallery-{{ section.id }} .section__container{
+          padding-top: {{ section.settings.padding_top }}px !important;
+          padding-bottom: {{ section.settings.padding_bottom }}px !important;
+        }
+      }
+    {%- endif -%}
+{%- endstyle -%}
+
+<div class="gallery gallery-{{ section.id }} color-background-1">
+    <div class="section__container">
+        <div class="page-width">
+            
+            {%- assign header = section.blocks | where: 'type', 'heading' -%}
+            {%- for block in header -%}
+                {%- if block.settings.title != blank or block.settings.subtitle != blank -%}
+                {%- render 'section-header',
+                    title: block.settings.title,
+                    subtitle: block.settings.subtitle,
+                    uppercase: block.settings.title_uppercase
+                -%}
+                {%- endif -%}
+            {%- endfor -%}
+
+            {% capture grid_device_class %}
+                grid--1-col grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_tablet }}-col-tablet
+            {% endcapture %}
+
+             <div class="section__gallery--content">
+                <div class="section__gallery--content-videos">
+                    <ul class="grid {{ grid_device_class | strip }}">
+                    {%- assign block_videos = section.blocks | where: "type", "video" -%}
+                    {%- for block in block_videos -%}
+                        <li class="grid__item">
+                            <div class="gallery--wrapper">
+                                {%- unless block.settings.title == blank -%}
+                                <div class="gallery--info">
+                                    <h2 class="h2 uppercase center">{{ block.settings.title | escape }}</h2>
+                                </div>
+                                {%- endunless -%}
+                                <div class="gallery--video">
+                                  {% comment %} For Info {% endcomment %}
+                                {% unless block.settings.image == blank %}
+                                  <img
+                                      srcset="{%- if block.settings.image.width >= 375 -%}{{ block.settings.image | image_url: width: 375 }} 375w,{%- endif -%}
+                                      {%- if block.settings.image.width >= 550 -%}{{ block.settings.image | image_url: width: 550 }} 550w,{%- endif -%}
+                                      {%- if block.settings.image.width >= 750 -%}{{ block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                                      {%- if block.settings.image.width >= 1100 -%}{{ block.settings.image | image_url: width: 1100 }} 1100w,{%- endif -%}
+                                      {%- if block.settings.image.width >= 1500 -%}{{ block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                                      {%- if block.settings.image.width >= 1780 -%}{{ block.settings.image | image_url: width: 1780 }} 1780w,{%- endif -%}
+                                      {%- if block.settings.image.width >= 2000 -%}{{ block.settings.image | image_url: width: 2000 }} 2000w,{%- endif -%}
+                                      {%- if block.settings.image.width >= 3000 -%}{{ block.settings.image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                                      {%- if block.settings.image.width >= 3840 -%}{{ block.settings.image | image_url: width: 3840 }} 3840w,{%- endif -%}
+                                      {{ block.settings.image | image_url }} {{ block.settings.image.width }}w"
+                                      sizes= "(min-width: 750px) 50vw, 100vw"
+                                      src="{{ block.settings.image | image_url }}"
+                                      alt="{% unless block.settings.image.alt == blank %}{{ block.settings.image.alt }}{% else %}{{ section.settings.title | append: ' - ' | append: shop.name }}{% endunless %}"
+                                      title="{% unless block.settings.image.alt == blank %}{{ block.settings.image.alt }}{% else %}{{ section.settings.title | append: ' - ' | append: shop.name }}{% endunless %}"
+                                      loading="lazy"
+                                      width="{{ block.settings.image.width }}"
+                                      height="{{ block.settings.image.height }}"
+                                  >
+                                {% else %}
+                                  {% render 'no-image' %}
+                                {% endunless %}
+                                    {% render 'video-popup-7923216', video_id: block.settings.video_id, video_type: block.settings.video_type %}
+                                </div>
+                            </div>
+                        </li>
+                    {%- endfor -%}
+                    </ul>
+                </div>
+
+                <div class="section__gallery--content-images">
+                    <ul class="grid grid--2-col grid--4-col-desktop grid--2-col-tablet">
+                    {%- assign block_images = section.blocks | where: "type", "image" -%}
+                    {%- for block in block_images -%}
+                        <li class="grid__item">
+                            <div class="gallery--wrapper">
+                            {% unless block.settings.image == blank %}
+                                <img
+                                    srcset="{%- if block.settings.image.width >= 375 -%}{{ block.settings.image | image_url: width: 375 }} 375w,{%- endif -%}
+                                    {%- if block.settings.image.width >= 550 -%}{{ block.settings.image | image_url: width: 550 }} 550w,{%- endif -%}
+                                    {%- if block.settings.image.width >= 750 -%}{{ block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                                    {%- if block.settings.image.width >= 1100 -%}{{ block.settings.image | image_url: width: 1100 }} 1100w,{%- endif -%}
+                                    {%- if block.settings.image.width >= 1500 -%}{{ block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                                    {%- if block.settings.image.width >= 1780 -%}{{ block.settings.image | image_url: width: 1780 }} 1780w,{%- endif -%}
+                                    {%- if block.settings.image.width >= 2000 -%}{{ block.settings.image | image_url: width: 2000 }} 2000w,{%- endif -%}
+                                    {%- if block.settings.image.width >= 3000 -%}{{ block.settings.image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                                    {%- if block.settings.image.width >= 3840 -%}{{ block.settings.image | image_url: width: 3840 }} 3840w,{%- endif -%}
+                                    {{ block.settings.image | image_url }} {{ block.settings.image.width }}w"
+                                    sizes= "(min-width: 750px) 50vw, 100vw"
+                                    src="{{ block.settings.image | image_url }}"
+                                    alt="{% unless block.settings.image.alt == blank %}{{ block.settings.image.alt }}{% else %}{{ section.settings.title | append: ' - ' | append: shop.name }}{% endunless %}"
+                                    title="{% unless block.settings.image.alt == blank %}{{ block.settings.image.alt }}{% else %}{{ section.settings.title | append: ' - ' | append: shop.name }}{% endunless %}"
+                                    loading="lazy"
+                                    width="{{ block.settings.image.width }}"
+                                    height="{{ block.settings.image.height }}"
+                                >
+                            {% else %}
+                                {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                            {% endunless %}
+                            </div>
+                        </li>
+                    {%- endfor -%}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 Gallery",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Grid Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3,
+      "label": "Columns on Desktop",
+      "info": "Default Value is 3"
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2,
+      "label": "Columns on Tablet",
+      "info": "Default Value is 3"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Gallery"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Video Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Thumbnail"
+        },
+        {
+          "type": "select",
+          "id": "video_type",
+          "label": "Type",
+          "options": [
+            {
+              "value": "htmlvid",
+              "label": "HTML"
+            },
+            {
+              "value": "vimeo",
+              "label": "Vimeo"
+            },
+            {
+              "value": "youtube",
+              "label": "Youtube"
+            }
+          ],
+          "default": "youtube"
+        },
+        {
+          "type": "text",
+          "id": "video_id",
+          "label": "ID",
+          "default": "_9VUPq3SxOc"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 Gallery",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

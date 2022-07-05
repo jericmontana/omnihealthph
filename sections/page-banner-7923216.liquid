@@ -1,0 +1,173 @@
+{% assign use_as_default_padding = settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+      .page-banner--{{ section.id }} .section__container {
+        padding-top: {{ settings.padding_top | times: 0.75 | round: 0 }}px !important;
+        padding-bottom: {{ settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+      }
+
+      @media screen and (min-width: 750px) {
+        .page-banner--{{ section.id }} .section__container {
+          padding-top: {{ settings.padding_top }}px !important;
+          padding-bottom: {{ settings.padding_bottom }}px !important;
+        }
+      }
+    {%- endif -%}
+
+    .page-banner .section__bg {
+        --color-foreground: {{ settings.fg_color.red }},{{ settings.fg_color.green }},{{ settings.fg_color.blue }};
+        --color-background: {{ settings.bg_color.red }},{{ settings.bg_color.green }},{{ settings.bg_color.blue }};
+        {% if settings.bg_image != blank %}background-image: url('{{ settings.bg_image | image_url }}');{% endif %}
+        background-color: {{ settings.bg_color }};
+        background-blend-mode: {{ settings.bg_blend }};
+    }
+    .page-banner .section__container {
+        --color-foreground: {{ settings.fg_color.red }},{{ settings.fg_color.green }},{{ settings.fg_color.blue }};
+        --color-background: {{ settings.bg_color.red }},{{ settings.bg_color.green }},{{ settings.bg_color.blue }};
+    }
+{%- endstyle -%}
+
+<div class="page-banner page-banner--{{ section.id }} section-with-bg">
+    <div class="section__bg"></div>
+    <div class="section__container">
+        <div class="page-width">
+
+            {%- assign breadcrumb = section.blocks | where: 'type', 'breadcrumb' -%}
+            {%- for block in breadcrumb -%}
+                <div class="section__breadcrumb center">
+                    {%- render 'breadcrumb-7923216' -%}
+                </div>
+            {%- endfor -%}
+            
+            {%- assign header = section.blocks | where: 'type', 'heading' -%}
+            {%- for block in header -%}
+                {% assign template_name = template.name | strip | escape %}
+                {% case template_name %}
+                    {% when 'page' %}
+                      {% assign dynamic_title = page.title %}
+                    {% when 'product' %}
+                      {% assign dynamic_title = product.title %}
+                    {% when 'collection' %}
+                      {% assign dynamic_title = collection.title %}
+                    {% when 'blog' %}
+                      {% assign dynamic_title = blog.title %}
+                    {% when 'article' %}
+                      {% assign dynamic_title = article.title %}
+                      {% assign article_date = article.published_at | time_tag: format: 'date' %}
+                {% endcase %}
+                <div class="section__header {% if template_name == 'article' %}section__header--article{% endif %} center">
+                    {% if block.settings.title != blank %}
+                        <h1 class="h1 {% if block.settings.title_uppercase %}uppercase{% endif %}">{{ block.settings.title | escape }}</h1>
+                    {% else %}
+                        <h1 class="h1 {% if block.settings.title_uppercase %}uppercase{% endif %}">{{ dynamic_title }}</h1>
+                    {% endif %}
+                        <p class="h3">{{ block.settings.subtitle | escape }}</p>
+
+                    {% if template_name == 'article' %}
+                      <div class="section__header--article-info">
+                        <p class="section__header--date">{{ article_date }}</p>
+                        <span class="section__header--separator">/</span>
+                        <div {{ block.shopify_attributes }}>
+                          <share-button class="share-button" {{ block.shopify_attributes }}>
+                            <button class="share-button__button hidden">
+                              {% render 'icon-share' %}
+                              Share
+                            </button>
+                            <details id="Details-{{ block.id }}-{{ section.id }}">
+                              <summary class="share-button__button">
+                                {% render 'icon-share' %}
+                                {{ block.settings.share_label | escape }}
+                              </summary>
+                              <div id="Article-share-{{ section.id }}" class="share-button__fallback motion-reduce">
+                                <div class="field">
+                                  <span id="ShareMessage-{{ section.id }}" class="share-button__message hidden" role="status">
+                                  </span>
+                                  <input type="text"
+                                        class="field__input"
+                                        id="url"
+                                        value="{{ request.origin | append: article.url }}"
+                                        placeholder="{{ 'general.share.share_url' | t }}"
+                                        onclick="this.select();"
+                                        readonly
+                                  >
+                                  <label class="field__label" for="url">{{ 'general.share.share_url' | t }}</label>
+                                </div>
+                                <button class="share-button__close hidden no-js-hidden">
+                                  {% render 'icon-close' %}
+                                  <span class="visually-hidden">{{ 'general.share.close' | t }}</span>
+                                </button>
+                                <button class="share-button__copy no-js-hidden">
+                                  {% render 'icon-clipboard' %}
+                                  <span class="visually-hidden">{{ 'general.share.copy_to_clipboard' | t }}</span>
+                                </button>
+                              </div>
+                            </details>
+                          </share-button>
+                          <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
+                        </div>
+                      </div>
+                    {% endif %}
+                </div>
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 Page Banner",
+  "tag": "section",
+  "settings": [
+
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "breadcrumb",
+      "name": "Breadcrumb",
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 Page Banner",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "breadcrumb"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

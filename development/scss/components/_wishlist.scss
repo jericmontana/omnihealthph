@@ -1,0 +1,133 @@
+@import 'abstract/animation';
+// From Theme
+// --color-base-accent-1: {{ settings.colors_accent_1.red }}, {{ settings.colors_accent_1.green }}, {{ settings.colors_accent_1.blue }};
+// --color-base-solid-button-labels: {{ settings.colors_solid_button_labels.red }}, {{ settings.colors_solid_button_labels.green }}, {{ settings.colors_solid_button_labels.blue }};
+
+:root{
+    --color-btn-wishlist-fill: var(--color-base-accent-1);
+    --color-btn-wishlist-stroke: var(--color-base-accent-1);
+    --color-loader: var(--color-base-accent-1);
+}
+
+/* Wishlist z-index */
+#shopify-section-header{
+    z-index: 4;
+}
+.facets__display{
+    z-index: 4!important;
+}
+
+/* Wishlist position */
+.grid__item.product__media-wrapper{
+    position: relative;
+}
+
+.header__icon--wishlist{
+    .icon.icon-heart{
+        fill: currentColor;
+        stroke: transparent;
+    }
+}
+
+.card__icon{
+   &.card__icon-wishlist{
+       position: absolute;
+       top: 0;
+       right: 0;
+       margin: 0.8rem;
+       z-index: 3;
+   }
+
+   .button-wishlist{
+        position: relative;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        border: none;
+        padding: 0 !important;
+        margin: 0 !important;
+
+       svg{
+           width: 18px;
+           height: auto;
+       }
+   }
+
+   .icon.icon-heart {
+        fill: transparent;
+        transition: fill 0.3s ease;
+        stroke-width: 2;
+        stroke: rgb(var(--color-btn-wishlist-stroke));
+    }
+
+    .active .icon.icon-heart {
+        fill: rgb(var(--color-btn-wishlist-fill));
+        stroke: transparent;
+    }
+
+}
+
+.wishlist-empty{
+    display: none;
+}
+
+// For Loader
+.wishlist__container{
+    position: relative;
+    height: auto;
+}
+
+.wishlist__loader--removed{
+    background-color: #ffffff;
+    height: 100%;
+    min-height: 280px;
+    z-index: 888;
+}
+
+.wishlist__loader{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .loading-dots{
+        margin-left: -1.5em;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        animation: loading-dots-fadein .5s linear forwards;
+
+        &__wrapper{
+            text-align: center;
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .dots{
+            width: .5em;
+            height: .5em;
+            display: inline-block;
+            vertical-align: middle;
+            background: rgb(var(--color-loader));
+            border-radius: 50%;
+            margin: 0 .125em;
+            animation: loading-dots-middle-dots .5s linear infinite;
+
+            &:first-of-type{
+                animation: loading-dots-first-dot .5s linear infinite;
+                opacity: 0;
+                filter: alpha(opacity=0);
+                transform: translate(-1em);
+            }
+
+            &:last-of-type{
+                animation: loading-dots-last-dot .5s linear infinite;
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,192 @@
+{{ 'section-signup-7923216.css' | asset_url | stylesheet_tag }}
+
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .signup--{{ section.id }} .section__container {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .signup--{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+{%- liquid
+    assign header_blocks = section.blocks | where: 'type', 'header'
+    assign form_blocks = section.blocks | where: 'type', 'form'
+-%}
+
+<div class="signup signup--{{ section.id }} section-with-bg">
+    {% if section.settings.bg_image != blank %}
+      <div class="section__bg" style="background-color: rgb(var(--color-section-bg))">
+        <img
+          class="small-hide"
+          srcset="{%- if section.settings.bg_image.width >= 375 -%}{{ section.settings.bg_image | image_url: width: 375 }} 375w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 550 -%}{{ section.settings.bg_image | image_url: width: 550 }} 550w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 750 -%}{{ section.settings.bg_image | image_url: width: 750 }} 750w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 1100 -%}{{ section.settings.bg_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 1500 -%}{{ section.settings.bg_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 1780 -%}{{ section.settings.bg_image | image_url: width: 1780 }} 1780w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 1800 -%}{{ section.settings.bg_image | image_url: width: 1800 }} 1800w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 2000 -%}{{ section.settings.bg_image | image_url: width: 2000 }} 2000w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 3000 -%}{{ section.settings.bg_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+            {%- if section.settings.bg_image.width >= 3840 -%}{{ section.settings.bg_image | image_url: width: 3840 }} 3840w,{%- endif -%}
+            {{ section.settings.bg_image | image_url }} {{ section.settings.bg_image.width }}w"
+          src="{{ section.settings.bg_image | image_url }}"
+          sizes="(min-width: 990px) 1800px, ((min-width: 750px) and (max-width: 989px)) 1080px, (max-width: 749px) 800px"
+          alt="{{ section.settings.bg_image.alt | escape }}"
+          title="{{ section.settings.bg_image.alt | escape }}"
+          loading="lazy"
+          width="{{ section.settings.bg_image.width }}"
+          height="{{ section.settings.bg_image.height }}"
+          draggable="false"
+        >
+      </div>
+    {% endif %}
+    <div class="section__container">
+        <div class="page-width">
+
+            {%- for header_block in header_blocks -%}
+                <div class="section__header">
+                    <h2>
+                        {{ header_block.settings.title }}
+                    </h2>
+                    <div>
+                        {{ header_block.settings.subtitle }}
+                    </div>
+                </div>
+            {%- endfor -%}
+
+            {%- for form_block in form_blocks -%}
+                <div class="section__form">
+                    {% render 'form-customer-7923216',
+                        name_label: form_block.settings.name_label,
+                        display_name_input: form_block.settings.display_name_input,
+                        email_label: form_block.settings.email_label,
+                        btn_label: form_block.settings.btn_label
+                    %}
+                </div>
+            {%- endfor -%}
+            
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 Signup",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Section BG"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "<p>Join Our VIP Club</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "<p>Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur.</p>"
+        }
+      ]
+    },
+    {
+      "type": "form",
+      "name": "Form",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "name_label",
+          "label": "Name Input Label",
+          "default": "Name..."
+        },
+        {
+          "type": "checkbox",
+          "id": "display_name_input",
+          "label": "Display Name Input",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "email_label",
+          "label": "Email Input Label",
+          "default": "Email..."
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Button Label",
+          "default": "Subscribe"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 Signup",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "form"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

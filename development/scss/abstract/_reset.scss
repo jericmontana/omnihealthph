@@ -1,0 +1,42 @@
+ol, ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* removes spacing between cells in tables */
+table {
+    border-collapse: collapse;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+    white-space: revert;
+}
+
+//Removed Outline
+button,input,select{
+    outline: none!important;
+}
+button{
+    &:active,&:focus,&:visited{
+        outline: none!important; 
+    }
+}
+input{
+    &:active,&:focus,&:visited{
+        outline: none!important; 
+    }
+}
+select{
+    &:active,&:focus,&:visited{
+        outline: none!important; 
+    }
+}

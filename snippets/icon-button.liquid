@@ -1,0 +1,54 @@
+{% comment %}
+    Renders Icon
+
+    Accepts:
+    - icon_type
+
+    Usage:
+    {% render 'icon',
+        icon_type: section.settings.icon_type
+    %}
+
+    Schema:
+    {
+        "settings": [
+
+            ...
+
+            {
+                "type": "select",
+                "id": "icon_type",
+                "label": "Button Icon",
+                "options": [
+                    {
+                    "value": "none",
+                    "label": "None"
+                    },
+                    {
+                    "value": "arrow",
+                    "label": "Arrow"
+                    }
+                ],
+                "default": "arrow"
+            }
+            
+            ...
+
+        ]
+    }
+
+{% endcomment %}
+
+{%- if icon_type != 'none' -%}
+    {%- case icon_type -%}
+        {%- when 'arrow' -%}
+        <svg viewBox="0 0 14 10" fill="none" aria-hidden="true" focusable="false" role="presentation" class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor">
+        </svg>
+
+        {%- when 'send' -%}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="icon icon-send">
+            <line x1="22" y1="2" x2="11" y2="13"></line><polygon stroke="currentColor" points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+    {%- endcase -%}
+{%- endif -%}

@@ -1,0 +1,24 @@
+.section--collection-list{
+
+    .section__collection{
+        max-width: 530px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1rem;
+        overflow: hidden;
+
+        &--image{
+            height: 280px!important;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & img{
+                height: 100%;
+                width: auto;
+                object-fit: cover;
+            }
+        }
+    }
+}

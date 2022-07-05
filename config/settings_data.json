@@ -1,0 +1,290 @@
+{
+  "current": {
+    "colors_accent_1": "#0B5394",
+    "colors_accent_2": "#121212",
+    "colors_text": "#121212",
+    "colors_outline_button_labels": "#121212",
+    "social_twitter_link": "",
+    "social_facebook_link": "https:\/\/www.facebook.com\/oswellph",
+    "social_instagram_link": "https:\/\/www.instagram.com\/oswell.inc.ph\/",
+    "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UClfvbBkua6NxJsWQ4-iM90g",
+    "favicon": "shopify:\/\/shop_images\/Oswell_Logo.png",
+    "fg_color": "#0b5394",
+    "bg_color": "#cfe2f3",
+    "use_as_default_padding": true,
+    "padding_top": 16,
+    "padding_bottom": 4,
+    "title": "ALL IS WELL",
+    "title_uppercase": false,
+    "subtitle": "Don't just look good, start feeling good & radiate a vibrant feel from the inside out.",
+    "banner_bg_color": "#f2dfd0",
+    "banner_bg_image": "shopify:\/\/shop_images\/Marble_White.png",
+    "banner_bg_blend": "luminosity",
+    "banner_btn_label": "Shop Now",
+    "banner_hover_effect": "lighten",
+    "banner_icon_type": "none",
+    "wave_desktop_image": "shopify:\/\/shop_images\/Wave_2880x250_e34c55cd-59dc-486c-b379-2d2b33b535ed.png",
+    "wave_mobile_image": "shopify:\/\/shop_images\/Wave_1080x94_4ab1ae6d-17e1-47d7-875a-e7e8bae1f34d.png",
+    "ty_discount_code": "OSWELL100P",
+    "ty_bg_color": "#f2dfd0",
+    "ty_bg_image": "shopify:\/\/shop_images\/Marble_White.png",
+    "ty_bg_blend": "luminosity",
+    "checkout_logo_image": "shopify:\/\/shop_images\/Oswell_Logo.png",
+    "checkout_logo_position": "center",
+    "checkout_logo_size": "small",
+    "checkout_sidebar_background_color": "#0e5396",
+    "checkout_accent_color": "#0e5396",
+    "checkout_button_color": "#0e5396",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "color_scheme": "background-1",
+          "logo": "shopify:\/\/shop_images\/Oswell_Logo.png",
+          "logo_width": 100,
+          "logo_position": "middle-left",
+          "menu": "main-menu-fo",
+          "show_line_separator": true,
+          "enable_sticky_header": true,
+          "margin_bottom": 0,
+          "btn_label": "Get P100 Off"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/Oswell_Logo.png",
+              "image_width": 100,
+              "alignment": "center"
+            }
+          },
+          "footer-1": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Quick Links",
+              "menu": "quick-links-fo"
+            }
+          },
+          "footer-2": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Customer Service",
+              "menu": "customer-service-fo"
+            }
+          },
+          "footer-3": {
+            "type": "email_signup",
+            "settings": {
+              "heading": "Join OSwell VIP List",
+              "subtext": "<p>Be the first one to know about our latest promotions and exclusive offers and get a discount on your first purchase.<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "footer-1",
+          "footer-2",
+          "footer-3"
+        ],
+        "settings": {
+          "color_scheme": "background-2",
+          "show_social": true,
+          "enable_country_selector": false,
+          "enable_language_selector": false,
+          "payment_enable": true,
+          "margin_top": 0,
+          "padding_top": 36,
+          "padding_bottom": 36
+        }
+      },
+      "main-password-header": {
+        "type": "main-password-header",
+        "settings": {
+        }
+      },
+      "main-password-footer": {
+        "type": "main-password-footer",
+        "settings": {
+        }
+      },
+      "announcement-bar-7923216": {
+        "type": "announcement-bar-7923216",
+        "blocks": {
+          "announcement-bar-7923216-0": {
+            "type": "announcement_bar",
+            "settings": {
+              "text": "FREE SHIPPING ON ALL DOMESTIC ORDERS",
+              "show_btn": false,
+              "round_corner": false,
+              "btn_action": "open-popup",
+              "btn_label": "Shop Now",
+              "btn_link": "shopify:\/\/collections\/all",
+              "hover_effect": "shine",
+              "icon_type": "send",
+              "shadow_effect": true,
+              "auto_width": false
+            }
+          },
+          "announcement-bar-7923216-1": {
+            "type": "announcement_bar",
+            "settings": {
+              "text": "GET 10% OFF AT YOUR FIRST PURCHASE",
+              "show_btn": true,
+              "round_corner": true,
+              "btn_action": "open-popup",
+              "btn_label": "Subscribe",
+              "btn_link": "shopify:\/\/pages\/lash-guide",
+              "hover_effect": "shine",
+              "icon_type": "send",
+              "shadow_effect": true,
+              "auto_width": false
+            }
+          }
+        },
+        "block_order": [
+          "announcement-bar-7923216-0",
+          "announcement-bar-7923216-1"
+        ],
+        "settings": {
+          "color_scheme": "accent-2",
+          "auto_rotate": true,
+          "change_slides_speed": 5,
+          "use_as_default_padding": false,
+          "padding_top": 0,
+          "padding_bottom": 0
+        }
+      },
+      "tab-7923216": {
+        "type": "tab-7923216",
+        "settings": {
+          "w_btn_label": "Wishlist",
+          "w_btn_link": "",
+          "r_btn_label": "Reviews",
+          "r_btn_link": "",
+          "s_btn_action": "redirect-link",
+          "s_btn_label": "Get 10% Off",
+          "s_btn_link": "shopify:\/\/pages\/vip-club"
+        }
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "blocks": {
+          "announcement-bar-0": {
+            "type": "announcement",
+            "settings": {
+              "text": "COD AVAILABLE | FREE Shipping on all orders nationwide",
+              "uppercase": false,
+              "size": "h3",
+              "color_scheme": "accent-1",
+              "link": "shopify:\/\/collections\/all"
+            }
+          }
+        },
+        "block_order": [
+          "announcement-bar-0"
+        ],
+        "settings": {
+        }
+      }
+    },
+    "content_for_index": [
+
+    ],
+    "blocks": {
+      "12120936241911852800": {
+        "type": "shopify:\/\/apps\/judge-me-product-reviews\/blocks\/reviews_tab\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": true,
+        "settings": {
+          "position": "right"
+        }
+      },
+      "sticky-cart-by-uplinkly": {
+        "type": "shopify:\/\/apps\/sticky-cart-by-uplinkly\/blocks\/sticky-cart\/25fba6ad-75e4-408b-a261-b223e0c71c8b",
+        "disabled": true,
+        "settings": {
+        }
+      },
+      "sticky-cart-animator-by-uplinkly": {
+        "type": "shopify:\/\/apps\/sticky-cart-by-uplinkly\/blocks\/cart-animator\/25fba6ad-75e4-408b-a261-b223e0c71c8b",
+        "disabled": true,
+        "settings": {
+        }
+      },
+      "14060646107696862457": {
+        "type": "shopify:\/\/apps\/judge-me-product-reviews\/blocks\/judgeme_core\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {
+        }
+      }
+    }
+  },
+  "presets": {
+    "Default": {
+      "sections": {
+        "announcement-bar": {
+          "type": "announcement-bar-7923216",
+          "settings": {
+          }
+        },
+        "header": {
+          "type": "header",
+          "settings": {
+            "logo_width": 90
+          }
+        },
+        "footer": {
+          "type": "footer",
+          "blocks": {
+            "footer-0": {
+              "type": "image",
+              "settings": {
+              }
+            },
+            "footer-1": {
+              "type": "link_list",
+              "settings": {
+                "heading": "Quick Links"
+              }
+            },
+            "footer-2": {
+              "type": "link_list",
+              "settings": {
+                "heading": "Customer Service"
+              }
+            },
+            "footer-3": {
+              "type": "email_signup",
+              "settings": {
+              }
+            }
+          },
+          "block_order": [
+            "footer-0",
+            "footer-1",
+            "footer-2",
+            "footer-3"
+          ],
+          "settings": {
+            "show_social": true,
+            "enable_country_selector": false,
+            "enable_language_selector": false,
+            "margin_top": 48
+          }
+        },
+        "main-password-header": {
+          "type": "main-password-header",
+          "settings": {
+          }
+        },
+        "main-password-footer": {
+          "type": "main-password-footer",
+          "settings": {
+          }
+        }
+      }
+    }
+  }
+}

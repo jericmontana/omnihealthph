@@ -1,0 +1,208 @@
+@import 'abstract/mixin';
+@import 'abstract/animation';
+
+// From Theme
+// --color-base-accent-1: {{ settings.colors_accent_1.red }}, {{ settings.colors_accent_1.green }}, {{ settings.colors_accent_1.blue }};
+// --color-base-solid-button-labels: {{ settings.colors_solid_button_labels.red }}, {{ settings.colors_solid_button_labels.green }}, {{ settings.colors_solid_button_labels.blue }};
+
+:root{
+    --color-btn-bg: var(--color-base-accent-1);
+    --color-btn-lbl: var(--color-base-solid-button-labels);
+
+    --color-btn-bg-2: 207, 226, 243;
+}
+
+.btn{
+    position: relative;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 2;
+
+    background-color: rgb(var(--color-btn-bg));
+    color: rgb(var(--color-btn-lbl));
+    border: 2px solid rgb(var(--color-btn-bg));
+    
+    & svg{
+        width: 20px;
+        height: auto;
+        stroke: rgb(var(--color-btn-lbl));
+    }
+
+
+    &--disbaled{
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    &-auto-width{
+        width: auto !important;
+        max-width: none !important;
+    }
+
+    &.btn--xs{
+        padding: 5px 8px;
+        font-weight: 400;
+        max-width: 120px;
+
+        & svg{
+            margin-left: 1rem;
+        }
+    }
+
+    &.btn--default{
+        padding: 7px 10px;
+        font-weight: 400;
+        max-width: 180px;
+
+        & svg{
+            margin-left: 1.5rem;
+        }
+    }
+    
+    &.btn--medium{-size: 18px;
+        padding: 10px 10px;
+        font-weight: 400;
+        max-width: 260px;
+
+        & svg{
+            margin-left: 1.5rem;
+        }
+    }
+    
+    &.btn--large{-size: 23px;
+        padding: 13px 10px;
+        font-weight: 400;
+        max-width: 370px;
+
+        & svg{
+            margin-left: 1.5rem;
+        }
+    }
+    
+    &-he--lighten{
+        @include device('desktop'){
+            &:hover{
+                @include animation(lighten);
+            }
+        }
+    }
+    
+    &-he--color-switch{
+        @include device('desktop'){
+            &:hover{
+                @include animation(color-switch);
+            }
+
+            &:hover svg{
+                stroke: rgb(var(--color-btn-bg));
+            }
+        }
+    }
+
+    &-he--slide{
+            @include animation(slide);
+
+            @include device('desktop'){
+                &:hover svg{
+                    stroke: rgb(var(--color-btn-bg));
+                }
+            }
+        
+    }
+    
+    &-he--shine{
+        @include device('desktop'){
+            &:hover{
+                @include animation(shine);
+            }
+        }
+    }
+
+    &-he--bs{
+        @include device('desktop'){
+            &:hover{
+                box-shadow: 6px 8px 22px -2px rgb(0 0 0 / 74%) !important;
+                z-index: auto;
+            }
+        }
+    }
+
+    &-bs{
+        box-shadow: 6px 8px 22px -2px rgb(0 0 0 / 74%) !important;
+        // box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+
+    &--round-corner{
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    &--copy{
+
+        width: auto;
+
+        &__tooltip{
+
+            pointer-events: none!important;
+
+            &:after{
+                position: absolute;
+                opacity: 0;
+                left: 0%;
+                top: 0%;
+                display: flex;
+                justify-content: center;
+                color: rgb(var(--color-btn-bg));
+                background-color: rgb(var(--color-btn-lbl));
+                content: attr(data-tooltip);
+                padding: 0.8rem 1rem;
+                animation: fade-in-out 2.3s ease forwards;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+    }
+
+    // &.btn--signup{
+    //     padding-left: 1rem;
+    //     padding-right: 1rem;
+    //     & svg{
+    //         margin-left: 0.8rem;
+    //     }
+    // }
+}
+
+
+
+// For Header Signup Button
+// .header__buttons--signup{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+
+//     .custom-btn--signup{
+//         color: rgb(var(--color-btn-bg)) !important;
+//         background-color: rgb(var(--color-btn-lbl)) !important;
+//         padding-top: 0.5rem;
+//         padding-bottom: 0.5rem;
+//         padding-left: .8rem;
+//         padding-right: .8rem;
+//         text-transform: none;
+//         border: none;
+//         border-radius: 4px;
+        
+//         @include device('desktop'){
+//             &{
+//                 padding-left: 1rem;
+//                 padding-right: 1rem;
+//             }
+//         }
+//     }
+// }

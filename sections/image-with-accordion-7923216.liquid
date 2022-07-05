@@ -1,0 +1,258 @@
+{{ 'section-image-with-accordion-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .image-with-accordion--{{ section.id }} .section__container {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .image-with-accordion--{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+{%- assign header_blocks = section.blocks | where: 'type', 'header' -%}
+{%- assign accordion_blocks = section.blocks | where: 'type', 'accordion' -%}
+{%- assign image_blocks = section.blocks | where: 'type', 'image' -%}
+
+{%- liquid
+-%}
+
+<div class="image-with-accordion image-with-accordion--{{ section.id }} {% if section.settings.bg_image != blank %}section-with-bg{% endif %}">
+  {% if section.settings.bg_image != blank %}
+    {% comment %} <div class="section__bg" style="background-color: rgb(var(--color-section-bg)); background-image: url('{{ section.settings.bg_image | image_url: width: 2000 }}')"> {% endcomment %}
+    <div class="section__bg {% if section.settings.image_first %}section__bg-reverse{% endif %}" style="background-color: {{ section.settings.bg_color }}">
+      {% comment %} <img
+        class="small-hide"
+        srcset="{%- if section.settings.bg_image.width >= 375 -%}{{ section.settings.bg_image | image_url: width: 375 }} 375w,{%- endif -%}
+          {%- if section.settings.bg_image.width >= 550 -%}{{ section.settings.bg_image | image_url: width: 550 }} 550w,{%- endif -%}
+          {%- if section.settings.bg_image.width >= 750 -%}{{ section.settings.bg_image | image_url: width: 750 }} 750w,{%- endif -%}
+          {%- if section.settings.bg_image.width >= 1100 -%}{{ section.settings.bg_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+          {%- if section.settings.bg_image.width >= 1500 -%}{{ section.settings.bg_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+          {%- if section.settings.bg_image.width >= 1780 -%}{{ section.settings.bg_image | image_url: width: 1780 }} 1780w,{%- endif -%}
+          {%- if section.settings.bg_image.width >= 2000 -%}{{ section.settings.bg_image | image_url: width: 2000 }} 2000w,{%- endif -%}
+          {%- if section.settings.bg_image.width >= 3000 -%}{{ section.settings.bg_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+          {%- if section.settings.bg_image.width >= 3840 -%}{{ section.settings.bg_image | image_url: width: 3840 }} 3840w,{%- endif -%}
+          {{ section.settings.bg_image | image_url }} {{ section.settings.bg_image.width }}w"
+        src="{{ section.settings.bg_image | image_url }}"
+        sizes="(min-width: 990px) 2006px, ((min-width: 750px) and (max-width: 989px)) 1080px, (max-width: 749px) 800px"
+        alt="{{ section.settings.bg_image.alt | escape }}"
+        title="{{ section.settings.bg_image.alt | escape }}"
+        loading="lazy"
+        width="{{ section.settings.bg_image.width }}"
+        height="{{ section.settings.bg_image.height }}"
+        draggable="false"
+      > {% endcomment %}
+    </div>
+  {% endif %}
+  <div class="section__container">
+      <div class="page-width">
+          <div class="grid grid--1-col grid--2-col-desktop grid--2-col-tablet {% if section.settings.image_first %}image-first{% endif %}">
+            <div class="grid__item">
+                <div class="section__copy">
+                    {%- for header_block in header_blocks -%}
+                    <div class="image-with-accordion__header">
+                        <h2 class="h2 {% if header_block.settings.title_uppercase %}uppercase{% endif %}">{{ header_block.settings.title | escape }}</h2>
+                        <p class="h3">{{ header_block.settings.subtitle | escape }}</p>
+                    </div>
+                    {%- endfor -%}
+
+                    <div class="image-with-accordion__accordion">
+                    {%- for accordion_block in accordion_blocks -%}
+                        {% assign item_number = forloop.index %}
+                        <div class="accordion">
+                            <details class="{% if item_number == 1 %}details-first{% endif %}" {% if item_number == 1 %}open{% endif %}>
+                                <summary class="summary__title">
+                                    <h3 class="accordion__title h3">{{ accordion_block.settings.title | escape }}</h3>
+                                    <div class="accordion__icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 10 10">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1 4.51a.5.5 0 000 1h3.5l.01 3.5a.5.5 0 001-.01V5.5l3.5-.01a.5.5 0 00-.01-1H5.5L5.49.99a.5.5 0 00-1 .01v3.5l-3.5.01H1z">
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-minus" viewBox="0 0 10 2">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M.5 1C.5.7.7.5 1 .5h8a.5.5 0 110 1H1A.5.5 0 01.5 1z">
+                                        </svg>
+                                    </div>
+                                </summary>
+                                <div class="accordion__content-wrapper">
+                                    <div class="accordion__content">{{ accordion_block.settings.content }}</div>
+                                </div>
+                            </details>
+                            <span class="accordion__box-shadow"></span>
+                        </div>
+                    {%- endfor -%}
+                    </div>
+                </div>
+            </div>
+            <div class="grid__item">
+              {%- for block in image_blocks -%}
+              <div class="section__image">
+                  {%- if block.settings.image != blank -%}
+                      <img
+                        srcset="{%- if block.settings.image.width >= 165 -%}{{ block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+                        {%- if block.settings.image.width >= 360 -%}{{ block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                        {%- if block.settings.image.width >= 535 -%}{{ block.settings.image | image_url: width: 535 }} 535w,{%- endif -%}
+                        {%- if block.settings.image.width >= 750 -%}{{ block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                        {%- if block.settings.image.width >= 1070 -%}{{ block.settings.image | image_url: width: 1070 }} 1070w,{%- endif -%}
+                        {%- if block.settings.image.width >= 1500 -%}{{ block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                        {{ block.settings.image | image_url }} {{ block.settings.image.width }}w"
+                        src="{{ block.settings.image | image_url }}"
+                        sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), (max-width: 749px) calc(100vw - 50px)"
+                        alt="{{ block.settings.image.alt | escape }}"
+                        title="{{ block.settings.image.alt | escape }}"
+                        loading="lazy"
+                        width="{{ block.settings.image.width }}"
+                        height="{{ block.settings.image.height }}"
+                        draggable="false"
+                      >
+                    {%- else -%}
+                      {% render 'no-image' %}
+                    {%- endif -%}
+              </div>
+              {%- endfor -%}
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 IwAccordion",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "image_first",
+      "label": "Image First",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Mobile Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Image with Accordion"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Consectetuer aptent lorem ut"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Adipiscing mus sociosqu facilisi cursus torquent class nulla maecenas vehicula aptent congue.</p><p>Fringilla penatibus purus scelerisque condimentum gravida dis efficitur himenaeos.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 IwAccordion",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "header"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

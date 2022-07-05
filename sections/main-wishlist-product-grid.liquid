@@ -1,0 +1,101 @@
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+
+<link rel="preload" href="{{ 'component-rte.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+        .section--wishlist-product-grid .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+        }
+
+        @media screen and (min-width: 750px) {
+            .section--wishlist-product-grid .section-{{ section.id }}-padding {
+                padding-top: {{ section.settings.padding_top }}px !important;
+                padding-bottom: {{ section.settings.padding_bottom }}px !important;
+            }
+        }
+    {%- endif -%}
+{%- endstyle -%}
+
+<div class="section section--wishlist-product-grid section--wishlist-product-grid-{{ section.id }}">
+    <div class="section__bg-container section-{{ section.id }}-bg-contaier section-{{ section.id }}-padding">
+        <div class="page-width">
+            <div class="wishlist-empty">
+                <p class="wishlist-empty__warning center h2">Your wishlist is empty</p>
+            </div>
+
+            <div class="wishlist__container">
+                <div class="wishlist__loader wishlist__loader--removed">
+                    <noscript>You need to enable JavaScript to properly run this app.</noscript>
+                    <div class="wishlist__loader__container">
+                        <div class="loading-dots__wrapper">
+                            <div class="loading-dots">
+                                <div class="dots"></div>
+                                <div class="dots"></div>
+                                <div class="dots"></div>
+                                <div class="dots"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="wishlist__container--ul grid grid--2-col negative-margin product-grid
+                grid--4-col-desktop grid--3-col-tablet grid--one-third-max grid--4-col-desktop grid--quarter-max"
+                grid-wishlist>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Wishlist Product Grid",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Wishlist Product Grid"
+    }
+  ]
+}
+{% endschema %}
+

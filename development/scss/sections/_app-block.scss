@@ -1,0 +1,107 @@
+.app-block{
+    position: relative;
+    
+    // For Judgeme
+    .jdgm-rev__buyer-badge{
+        background-color: rgb(var(--color-base-accent-1)) !important;
+        color: rgb(var(--color-base-solid-button-labels)) !important;
+    }
+
+    .jdgm-rev__icon::after{
+        background-color: rgb(var(--color-base-accent-1)) !important;
+        color: rgb(var(--color-base-solid-button-labels)) !important;
+    }
+
+    .jdgm-star{
+        color: rgb(var(--color-base-accent-1)) !important;
+    }
+
+    .jdgm-histogram .jdgm-histogram__bar-content{
+        background-color: rgb(var(--color-base-accent-1)) !important;
+        background: rgb(var(--color-base-accent-1)) !important;
+    }
+
+    .jdgm-ask-question-btn, .jdgm-write-rev-link{
+        border-color: rgb(var(--color-base-accent-1)) !important;
+        color: rgb(var(--color-base-accent-1)) !important;
+    }
+
+    .jdgm-carousel-item__product-title, .jdgm-rev__prod-link{
+        color: rgb(var(--color-base-accent-1)) !important;
+    }
+
+    // .jdgm-carousel__arrows{
+    //     display: none !important;
+    // }
+
+    
+
+    .jdgm-carousel-wrapper{
+        padding: 1rem 2rem !important;
+        width: 100% !important;
+        position: relative;
+
+        .jdgm-carousel__arrows{
+            position: absolute;
+            top: 50%;
+            bottom: 50%;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: calc(100% + 1rem);
+            margin-left: -0.5rem;
+        }
+
+        .jdgm-carousel__right-arrow, .jdgm-carousel__left-arrow {
+            border: none !important;
+            border-style: none !important;
+            transform: none !important;
+            margin: 0!important;
+
+            position: relative;
+            height: 38px;
+            width: 38px;
+
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+
+            box-shadow: 0px 0px 14px -4px rgba(0,0,0,0.75);
+            background-color: rgb(var(--color-slider-control-bg));
+            border-radius: 50%;
+
+        }
+
+        .jdgm-carousel__right-arrow::after, .jdgm-carousel__left-arrow::after {
+            color: #ffffff !important;
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            font-size: 50px;
+            line-height: 28px;
+            font-weight: 400;
+        }
+
+        .jdgm-carousel__right-arrow::after {
+            content: '\203A';
+        }
+
+        .jdgm-carousel__left-arrow::after {
+            content: '\2039';
+        }
+
+        .jdgm-carousel--aligned-theme .jdgm-carousel-item__product-image{
+            vertical-align: top;
+            width: 25%;
+        }
+
+    }
+
+    .jdgm-branding-footer{
+        display: none !important;
+    }
+}

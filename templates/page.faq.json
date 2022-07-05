@@ -1,0 +1,207 @@
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner-7923216",
+      "blocks": {
+        "16469786612d2c6734-0": {
+          "type": "heading",
+          "settings": {
+            "title": "",
+            "title_uppercase": true,
+            "subtitle": "Quickly find out if we've already addressed your query."
+          }
+        },
+        "16469786612d2c6734-1": {
+          "type": "breadcrumb",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "16469786612d2c6734-0",
+        "16469786612d2c6734-1"
+      ],
+      "settings": {
+      }
+    },
+    "164702602169907f6d": {
+      "type": "accordion-with-image-7923216",
+      "blocks": {
+        "cafbfc89-ebbd-4097-8b8e-f917b0902a1b": {
+          "type": "heading",
+          "settings": {
+            "title": "Payment",
+            "title_uppercase": true,
+            "subtitle": "",
+            "header_on_top_of_accordion": false
+          }
+        },
+        "d9245294-5758-46a8-bd7b-9a25e741c8aa": {
+          "type": "accordion",
+          "settings": {
+            "title": "What are my payment options?",
+            "accordion_content": "<p>We have numerous payment methods that our customers can choose from namely: Credit Cards (Visa and MasterCard), Cash on Delivery (COD), PayPal, and GCash. Just select your preferred payment method upon checkout.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "cafbfc89-ebbd-4097-8b8e-f917b0902a1b",
+        "d9245294-5758-46a8-bd7b-9a25e741c8aa"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "accordion_default_color": true,
+        "accordion_color": "#cfe2f3",
+        "use_as_default_padding": true,
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "1656516315c5ef88cd": {
+      "type": "accordion-with-image-7923216",
+      "blocks": {
+        "1656516315150ba92a-0": {
+          "type": "heading",
+          "settings": {
+            "title": "Products",
+            "title_uppercase": true,
+            "subtitle": "",
+            "header_on_top_of_accordion": false
+          }
+        },
+        "1656516315150ba92a-2": {
+          "type": "accordion",
+          "settings": {
+            "title": "How do you take OSwell food supplements?",
+            "accordion_content": "<p>As a dietary supplement, we suggest our customers take 2 tablets a day. For quicker and enhanced effect, take up to 4 tablets a day. Products should be taken preferably with a meal, or as directed by a qualified healthcare practitioner. Follow instruction. Ingest in moderation.<\/p>"
+          }
+        },
+        "1656516315150ba92a-3": {
+          "type": "accordion",
+          "settings": {
+            "title": "Can OSwell food supplements be used by pregnant or breastfeeding women?",
+            "accordion_content": "<p>Yes, it is safe for consumption. However, pregnant and breastfeeding women have different dietary requirements and as such, it is recommended to consult your doctor before taking any food supplements.<\/p>"
+          }
+        },
+        "1656516315150ba92a-4": {
+          "type": "accordion",
+          "settings": {
+            "title": "Can a child take OSwell food supplements?",
+            "accordion_content": "<p>For adults use only. Not intended for children. We always recommended consulting with your physician prior to use.<\/p>"
+          }
+        },
+        "254ea7d3-ebcf-42ce-8566-c22838fe1cde": {
+          "type": "accordion",
+          "settings": {
+            "title": "Can you take this while using other medications?",
+            "accordion_content": "<p>Yes, as long as you take it at least 2 hours after taking your medications.<\/p>"
+          }
+        },
+        "05c3a80d-8a18-4ca4-8af2-5b43bb042143": {
+          "type": "accordion",
+          "settings": {
+            "title": "Are there any side-effects?",
+            "accordion_content": "<p>OSwell’s food supplements are made of all natural ingredients. The extensive research on the ingredients and final products have shown NO significant side effects.<\/p>"
+          }
+        },
+        "d677a2b1-c6b0-40eb-9a23-dbc9cd59ea4d": {
+          "type": "accordion",
+          "settings": {
+            "title": "Is it safe to take?",
+            "accordion_content": "<p>Yes, OSwell food supplements are all FDA registered. Furthermore, our processes and factories are all ISO and HACCP approved. It is safe to take.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "1656516315150ba92a-0",
+        "1656516315150ba92a-2",
+        "1656516315150ba92a-3",
+        "1656516315150ba92a-4",
+        "254ea7d3-ebcf-42ce-8566-c22838fe1cde",
+        "05c3a80d-8a18-4ca4-8af2-5b43bb042143",
+        "d677a2b1-c6b0-40eb-9a23-dbc9cd59ea4d"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "accordion_default_color": true,
+        "accordion_color": "#cfe2f3",
+        "use_as_default_padding": true,
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    },
+    "1656516498d46ed98a": {
+      "type": "accordion-with-image-7923216",
+      "blocks": {
+        "165651649811a3f67d-0": {
+          "type": "heading",
+          "settings": {
+            "title": "Shipment​​",
+            "title_uppercase": true,
+            "subtitle": "",
+            "header_on_top_of_accordion": false
+          }
+        },
+        "165651649811a3f67d-2": {
+          "type": "accordion",
+          "settings": {
+            "title": "How many days to process the order?",
+            "accordion_content": "<p><strong>Metro-Manila<\/strong> - 1~2 days<\/p><p><strong>Luzon<\/strong> - 2~3 days<\/p><p><strong>Visayas<\/strong> - 7~10 days<\/p><p><strong>Mindanao<\/strong> - 7~10 days<\/p><p><strong>Islands<\/strong> - 7~10 days<\/p><p><strong>Palawan<\/strong> - 3~4 weeks<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "165651649811a3f67d-0",
+        "165651649811a3f67d-2"
+      ],
+      "settings": {
+        "color_scheme": "background-1",
+        "accordion_default_color": true,
+        "accordion_color": "#cfe2f3",
+        "use_as_default_padding": true,
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    },
+    "shopnow_banner": {
+      "type": "shopnow-banner",
+      "blocks": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "apply_general_settings_header": true,
+            "title": "Visit Our Store",
+            "title_uppercase": false,
+            "subtitle": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "apply_general_settings_btn": true,
+            "btn_label": "Shop Now",
+            "btn_link": "shopify:\/\/collections\/all",
+            "btn_size": "default",
+            "hover_effect": "shine",
+            "icon_type": "arrow",
+            "shadow_effect": true,
+            "auto_width": false
+          }
+        }
+      },
+      "block_order": [
+        "header",
+        "button"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "164702602169907f6d",
+    "1656516315c5ef88cd",
+    "1656516498d46ed98a",
+    "shopnow_banner"
+  ]
+}

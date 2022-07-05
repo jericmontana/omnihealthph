@@ -1,0 +1,24 @@
+/* Device Sizes | Mobile - Default */
+@mixin device($size){
+    @if $size == 'mobile' {
+        @media screen and (max-width: 749px){
+            @content;
+        }
+    } @else if $size == 'mobile-tablet' {
+        @media screen and (max-width: 989px){
+            @content;
+        }
+    } @else if $size == 'tablet' {
+        @media screen and (min-width: 750px) and (max-width: 989px){
+            @content;
+        }
+    }@else if $size == 'tablet-up' {
+        @media screen and (min-width: 750px){
+            @content;
+        }
+    }@else if $size == 'desktop' {
+        @media screen and (min-width: 990px){
+            @content;
+        }
+    }
+}

@@ -1,0 +1,178 @@
+{{ 'section-review-7923216.css' | asset_url | stylesheet_tag }}
+
+{%- assign header_blocks = section.blocks | where: 'type', 'header' -%}
+{%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+      .review-{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+      }
+
+      @media screen and (min-width: 750px) {
+        .review-{{ section.id }} .section__container{
+          padding-top: {{ section.settings.padding_top }}px !important;
+          padding-bottom: {{ section.settings.padding_bottom }}px !important;
+        }
+      }
+    {%- endif -%}
+{%- endstyle -%}
+
+<div class="review review-{{ section.id }}">
+    <div class="section__container">
+        <div class="page-width">
+
+            {%- for block in header_blocks -%}
+              {%- render 'section-header',
+                title: block.settings.title,
+                subtitle: block.settings.subtitle,
+                uppercase: block.settings.title_uppercase
+              -%}
+            {%- endfor -%}
+
+            {%- for block in review_blocks -%}
+                
+                <div class="section__review">
+                  {%- if block.settings.all_products -%}
+                    <article class='jdgm-widget jdgm-all-reviews-widget'>
+                      {{ shop.metafields.judgeme.all_reviews_header }}
+                      <div class='jdgm-all-reviews__body'>
+                        {% assign prefix = 'all_reviews_' %}
+                        {% for count in (0..65535) %}
+                          {% assign metafield_key = prefix | append: count %}
+                          {% assign current_metafield = shop.metafields.judgeme[metafield_key] %}
+                          {% unless current_metafield %} {% break %} {% endunless %}
+                          {{ current_metafield }}
+                        {% endfor %}
+                      </div>
+                   </article>
+                  {%- else -%}
+                    {%- liquid 
+                      assign concierge_install = false
+                      assign product = block.settings.product
+                    -%}
+                    {%- if product == blank -%}
+                      <div class="no-content">
+                        <p>Please select a product.</p>
+                      </div>
+                    {%- else -%}
+                      <div style='clear:both'></div>
+                      <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}'
+                      data-from-snippet='{% if concierge_install != nil  %}{{ concierge_install }}{% else %}true{% endif %}'
+                      data-auto-install='{% if auto_install != nil %}{{ auto_install }}{% else %}false{% endif %}'>
+                        {{ product.metafields.judgeme.widget }}
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+                </div>
+            {%- endfor -%}
+
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 Review",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Proin enim taciti dapibus"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Lacus in dui sollicitudin risus suspendisse sed placerat ad pharetra ipsum letius mattis vel"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "all_products",
+          "label": "All Products",
+          "default": true
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 Review",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "review"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

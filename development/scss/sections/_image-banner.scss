@@ -1,0 +1,160 @@
+@import 'abstract/mixin';
+
+.section--hb{
+    position: relative;
+
+    & .section__bg-container{
+        padding-top: 60px;
+
+        @include device('mobile-tablet'){
+            & {
+                padding-top: 20px;
+            }
+        }
+    }
+
+
+    
+
+    &__kicker{
+        margin-top: 0;
+        text-align: center;
+
+        // Edited
+        margin-bottom: 0px !important;
+        font-size: 23px;
+        @include device('desktop'){
+            &{
+                font-size: 30px;
+            }
+            
+        }
+        
+        // Original
+        // margin-bottom: 15px !important;
+        // font-size: inherit;
+        // font-weight: 700;
+        // text-transform: uppercase;
+       
+    }
+
+    &__heading{
+        margin-top: 0;
+        margin-bottom: 25px !important;
+        font-size: 35px;
+        font-weight: 700;
+        line-height: 42px;
+        text-align: center;
+        text-transform: uppercase;
+
+        p{
+            padding: 0;
+            margin: 0;
+            color: rgb(var(--color-base-accent-1));
+        }
+
+        strong{
+            font-family: 'BrittanySignature' !important;
+            font-weight: 400 !important;
+            text-transform: none !important;
+            font-size: 32px !important;
+            line-height: 0 !important;
+            color: rgb(var(--color-foreground));
+        }
+
+        @include device('mobile-tablet'){
+            &{
+                padding-top: 1rem;
+                // padding-bottom: 2rem;
+            }
+        }
+    }
+
+    &__subheading{
+        margin-top: 0;
+        margin-bottom: 50px !important;
+        font-size: inherit;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    &__button{
+        // padding-bottom: 20px;
+        // TODO TOEDIT TODELETE
+        padding-bottom: 30px;
+        @include device('mobile-tablet'){
+            & a{
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        .btn--default{
+            max-width: 230px;
+        }
+    }
+
+    &__kicker, &__heading, &__subheading, &__button{
+        width: 100%;
+    }
+/* Text and Image Container div*/
+
+    &__text{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__image{
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+
+        img{
+            width: 100%;
+            max-width: 550px;
+        }
+
+        @include device('mobile-tablet'){
+            & {
+                margin-top: -3.5rem;
+            }
+        }
+    }
+
+    @include device('desktop')
+    {
+        & .section__bg-container{
+            padding-top: 50px;
+        }
+
+        &__heading{
+            font-weight: 700;
+            font-size: calc(60px * var(--font-base--banner__heading));
+            line-height: calc(70px * var(--font-base--banner__heading));
+
+            strong{
+                font-size: calc(60px * var(--font-base--banner__heading))!important;
+                text-transform: none !important;
+            }
+        }
+
+
+        &__kicker, &__heading, &__subheading, &__button{
+            text-align: left;
+        }
+
+        // &__image{
+        //     justify-content: flex-end;
+        // }
+
+    }
+    
+}
+  

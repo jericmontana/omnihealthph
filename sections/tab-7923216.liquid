@@ -1,0 +1,97 @@
+<div class="section__tab">
+
+    <div class="section__tab--controls section__tab--controls-show">
+        <div class="section__tab--control" role='button'>
+            {%- render 'icon-heart' -%}
+            {%- render 'icon-star' -%}
+            {%- render 'icon-gift' -%}
+        </div>
+    </div>
+
+    <div class="section__tab--buttons">
+        <div class="section__tab--button-close" role='button'>{%- render 'icon-close' -%}</div>
+
+        <a class="section__tab--button btn--round-corner" role='button' href="{{ section.settings.w_btn_link }}">{%- render 'icon-heart' -%}{{ section.settings.w_btn_label | escape }}</a>
+        <a class="section__tab--button btn--round-corner" role='button' href="{{ section.settings.r_btn_link }}">{%- render 'icon-star' -%}{{ section.settings.r_btn_label | escape }}</a>
+        
+        {%- if section.settings.s_btn_action == 'open-popup' -%}
+            <div class="section__tab--button btn--round-corner btn--signup-popup" role='button'>{%- render 'icon-gift' -%}{{ section.settings.s_btn_label | escape }}</div>
+        {%- else -%}
+            <a class="section__tab--button btn--round-corner" href="{{ section.settings.s_btn_link }}" role='button'>{%- render 'icon-gift' -%}{{ section.settings.s_btn_label | escape }}</a>
+        {%- endif -%}
+    </div>
+    
+</div>
+
+
+{% schema %}
+{
+  "name": "🔰 Tab",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Wishlist Button"
+    },
+    {
+      "type": "text",
+      "id": "w_btn_label",
+      "label": "Label",
+      "default": "Wishlist"
+    },
+    {
+      "type": "url",
+      "id": "w_btn_link",
+      "label": "Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Review Button"
+    },
+    {
+      "type": "text",
+      "id": "r_btn_label",
+      "label": "Label",
+      "default": "Reviews"
+    },
+    {
+      "type": "url",
+      "id": "r_btn_link",
+      "label": "Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Signup Button"
+    },
+    {
+      "type": "select",
+      "id": "s_btn_action",
+      "label": "Button Action",
+      "options": [
+        {
+          "value": "redirect-link",
+          "label": "Redirect to a link"
+        },
+        {
+          "value": "open-popup",
+          "label": "Open a popup"
+        }
+      ],
+      "default": "open-popup"
+    },
+    {
+      "type": "text",
+      "id": "s_btn_label",
+      "label": "Label",
+      "default": "Get 10% Off"
+    },
+    {
+      "type": "url",
+      "id": "s_btn_link",
+      "label": "Link",
+      "default": "/collections/all"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,473 @@
+{{ 'component-accordion-7923216.css' | asset_url | stylesheet_tag }}
+{{ 'section-accordion-image-7923216.css' | asset_url | stylesheet_tag }}
+
+
+{%- assign image_blocks = section.blocks | where: 'type', 'image' -%}
+{%- assign header = section.blocks | where: 'type', 'heading' -%}
+{%- assign button = section.blocks | where: 'type', 'button' -%}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{% assign accordion_default_color = section.settings.accordion_default_color %}
+
+{%- style -%}
+    {%- if use_as_default_padding -%}
+        .section--accordion-with-image .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+        }
+
+        @media screen and (min-width: 750px) {
+            .section--accordion-with-image .section-{{ section.id }}-padding {
+                padding-top: {{ section.settings.padding_top }}px !important;
+                padding-bottom: {{ section.settings.padding_bottom }}px !important;
+            }
+        }
+    {%- endif -%}
+
+    {%- if accordion_default_color -%}
+        .section--accordion-with-image-{{ section.id }} .summary__title{
+            background-color: {{ section.settings.accordion_color }} !important;
+        }
+    {%- endif -%}
+
+    {% case section.settings.color_scheme %}
+        {% when 'background-1' %}
+        .section--accordion-with-image-{{ section.id }} .section__header--title{
+            color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+        }
+
+        .section--accordion-with-image-{{ section.id }} .summary__title{
+            background-color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+        }
+
+       .section--accordion-with-image-{{ section.id }} .accordion__content{
+           color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+       }
+
+    {% endcase %}
+
+
+    {%- for block in header -%}
+        {%- if block.settings.header_on_top_of_accordion -%}
+        @media screen and (min-width: 990px){
+            .section--accordion-with-image-{{ section.id }} .section__header{
+                margin-bottom: 0;
+            }
+        }
+        {%- endif -%}
+    {%- endfor -%}
+
+    {%- for block  in button -%}
+        {%- if block.settings.button_on_bottom_of_accordion -%}
+            @media screen and (min-width: 990px){
+                .section--accordion-with-image-{{ section.id }} .section__button{
+                    margin-top: 0;
+                }
+            }
+        {%- endif -%}
+    {%- endfor -%}
+{%- endstyle -%}
+
+<div class="section section--accordion-with-image section--accordion-with-image-{{ section.id }} color-{{ section.settings.color_scheme }}">
+    <div class="section__bg-container section-{{ section.id }}-bg-contaier section-{{ section.id }}-padding">
+        <div class="page-width">
+
+            
+            {%- for block in header -%}
+                {%- unless block.settings.header_on_top_of_accordion -%}
+                    {%- if block.settings.title != blank or block.settings.subtitle != blank -%}
+                        {%- render 'section-header',
+                            title: block.settings.title,
+                            subtitle: block.settings.subtitle,
+                            uppercase: block.settings.title_uppercase
+                        -%}
+                    {%- endif -%}
+                {%- endunless -%}
+            {%- endfor -%}
+            
+            <div class="section--content-wrapper">
+
+                <div class="{% if image_blocks.size > 0 %}grid grid--1-col grid--2-col-desktop{% endif %}">
+
+                    <div class="{% if image_blocks.size > 0 %}grid__item grid__item--accordion{% endif %}">
+                        
+                        
+                        {%- for block in header -%}
+                            {%- if block.settings.header_on_top_of_accordion -%}
+                                {%- if block.settings.title != blank or block.settings.subtitle != blank -%}
+                                    {%- render 'section-header',
+                                        title: block.settings.title,
+                                        subtitle: block.settings.subtitle,
+                                        uppercase: block.settings.title_uppercase
+                                    -%}
+                                {%- endif -%}
+                            {%- endif -%}
+                        {%- endfor -%}
+                        
+                        {%- assign accordion = section.blocks | where: 'type', 'accordion' -%}
+                        <div class="section__accordion section__accordion--max-width">
+                        {%- for block in accordion -%}
+                            {% assign number = forloop.index %}
+                            {%- render 'accordion-7923216',
+                                accordion_content: block.settings.accordion_content,
+                                accordion_title: block.settings.title,
+                                number: number
+                            -%}
+                        {%- endfor -%}
+                        </div>
+
+                        {%- for block  in button -%}
+                        {%- if block.settings.button_on_bottom_of_accordion -%}
+                        <div class="section__button">
+                            {% render 'button',
+                                btn_label: block.settings.btn_label,
+                                btn_link: block.settings.btn_link,
+                                btn_size: block.settings.btn_size,
+                                hover_effect: block.settings.hover_effect,
+                                icon_type: block.settings.icon_type,
+                                round_corner: block.settings.round_corner,
+                                shadow_effect: block.settings.shadow_effect,
+                                auto_width: block.settings.auto_width
+                            %}
+                        </div>
+                        {%- endif -%}
+                        {%- endfor -%}
+                    </div>
+
+                    {%- assign image_blocks = section.blocks | where: 'type', 'image' -%}
+                    {%- for block in image_blocks -%}
+                    <div class="grid__item">
+                        <div class="section__image section__image--max-width">
+                            {% if block.settings.image == blank %}
+                                {% render 'no-image' %}
+                            {% else %}
+                                {%- liquid
+                                    if block.settings.image.alt == blank
+                                    assign image_alt = shop.name
+                                    assign image_title = shop.name
+                                    else
+                                    assign image_alt = block.settings.image.alt
+                                    assign image_title = block.settings.image.alt
+                                    endif
+                                -%}
+                                <img
+                                srcset="{%- if block.settings.image.width >= 375 -%}{{ block.settings.image | image_url: width: 375 }} 375w,{%- endif -%}
+                                {%- if block.settings.image.width >= 750 -%}{{ block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                                {%- if block.settings.image.width >= 1100 -%}{{ block.settings.image | image_url: width: 1100 }} 1100w,{%- endif -%}
+                                {%- if block.settings.image.width >= 1500 -%}{{ block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                                {%- if block.settings.image.width >= 1780 -%}{{ block.settings.image | image_url: width: 1780 }} 1780w,{%- endif -%}
+                                {%- if block.settings.image.width >= 2000 -%}{{ block.settings.image | image_url: width: 2000 }} 2000w,{%- endif -%}
+                                {%- if block.settings.image.width >= 3000 -%}{{ block.settings.image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                                {%- if block.settings.image.width >= 3840 -%}{{ block.settings.image | image_url: width: 3840 }} 3840w,{%- endif -%}
+                                {{ block.settings.image | image_url }} {{ block.settings.image.width }}w"
+                                sizes="{% if block.settings.image != blank %}50vw{% else %}100vw{% endif %}"
+                                src="{{ block.settings.image | image_url: width: 1000 }}"
+                                loading="lazy"
+                                alt="{{ image_alt | escape }}"
+                                title="{{ image_title | escape }}"
+                                width="{{ block.settings.image.width }}"
+                                height="{{ block.settings.image.height }}"
+                                >
+                            {% endif %}
+                        </div>
+                    </div>
+                    {%- endfor -%}
+                </div>
+            </div>
+
+            {%- for block  in button -%}
+            {%- unless block.settings.button_on_bottom_of_accordion -%}
+            <div class="section__button">
+                {% render 'button',
+                    btn_label: block.settings.btn_label,
+                    btn_link: block.settings.btn_link,
+                    btn_size: block.settings.btn_size,
+                    hover_effect: block.settings.hover_effect,
+                    icon_type: block.settings.icon_type,
+                    round_corner: block.settings.round_corner,
+                    shadow_effect: block.settings.shadow_effect,
+                    auto_width: block.settings.auto_width
+                %}
+            </div>
+            {%- endunless -%}
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Accordion with Image",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "header",
+      "content": "Accordion Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "accordion_default_color",
+      "label": "Set as default color",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "accordion_color",
+      "label": "Color"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Frequently Asked Questions"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Quickly find out if we've already addressed your query."
+        },
+        {
+          "type": "checkbox",
+          "id": "header_on_top_of_accordion",
+          "label": "Place on top of accordion",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Accordion Title",
+          "default": "Magnis tempor parturient vitae vel ac proin consectetuer fermentum fringilla porttitor?"
+        },
+        {
+          "type": "richtext",
+          "id": "accordion_content",
+          "label": "Accordion Content",
+          "default": "<p>Sociosqu volutpat vel tristique quam lorem fusce hac quisque iaculis orci ornare nascetur nostra odio malesuada eu mollis rutrum faucibus urna tellus class blandit interdum pharetra tincidunt adipiscing laoreet leo.</p>"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "button_on_bottom_of_accordion",
+          "label": "Place at the bottom of accordion",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Label",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Link",
+          "default": "/collections/all"
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button Size",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "select",
+          "id": "hover_effect",
+          "label": "Hover Effect",
+          "options": [
+            {
+              "value": "lighten",
+              "label": "Lighten Effect"
+            },
+            {
+              "value": "color-switch",
+              "label": "Color Switch Effect"
+            },
+            {
+              "value": "slide",
+              "label": "Slide Effect"
+            },
+            {
+              "value": "shine",
+              "label": "Shine Effect"
+            }
+          ],
+          "default": "shine"
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Button Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "arrow",
+              "label": "Arrow"
+            }
+          ],
+          "default": "arrow"
+        },
+        {
+          "type": "checkbox",
+          "id": "shadow_effect",
+          "label": "Enable Shadow Effect",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "auto_width",
+          "label": "Enable Auto Width",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "round_corner",
+          "label": "Round Corner",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Accordion with Image",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "accordion"
+        },
+        {
+          "type": "accordion"
+        },
+        {
+          "type": "accordion"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

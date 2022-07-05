@@ -1,0 +1,221 @@
+{{ 'section-shopnow-banner.css' | asset_url | stylesheet_tag }}
+
+<div class="shopnow-banner shopnow-banner--{{ section.id }} {% if page.template_suffix == 'wishlist' %}wishlist-empty{% endif %}">
+    <div class="section__container">
+        <div class="page-width">
+
+            <div class="grid grid--gapless grid--1-col grid--2-col-desktop grid--2-col-tablet"
+                style="{% unless settings.banner_bg_image == blank %}background-image: url('{{ settings.banner_bg_image | image_url }}');{% endunless %}{% unless settings.banner_bg_color == blank %}background-color: {{ settings.banner_bg_color }};{% endunless %}background-blend-mode: {{ settings.banner_bg_blend }};">
+                {%- assign header = section.blocks | where: 'type', 'header' -%}
+                {%- for block in header -%}
+                {%- if block.settings.apply_general_settings_header -%}
+                    {% if settings.title != blank or settings.subtitle != blank %}
+                    <div class="grid__item">
+                        <div class="section__header">
+                            <h2 class="h1{% if settings.title_uppercase %}uppercase{% endif %}">{{ settings.title | escape }}</h2>
+                            <p class="h3">{{ settings.subtitle | escape }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {%- else -%}
+                    {% if block.settings.title != blank or block.settings.subtitle != blank %}
+                    <div class="grid__item">
+                        <div class="section__header">
+                            <h2 class="h1 {% if block.settings.title_uppercase %}uppercase{% endif %}">{{ block.settings.title | escape }}</h2>
+                            <p class="h3">{{ block.settings.subtitle | escape }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {%- endif -%}
+                {%- endfor -%}
+                
+                <div class="grid__item">
+                {%- assign button = section.blocks | where: 'type', 'button' -%}
+                    {%- for block in button -%}
+                        {%- if block.settings.apply_general_settings_btn -%}
+                            <div class="section__button">
+                                {% render 'button',
+                                    btn_label: settings.banner_btn_label,
+                                    btn_link: settings.banner_btn_link,
+                                    btn_size: settings.banner_btn_size,
+                                    hover_effect: settings.banner_hover_effect,
+                                    icon_type: settings.banner_icon_type,
+                                    shadow_effect: settings.banner_shadow_effect,
+                                    auto_width: settings.banner_auto_width
+                                %}
+                            </div>
+                        {%- else -%}
+                            <div class="section__button">
+                                {% render 'button',
+                                    btn_label: block.settings.btn_label,
+                                    btn_link: block.settings.btn_link,
+                                    btn_size: block.settings.btn_size,
+                                    hover_effect: block.settings.hover_effect,
+                                    icon_type: block.settings.icon_type,
+                                    shadow_effect: block.settings.shadow_effect,
+                                    auto_width: block.settings.auto_width
+                                %}
+                            </div>
+                        {%- endif -%}
+                    {%- endfor -%}
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Shop Now Banner",
+  "tag": "section",
+  "settings": [
+
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "apply_general_settings_header",
+          "label": "Apply General Settings",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Visit Our Store"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "apply_general_settings_btn",
+          "label": "Apply General Settings",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Link",
+          "default": "/collections/all"
+        },
+        {
+          "type": "select",
+          "id": "btn_size",
+          "label": "Button Size",
+          "options": [
+            {
+              "value": "default",
+              "label": "Default"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "large",
+              "label": "Large"
+            }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "select",
+          "id": "hover_effect",
+          "label": "Hover Effect",
+          "options": [
+            {
+              "value": "lighten",
+              "label": "Lighten Effect"
+            },
+            {
+              "value": "color-switch",
+              "label": "Color Switch Effect"
+            },
+            {
+              "value": "slide",
+              "label": "Slide Effect"
+            },
+            {
+              "value": "shine",
+              "label": "Shine Effect"
+            }
+          ],
+          "default": "shine"
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Button Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "arrow",
+              "label": "Arrow"
+            }
+          ],
+          "default": "arrow"
+        },
+        {
+          "type": "checkbox",
+          "id": "shadow_effect",
+          "label": "Enable Shadow Effect",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "auto_width",
+          "label": "Enable Auto Width",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Shop Now Banner",
+      "category": "Custom Section",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "button"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

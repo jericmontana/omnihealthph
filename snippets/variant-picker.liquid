@@ -1,0 +1,206 @@
+{% comment %}
+    Renders variant picker
+
+    Accepts:
+    - picker_type
+    
+    Usage:
+    {% render 'variant-picker', picker_type: block.settings.picker_type %}
+    
+{% endcomment %}
+
+
+{% comment %} Get the size of product options e.g: Color, Size and Type {% endcomment %}
+{% comment %} Maximum of 3 — Shopify Limit — {% endcomment %}
+{% assign product_options_size = product.options_with_values | size %}  
+
+{% comment %} The size and value of all category e.g.: 3 if the first category is color and values are Red, Blue and Green {% endcomment %}
+{% for product_option in product.options_with_values %}
+    {% if forloop.index0 == 0 %}
+        {% assign first_category_values = product_option.values %}
+        
+    {% elsif forloop.index0 == 1 %}
+        {% assign second_category_values = product_option.values %}
+        
+    {% elsif forloop.index0 == 2 %}
+        
+        
+    {% endif %}
+{% endfor %}
+
+{% comment %} List of all variants of the selected product {% endcomment %}
+{% assign master_variant_titles = '' %}
+{% for variant in product.variants %}
+    {% assign master_variant_title = variant.title | escape | append: ' ' %}
+    {% if master_variant_titles contains master_variant_title %}{% continue %}{% endif %}
+    {% assign master_variant_titles = master_variant_title | append: master_variant_titles %}
+{% endfor %}
+
+{% if picker_type == 'button' %}
+    {% comment %} For Colors {% endcomment %}
+    {% assign reusable_classes_colors_array = settings.reusable_classes_colors | split: ',' %}
+    {% for reusable_classes_color in reusable_classes_colors_array %}
+        {% assign reusable_classes_color_ref = reusable_classes_color | strip | prepend: '+' | append: '+' %}
+        {% if reusable_classes_colors_new_string contains reusable_classes_color_ref %}{% continue %}{% endif %}
+        {% assign reusable_classes_colors_new_string = reusable_classes_color_ref | append: reusable_classes_colors_new_string %}
+    {% endfor %}
+    <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+        {%- for option in product.options_with_values -%}
+            
+            {% assign category = forloop.index0 %}
+
+            <fieldset class="js product-form__input">
+                <legend class="form__label">Choose your {% if product.vendor == '8ight Stella' and option.name == 'Color' %}Frame{% endif %} {{ option.name | downcase }}:</legend>
+
+                {% for value in option.values %}
+
+                    {% comment %} For Colors {% endcomment %}
+                    {% if option.name == 'Color' %}
+                        {% assign color_name = value | append: '+' | prepend: '+' | strip | escape %}
+                        {% assign color_name_handleize = color_name | handleize %}
+                        {% capture color_style_class %}
+                            {% if reusable_classes_colors_new_string contains color_name %}
+                                class="option-labels--color {{ 'color--' | append: color_name_handleize }} "
+                            {% else %}"
+                                class="option-labels--color" style="background-color:{{ color_name_handleize }};" 
+                            {% endif %}
+                        {% endcapture %}
+                    {% endif %}
+
+                    {% comment %} Validate all of the available variants and generate classes {% endcomment %}
+                    {% if product_options_size > 1 %}
+                        {% for first_category_value in first_category_values %}
+                            {% for second_category_value in second_category_values %}
+
+                                {% if product_options_size == 2 or product_options_size == 3 %}
+                                    {% if category == 1 %}
+                                        {% assign target_category = first_category_value | append: ' / ' | append: value %}
+                                    {% elsif category == 2 %}
+                                        {% assign target_category = first_category_value | append: ' / ' | append: second_category_value | append: ' / ' | append: value %}
+                                    {% endif %}
+                                {% endif %}
+
+                                {% unless master_variant_titles contains target_category %}
+                                    {% if product_options_size == 2 or product_options_size == 3 %}
+                                        {% if category == 1 %}
+                                            {% assign option_class = first_category_value | handleize | append: '-x ' %}
+                                        {% elsif category == 2 %}
+                                            {% assign option_class = first_category_value | handleize | append: '-' | append: second_category_value | handleize | append: '-x ' %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if option_classes contains option_class %}{% continue %}{% endif %}
+                                    {% assign option_classes = option_class | append: option_classes %}
+                                {% endunless %}
+
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+
+                    <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                        name="{{ option.name }}"
+                        value="{{ value | escape }}"
+                        form="{{ product_form_id }}"
+                        class="option-inputs"
+                        {% if option.selected_value == value %}checked{% endif %}
+                    >
+                    
+                    {% case product_options_size %}
+                        {% when 1 %}
+                            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="option-labels">
+                            {{ value }}
+                            {% if option.name == 'Color' %}
+                                <span {{ color_style_class }}></span>
+                            {% endif %}
+                            </label>
+                        {% when 2 %}
+                            {% if category == 0 %}
+                                <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="option-labels option-labels-first-cat" data-selectedoptfirstcat="{{ value | handleize }}">
+                                {{ value }}
+                                {% if option.name == 'Color' %}
+                                    <span {{ color_style_class }}></span>
+                                {% endif %}
+                                </label>
+                            {% elsif category == 1 %}
+                                <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="option-labels {{ option_classes }} option-labels-second-cat">
+                                {{ value }}
+                                {% if option.name == 'Color' %}
+                                    <span {{ color_style_class }}></span>
+                                {% endif %}
+                                </label>
+                                {% assign option_classes = '' %}
+                            {% endif %}
+                        {% when 3 %}
+                            {% if category == 0 %}
+                                <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="option-labels option-labels-first-cat" data-selectedoptfirstcat="{{ value | handleize }}">
+                                {{ value }}
+                                {% if option.name == 'Color' %}
+                                    <span {{ color_style_class }}></span>
+                                {% endif %}
+                                </label>
+                            {% elsif category == 1 %}
+                                <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="option-labels {{ option_classes }} option-labels-second-cat" data-selectedoptsecondcat="{{ value | handleize }}">
+                                {{ value }}
+                                {% if option.name == 'Color' %}
+                                    <span {{ color_style_class }}></span>
+                                {% endif %}
+                                </label>
+                                {% assign option_classes = '' %}
+                            {% elsif category == 2 %}
+                                <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="option-labels {{ option_classes }}">
+                                {{ value }}
+                                {% if option.name == 'Color' %}
+                                    <span {{ color_style_class }}></span>
+                                {% endif %}
+                                </label>
+                                {% assign option_classes = '' %}
+                            {% endif %}
+                    {% endcase %}
+                {% endfor %}
+
+            </fieldset>
+        {%- endfor -%}
+        <script type="application/json">
+            {{ product.variants | json }}
+        </script>
+    </variant-radios>
+{% else %}
+    <variant-selects class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
+        {%- for option in product.options_with_values -%}
+        <div class="product-form__input product-form__input--dropdown">
+            <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option.name }}
+            </label>
+            <div class="select">
+            <select id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                class="select__select"
+                name="options[{{ option.name | escape }}]"
+                form="{{ product_form_id }}"
+            >
+                {%- for value in option.values -%}
+                <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
+                    {{ value }}
+                </option>
+                {%- endfor -%}
+            </select>
+            {% render 'icon-caret' %}
+            </div>
+        </div>
+        {%- endfor -%}
+
+        <script type="application/json">
+        {{ product.variants | json }}
+        </script>
+    </variant-selects>
+{% endif %}
+
+{% comment %} First Available Variant when Reload *this is also applicable for URL with '?variant='{% endcomment %}
+{% if product_options_size > 1 %}
+    {% assign selected_variant = product.selected_or_first_available_variant.title | escape | replace: ' / ', '+' %}
+    {% assign selected_variant = selected_variant | replace: ' ', '-' | downcase %}
+    {% assign selected_variant_array = selected_variant | split: '+' %}
+    <script>
+        localStorage.setItem("selected_option_first_category", "{{ selected_variant_array[0] }}");
+        localStorage.setItem("selected_option_second_category", "{{ selected_variant_array[1] }}");
+    </script>
+{% endif %}

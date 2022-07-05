@@ -1,0 +1,76 @@
+@import 'abstract/mixin';
+
+.image-with-textblock{
+    position: relative;
+    overflow: hidden;
+
+    .grid__item{
+        display: grid;
+
+        &+*{
+            grid-area: 1/1;
+        }
+    }
+
+    // .section__header{
+    //     * {
+    //         color: rgb(var(--color-base-accent-2));
+    //     }
+    // }
+
+    .section__image{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0rem 1.4rem 0rem 1.4rem;
+
+        img{
+            object-fit: cover;
+            object-position: center center;
+        }
+
+        @include device('mobile-tablet'){
+            &{
+                margin-bottom: 2rem;
+            }
+        }
+    }
+
+    .section__richtext{
+        padding: 0rem 1.4rem 0rem 1.4rem;
+
+        // * {
+        //     color: rgb(var(--color-base-accent-2));
+        // }
+
+        .richtext--block{
+            &:not(:first-of-type){
+                margin-top: 2rem;
+            }
+            
+            h3.h2{
+                margin-top: 0rem;
+                margin-bottom: 0rem; 
+            }
+
+            p{
+                margin: 0rem;
+            }
+
+            .richtext-description p{
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+    }
+
+
+    .image-first{
+        flex-direction: column-reverse;
+    }
+    @include device('desktop'){
+        .image-first{
+            flex-direction: row-reverse;
+        }
+    }
+}

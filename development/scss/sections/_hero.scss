@@ -1,0 +1,230 @@
+@import 'abstract/mixin';
+.hero{
+    position: relative;
+    overflow: hidden;
+    
+    // If BG with image
+    padding: 0rem !important;
+
+    .section__button{
+        justify-content: flex-start;
+    }
+
+    .section__bg{
+        background-color: rgb(var(--color-section-bg));
+    }
+
+    // @include device('tablet'){
+    //     .section__bg{
+    //         height: max-content;
+    //     }
+    // }
+
+
+    .section__container{
+        display: grid;
+
+        .page-width{
+            width: 100%;
+            grid-area: 1/1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            @include device('tablet-up'){
+                & {
+                    padding: 0 2rem;
+                }
+            }
+        }
+
+        .grid{
+            width: 100%;
+        }
+
+        .grid__item--image{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+
+            @include device('mobile'){
+                &{
+                    flex-direction: column;
+                }
+            }
+        }
+
+        .grid__item--copy{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+
+    .hero__copy{
+        width: 100%;
+
+        @include device('tablet-up'){
+            &{
+                padding-right: 3rem;
+            }
+        }
+        .title{
+            --font-heading-scale: 1.4;
+            color: rgb(var(--color-base-accent-2));
+            margin: 0rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+
+            p{
+                margin: 0rem;
+            }
+            
+            @include device('tablet'){
+                &{
+                    --font-heading-scale: 1;
+                }
+            }
+        }
+
+        .subtitle{
+            color: rgb(var(--color-base-accent-2));
+            margin-bottom: 1rem;
+            line-height: calc(1 + .5/var(--font-body-scale));
+
+            p{
+                margin: 0rem;
+            }
+
+            p:not(:last-child){
+                margin-bottom: 1rem;
+            }
+        }
+
+        .btn{
+            margin-top: 1rem;
+
+            @include device('desktop'){
+                margin-top: 8rem;
+            }
+        }
+
+        .hero__header{
+            display: grid;
+
+            .tabcontent{
+                grid-area: 1/1;
+            }
+    
+            .tabcontent:not(:first-of-type){
+                display: none;
+            }
+            
+        }
+    }
+
+    .hero__button{
+        display: grid;
+
+        .tabcontent{
+            grid-area: 1/1;
+        }
+
+        .tabcontent:not(:first-of-type){
+            display: none;
+        }
+
+        @include device('mobile'){
+            &{
+                width: 100%;
+
+                .btn--default{
+                    max-width: 300px;
+                }
+            }
+        }
+    }
+
+    .hero__image{
+        display: grid;
+
+        .tabcontent{
+            grid-area: 1/1;
+        }
+
+        .tabcontent:not(:first-of-type){
+            display: none;
+        }
+
+        .image--wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img{
+                object-fit: cover;
+            }
+        }
+
+    }
+
+    .hero__controls{
+        padding: 1rem;
+
+        
+        width: 100%;
+        max-width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        margin-top: -3rem;
+
+        @include device('mobile'){
+            &{
+                margin-top: -2rem;
+                margin-bottom: 2rem;
+            }
+        }
+        
+
+        // @include device('mobile'){
+        //     &{
+        //         width: 100%;
+        //         max-width: fit-content;
+        //         display: flex;
+        //         justify-content: center;
+        //         align-items: center;
+        //         flex-direction: row;
+        //         margin-bottom: 2rem;
+        //     }
+        // }
+
+        .tab-control{
+            display: block !important;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: rgb(var(--color-base-accent-2));
+
+            &:not(:last-of-type) {
+                margin-right: 1.4rem;
+            }
+
+            // @include device('tablet-up'){
+            //     &:not(:last-of-type) {
+            //         margin-bottom: 1.4rem;
+            //     }
+            // }
+
+
+            &.active{
+                border: 3px solid rgb(var(--color-base-accent-2), 0.38);
+                transform: scale(1.14);
+            }
+        }
+    }
+}

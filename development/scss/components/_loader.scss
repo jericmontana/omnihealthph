@@ -1,0 +1,60 @@
+@import 'abstract/animation';
+
+#loader{
+    width: 100%;
+    height: 100vh;
+    position: sticky;
+    top: 0%;
+    left: 0;
+    z-index: 8000;
+    background-color: #ffffff;
+}
+
+.loading{
+    display: flex;
+    place-items: center;
+    place-content: center;
+    flex-direction: column;
+    overflow: hidden;
+
+    .loader__content{
+        // For Loading Dots
+        .loading-dots{
+            margin-left: -1.5em;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            animation: loading-dots-fadein .5s linear forwards;
+
+            &__wrapper{
+                text-align: center;
+                max-width: 100%;
+                margin: auto;
+            }
+
+            .dots{
+                width: .5em;
+                height: .5em;
+                display: inline-block;
+                vertical-align: middle;
+                background: rgb(var(--color-base-accent-2));
+                border-radius: 50%;
+                margin: 0 .125em;
+                animation: loading-dots-middle-dots .5s linear infinite;
+
+                &:first-of-type{
+                    animation: loading-dots-first-dot .5s linear infinite;
+                    opacity: 0;
+                    filter: alpha(opacity=0);
+                    transform: translate(-1em);
+                }
+
+                &:last-of-type{
+                    animation: loading-dots-last-dot .5s linear infinite;
+                }
+            }
+
+        }
+        
+    }
+}
+

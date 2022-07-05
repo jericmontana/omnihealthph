@@ -1,0 +1,190 @@
+{% comment %}
+    Renders button
+
+    Accepts:
+    - product
+    - item_number | For Showing Second Image
+    - show_price
+
+    For CTA
+    - cta_viewproduct
+
+    For Image Sizes | Define in Section Settings
+    - columns_desktop
+    - columns_tablet
+    - columns_mobile
+
+
+    Usage:
+    {%- render 'card-product-7923216',
+        product: product,
+        item_number: item_number,
+        columns_desktop: block.settings.columns_desktop,
+        columns_tablet: block.settings.columns_tablet,
+        columns_mobile: block.settings.columns_mobile
+    -%}
+
+    Schema:
+    {
+        "settings": [
+
+            ...
+
+            ...
+
+        ]
+    }
+
+{% endcomment %}
+
+<div class="g-card {% if product.media[1] != nil %}g-card--has-second-image g-card--has-second-image--{{ section.id }}-{{ item_number }}{% endif %}">
+    <div class="g-card__media">
+        <div class="media--wrapper">
+            {%- if product.featured_media -%}
+                {%- liquid
+                    if product.featured_media.alt == blank
+                    assign image_alt = product.title
+                    assign image_title = product.title
+                    else
+                    assign image_alt = product.featured_media.alt
+                    assign image_title = product.featured_media.alt
+                    endif
+                -%}
+
+                {% capture image_sizes %}
+                    (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: columns_desktop }}px, (min-width: 990px) calc((100vw - 130px) / {{ columns_desktop }}), (min-width: 750px) calc((100vw - 120px) / {{ columns_tablet }}), calc((100vw - 35px) / {{ columns_mobile }})
+                {% endcapture %}
+
+                <img
+                    srcset="{%- if product.featured_media.width >= 165 -%}{{ product.featured_media | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if product.featured_media.width >= 180 -%}{{ product.featured_media | image_url: width: 180 }} 180w,{%- endif -%}
+                    {%- if product.featured_media.width >= 360 -%}{{ product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if product.featured_media.width >= 533 -%}{{ product.featured_media | image_url: width: 533 }} 533w,{%- endif -%}
+                    {%- if product.featured_media.width >= 720 -%}{{ product.featured_media | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if product.featured_media.width >= 940 -%}{{ product.featured_media | image_url: width: 940 }} 940w,{%- endif -%}
+                    {%- if product.featured_media.width >= 1066 -%}{{ product.featured_media | image_url: width: 1066 }} 1066w,{%- endif -%}
+                    {{ product.featured_media | image_url }} {{ product.featured_media.width }}w"
+                    src="{{ product.featured_media | image_url: width: 533 }}"
+                    sizes="{{ image_sizes | strip }}"
+                    alt="{{ image_alt | escape }}"
+                    title="{{ image_alt | escape }}"
+                    class="g-card-image tabcontent-{{ section.id }}-{{ item_number }} tabcontent-{{ section.id }}-{{ item_number }}-1"
+                    loading="lazy"
+                    width="{{ product.featured_media.width }}"
+                    height="{{ product.featured_media.height }}"
+                >
+            {%- endif -%}
+
+            {%- if product.media[1] != nil -%}
+                {%- liquid
+                if product.media[1].alt == blank
+                    assign image_alt = product.title
+                    assign image_title = product.title
+                else
+                    assign image_alt = product.media[1].alt
+                endif
+                -%}
+                <img
+                srcset="{%- if product.media[1].width >= 165 -%}{{ product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
+                    {%- if product.media[1].width >= 180 -%}{{ product.media[1] | image_url: width: 180 }} 180w,{%- endif -%}
+                    {%- if product.media[1].width >= 360 -%}{{ product.media[1] | image_url: width: 360 }} 360w,{%- endif -%}
+                    {%- if product.media[1].width >= 533 -%}{{ product.media[1] | image_url: width: 533 }} 533w,{%- endif -%}
+                    {%- if product.media[1].width >= 720 -%}{{ product.media[1] | image_url: width: 720 }} 720w,{%- endif -%}
+                    {%- if product.media[1].width >= 940 -%}{{ product.media[1] | image_url: width: 940 }} 940w,{%- endif -%}
+                    {%- if product.media[1].width >= 1066 -%}{{ product.media[1] | image_url: width: 1066 }} 1066w,{%- endif -%}
+                    {{ product.media[1] | image_url }} {{ product.media[1].width }}w"
+                src="{{ product.media[1] | image_url: width: 533 }}"
+                sizes="{{ image_sizes | strip }}"
+                alt="{{ image_alt | escape }}"
+                title="{{ image_title | escape }}"
+                class="g-card-image tabcontent-{{ section.id }}-{{ item_number }} tabcontent-{{ section.id }}-{{ item_number }}-2"
+                loading="lazy"
+                width="{{ product.media[1].width }}"
+                height="{{ product.media[1].height }}"
+                >
+            {%- endif -%}
+        </div>
+        <div class="media--badge">
+            {%- if product.available == false -%}
+              <span class="g-badge g-badge--sold-out">Sold out</span>
+            {%- elsif product.compare_at_price > product.price and product.available -%}
+              <span class="g-badge g-badge--sale">Sale</span>
+            {%- endif -%}
+        </div>
+        <a href="{{ product.url }}" title="{{ product.title }}" class="media-link full-unstyled-link"></a>
+        <div class="media--icon media--icon-wishlist">
+            {%- render 'button-wishlist', product: product -%}
+        </div>
+        {%- if product.media[1] != nil -%}
+        <div class="media--icon media--icon-second-image large-up-hide">
+            <div class="tab-control tab-control--prev tab-control--prev-{{ section.id }}-{{ item_number }}"
+                data-maxblock="2"
+                data-tabcontentclass='tabcontent-{{ section.id }}-{{ item_number }}'
+                data-tabnext ='tab-control--next-{{ section.id }}-{{ item_number }}'
+                data-gcard='g-card--has-second-image--{{ section.id }}-{{ item_number }}'>
+                {%- liquid
+                    if product.featured_media.alt == blank
+                    assign image_alt = product.title
+                    else
+                    assign image_alt = product.featured_media.alt
+                    endif
+                -%}
+                <img
+                    src="{{ product.featured_media | image_url: width: 50 }}"
+                    alt="{{ image_alt | escape }}"
+                    width="50"
+                    height="50"
+                >
+            </div>
+            <div class="tab-control tab-control--next tab-control--next-{{ section.id }}-{{ item_number }}"
+                data-maxblock="2"
+                data-tabcontentclass='tabcontent-{{ section.id }}-{{ item_number }}'
+                data-tabprev='tab-control--prev-{{ section.id }}-{{ item_number }}'
+                data-gcard='g-card--has-second-image--{{ section.id }}-{{ item_number }}'>
+                {%- liquid
+                    if product.media[1].alt == blank
+                        assign image_alt = product.title
+                    else
+                        assign image_alt = product.media[1].alt
+                    endif
+                -%}
+                <img
+                src="{{ product.media[1] | image_url: width: 50 }}"
+                alt="{{ image_alt | escape }}"
+                loading="lazy"
+                width="50"
+                height="50"
+                >   
+            </div>
+        </div>
+        {%- endif -%}
+
+    </div>
+    <div class="g-card__info">
+        <a href="{{ product.url }}" title="{{ product.title }}" class="full-unstyled-link"><h3 class="g-card--title">{{ product.title }}</h3></a>
+      {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true, product: product %}
+        {%- liquid 
+            assign target = product
+            assign compare_at_price = target.compare_at_price | money
+            if settings.currency_code_enabled
+                assign compare_at_price = target.compare_at_price | money_with_currency
+            endif
+            assign price = target.price | default: 1999
+            assign money_price = price | money
+            if settings.currency_code_enabled
+                assign money_price = price | money_with_currency
+            endif
+        -%}
+        {%- if show_price -%}
+        <div class="g-card--price">
+            <p>{{ compare_at_price | strip_html }}</p>
+            <p>{% if target.price_varies %}<span>from </span>{% endif %}{% if target.price_varies == false and target.compare_at_price %}<span>now </span>{% endif %}{{ money_price | strip_html }}</p>
+        </div>
+         {%- endif -%}
+    </div>
+    <div class="g-card__cta">
+        {%- if cta_viewproduct -%}
+        <a href="{{ product.url }}" title="{{ product.title }}" class="full-unstyled-link btn btn--default btn-he--lighten">View Product</a>
+        {%- endif -%}
+    </div>
+</div>

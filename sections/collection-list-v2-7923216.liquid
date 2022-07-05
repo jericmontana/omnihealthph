@@ -1,0 +1,273 @@
+{{ 'section-collection-list-v2-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .section--collection-list-v2 .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section--collection-list-v2 .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+
+  
+  {% case section.settings.color_scheme %}
+      {% when 'background-1' %}
+      .section--collection-list-v2-{{ section.id }} .section__header--title{
+        color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+      }
+
+      .section--collection-list-v2-{{ section.id }} .section__collection--information__title h3{
+        color: #ffffff;
+      }
+
+      .section--collection-list-v2-{{ section.id }} .section__collection{
+        background-color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+      }
+
+  {% endcase %}
+{%- endstyle -%}
+
+<div class="section section--collection-list-v2 section--collection-list-v2-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <div class="section__bg-container section-{{ section.id }}-bg-contaier section-{{ section.id }}-padding">
+    <div class="page-width">
+    
+      {% comment %} For Section Header {% endcomment %}
+      {%- assign header = section.blocks | where: 'type', 'heading' -%}
+      {%- for block in header -%}
+        {% if block.settings.title != blank or block.settings.subtitle != blank %}
+          {%- render 'section-header',
+            title: block.settings.title,
+            subtitle: block.settings.subtitle,
+            uppercase: block.settings.title_uppercase
+          -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {% comment %} For Featured Collections {% endcomment %}
+      {%- assign featured_collection_blocks = section.blocks | where: 'type', 'collection' -%}
+      <div class="grid grid--1-col grid--4-col-desktop grid--2-col-tablet">
+      {%- for featured_collection_block in featured_collection_blocks limit: block.settings.collections_to_show -%}
+        <div class="grid__item">
+          {% assign featured_collection = featured_collection_block.settings.featured_collection %}
+          {% if featured_collection_block.settings.use_custom_image %}
+            {% assign featured_collection_image = featured_collection_block.settings.featured_collection_image %}
+          {% else %}
+            {% assign featured_collection_image = featured_collection.featured_image %}
+          {% endif %}
+          <a class="full-unstyled-link" {% if featured_collection != blank %}href="{{ featured_collection.url }}" title="{{ featured_collection.title }}" {% endif %}>
+            <div class="section__collection">
+
+              <div class="section__collection--image">
+                  {%- if featured_collection_image -%}
+                      <img
+                        srcset="{%- if featured_collection_image.width >= 165 -%}{{ featured_collection_image | image_url: width: 165 }} 165w,{%- endif -%}
+                          {%- if featured_collection_image.width >= 330 -%}{{ featured_collection_image | image_url: width: 330 }} 330w,{%- endif -%}
+                          {%- if featured_collection_image.width >= 535 -%}{{ featured_collection_image | image_url: width: 535 }} 535w,{%- endif -%}
+                          {%- if featured_collection_image.width >= 750 -%}{{ featured_collection_image | image_url: width: 750 }} 750w,{%- endif -%}
+                          {%- if featured_collection_image.width >= 1000 -%}{{ featured_collection_image | image_url: width: 1000 }} 1000w,{%- endif -%}
+                          {%- if featured_collection_image.width >= 1500 -%}{{ featured_collection_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                          {%- if featured_collection_image.width >= 3000 -%}{{ featured_collection_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                          {{ featured_collection_image | image_url }} {{ featured_collection_image.width }}w"
+                        src="{{ featured_collection_image | image_url }}"
+                        alt="{{ featured_collection.title | escape }}"
+                        title="{{ featured_collection.title | escape }}"
+                        height="{{ featured_collection_image.height }}"
+                        width="{{ featured_collection_image.width }}"
+                        loading="lazy"
+                        class="motion-reduce"
+                      >
+                  {%- else -%}
+                      {% render 'no-image' %}
+                  {%- endif -%}
+              </div>
+
+              <div class="section__collection--information">
+                <div class="section__collection--information__product-count">
+                  {%- if featured_collection.products_count > 1 -%}
+                    <p>{{ featured_collection.products_count | escape }} products</p>
+                  {%- else -%}
+                    <p>{{ featured_collection.products_count | escape }} product</p>
+                  {%- endif -%}
+                  {%- render 'icon-arrow' -%}
+                </div>
+
+                <div class="section__collection--information__title">
+                  {%- if featured_collection_block.settings.title != blank -%}
+                    <h3>{{ featured_collection_block.settings.title | escape }}</h3>
+                  {%- else -%}
+                    <h3>{{ featured_collection.title | escape }}</h3>
+                  {%- endif -%}
+                </div>
+              </div>
+                
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+      </div>
+  
+    
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Collection List v2",
+  "tag": "section",
+  "max_blocks": 15,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Collection List"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "collection",
+      "name": "Featured Collection",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "collection",
+          "id": "featured_collection",
+          "label": "Collection",
+          "info": "Slider Block is required | Background Color and Border Radius @ Section Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "image_picker",
+          "id": "featured_collection_image",
+          "label": "Custom Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_custom_image",
+          "label": "Use Custom Image",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Collection List v2",
+      "category": "Custom Section",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

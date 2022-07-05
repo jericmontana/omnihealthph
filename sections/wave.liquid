@@ -1,0 +1,102 @@
+{{ 'section-wave-7923216.css' | asset_url | stylesheet_tag }}
+
+
+{%- style -%}
+    .section--wave .section-{{ section.id }}-style {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      background-color: {{ section.settings.bg_color_top }} !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section--wave .section-{{ section.id }}-style {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        background-color: {{ section.settings.bg_color_top }} !important;
+      }
+    }
+{%- endstyle -%}
+
+<div class="section section--wave section--wave-{{ section.id }} color-{{ section.settings.color_scheme }}">
+    <div class="section__content-wave section-{{ section.id }}-style">
+        {%- if settings.wave_desktop_image != blank and settings.wave_mobile_image != blank -%}
+            <div class="section__content-wave--desktop small-hide medium-hide">
+                <img 
+                    src="{{ settings.wave_desktop_image | image_url }}"
+                    loading="lazy"
+                    width="{{ settings.wave_desktop_image.width }}"
+                    height="{{ settings.wave_desktop_image.height }}"
+                >
+            </div>
+            <div class="section__content-wave--desktop large-up-hide">
+                <img 
+                    src="{{ settings.wave_mobile_image | image_url }}"
+                    loading="lazy"
+                    width="{{ settings.wave_desktop_image.width }}"
+                    height="{{ settings.wave_desktop_image.height }}"
+                >
+            </div>
+        {%- endif -%}
+    </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "🔰 Wave",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "accent-2",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "color",
+      "id": "bg_color_top",
+      "label": "Background Color Top",
+      "default": "#FFFFFF",
+      "info": "Default #FFFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Wave"
+    }
+  ]
+}
+{% endschema %}

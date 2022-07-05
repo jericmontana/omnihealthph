@@ -1,0 +1,322 @@
+{{ 'section-email-signup-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{% assign use_as_default_bg = section.settings.use_as_default_bg %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .section--email-signup .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section--email-signup .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+
+  {%- if  use_as_default_bg -%}
+    .section--email-signup .section-{{ section.id }}-bg-contaier {
+      --color-foreground: {{ section.settings.fg_color.red }},{{ section.settings.fg_color.green }},{{ section.settings.fg_color.blue }};
+      --color-background: {{ section.settings.bg_color.red }},{{ section.settings.bg_color.green }},{{ section.settings.bg_color.blue }};
+      background-image: url('{{ section.settings.bg_image | image_url }}');
+      background-color: {{ section.settings.bg_color }};
+      background-blend-mode: {{ section.settings.bg_blend }};
+    }
+  {%- endif -%}
+
+  .section--email-signup-{{ section.id }} .section__image-with-product-card{
+    border-radius: {{ section.settings.cc_border_radius }}rem;
+    background-color: {{ section.settings.cc_bg_color }};
+  }
+
+{% case section.settings.color_scheme %}
+    {% when 'background-1' %}
+        .section--email-signup-{{ section.id }} .section__header--title{
+            color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }});
+        }
+        .section--email-signup-{{ section.id }} .newsletter-form__button{
+            background-color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }}) !important;
+        }
+        .section--email-signup-{{ section.id }} .newsletter-form__field-wrapper .field__input{
+            border-color: rgb({{ settings.colors_accent_2.red }}, {{ settings.colors_accent_2.green }}, {{ settings.colors_accent_2.blue }}) !important;
+        }
+{% endcase %}
+
+{%- endstyle -%}
+
+<div class="section section--email-signup section--email-signup-{{ section.id }} {% unless use_as_default_bg %}color-{{ section.settings.color_scheme }}{% endunless %}">
+    <div class="section__bg-container section-{{ section.id }}-bg-contaier section-{{ section.id }}-padding">
+        <div class="page-width">
+
+            {% comment %} For Header Block {% endcomment %}
+            {%- assign header = section.blocks | where: 'type', 'heading' -%}
+            {%- for block in header -%}
+                {%- if block.settings.title != blank or block.settings.subtitle != blank -%}
+                {%- render 'section-header',
+                    title: block.settings.title,
+                    subtitle: block.settings.subtitle,
+                    uppercase: block.settings.title_uppercase
+                -%}
+                {%- endif -%}
+            {%- endfor -%}
+            
+            {%- assign email_signup_form = section.blocks | where: 'type', 'email_signup_form' -%}
+            {%- for block in email_signup_form -%}
+            <div class="section__signup-form">
+                {% form 'customer', class: 'newsletter-form' %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="newsletter-form__field-wrapper">
+                    <div class="field">
+                    <input
+                        id="NewsletterForm--{{ section.id }}"
+                        type="email"
+                        name="contact[email]"
+                        class="field__input"
+                        value="{{ form.email }}"
+                        aria-required="true"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        autocomplete="email"
+                        {% if form.errors %}
+                        autofocus
+                        aria-invalid="true"
+                        aria-describedby="Newsletter-error--{{ section.id }}"
+                        {% elsif form.posted_successfully? %}
+                        aria-describedby="Newsletter-success--{{ section.id }}"
+                        {% endif %}
+                        placeholder="{{ block.settings.placeholder | escape }}"
+                        required
+                    >
+                    <label class="field__label" for="NewsletterForm--{{ section.id }}">
+                        {{ block.settings.placeholder | escape }}
+                    </label>
+                    <button type="submit" data-targetopener="TYPopup-{{ section.id }}" class="newsletter-form__button field__button field__button--with-ty" name="commit" id="Subscribe">
+                        {% render 'icon-send' %}
+                        Subscribe
+                    </button>
+                    </div>
+
+                    {%- if form.errors -%}
+                        <small class="newsletter-form__message form__message" id="Newsletter-error--{{ section.id }}">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</small>
+                    {%- endif -%}
+
+                    {%- if form.posted_successfully? -%}
+                        {%- render 'thank-you-7923216' -%}                       
+                    {%- endif -%}
+                </div>
+                {% endform %}
+            </div>
+            {%- endfor -%}
+
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Email Signup",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Default Background"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "header",
+      "content": "Custom Color Scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_bg",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "fg_color",
+      "label": "Foreground Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "select",
+      "id": "bg_blend",
+      "label": "Blend Mode",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal"
+        },
+        {
+          "value": "multiply",
+          "label": "Multiply"
+        },
+        {
+          "value": "screen",
+          "label": "Screen"
+        },
+        {
+          "value": "overlay",
+          "label": "Overlay"
+        },
+        {
+          "value": "darken",
+          "label": "Darken"
+        },
+        {
+          "value": "lighten",
+          "label": "Lighten"
+        },
+        {
+          "value": "color-dodge",
+          "label": "Color Dodge"
+        },
+        {
+          "value": "saturation",
+          "label": "Saturation"
+        },
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "luminosity",
+          "label": "Luminosity"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Join our VIP Club"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "email_signup_form",
+      "name": "Email Signup Form",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder",
+          "default": "Email Address..."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🔰 Email Signup",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "email_signup_form"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

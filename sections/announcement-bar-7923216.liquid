@@ -1,0 +1,316 @@
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+
+{{ 'section-announcement-bar-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+    {%- if use_as_default_padding -%}
+        .section--announcement-bar .section-{{ section.id }}-padding {
+            padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+            padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+        }
+
+        @media screen and (min-width: 750px) {
+            .section--announcement-bar .section-{{ section.id }}-padding {
+                padding-top: {{ section.settings.padding_top }}px !important;
+                padding-bottom: {{ section.settings.padding_bottom }}px !important;
+            }
+        }
+    {%- endif -%}
+
+    {% case section.settings.color_scheme %}
+        {% when 'accent-2' %}
+        .section--announcement-bar-{{ section.id }}{
+          --color-btn-bg: var(--color-base-solid-button-labels);
+          --color-btn-lbl: var(--color-base-accent-1);
+
+          --color-slider-control-icon: var(--color-base-accent-1);
+          --color-slider-control-bg: var(--color-base-solid-button-labels);
+        }
+    {% endcase %}
+
+{%- endstyle -%}
+<div class="section section--announcement-bar section--announcement-bar-{{ section.id }} color-{{ section.settings.color_scheme }}">
+  <div class="section-{{ section.id }}-padding">
+    <div class="page-width">
+      <slideshow-component class="section__slider">
+        <div class="slideshow grid grid--1-col slider slider--everywhere"
+          id="Slider-{{ section.id }}"
+          aria-live="polite"
+          aria-atomic="true"
+          data-autoplay="{{ section.settings.auto_rotate }}"
+          data-speed="{{ section.settings.change_slides_speed }}"
+        >
+          {%- assign announcement_bar = section.blocks | where: 'type', 'announcement_bar' -%}
+          {%- for block in announcement_bar -%}
+            <div class="grid__item slideshow__slide slider__slide"
+            id="Slide-{{ section.id }}-{{ forloop.index }}"
+            {{ block.shopify_attributes }}
+            role="group"
+            tabindex="-1">
+              <div class="section__announcement">
+                <div class="section__announcement-text">
+                  <p>{{ block.settings.text | escape }}</p>
+                </div>
+
+                {% if block.settings.show_btn %}
+                <div class="section__announcement-button">
+                  {% render 'button-signup-7923216',
+                    btn_action: block.settings.btn_action,
+                    btn_label: block.settings.btn_label,
+                    btn_link: block.settings.btn_link,
+                    hover_effect: block.settings.hover_effect,
+                    icon_type: block.settings.icon_type,
+                    round_corner: block.settings.round_corner,
+                    shadow_effect: block.settings.shadow_effect,
+                    auto_width: block.settings.auto_width
+                  %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.blocks.size > 1 -%}
+          <div class="slideshow__controls slider-buttons no-js-hidden">
+            <button type="button" class="slider-button slider-button--prev" name="previous" aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}" aria-controls="Slider-{{ section.id }}">{% render 'icon-caret' %}</button>
+            
+            {% comment %} {%- if section.settings.show_counter -%}
+            <div class="slider-counter">
+                <span class="slider-counter--current">1</span>
+                <span class="hidden" aria-hidden="true"> / </span>
+                <span class="hidden">{{ 'general.slider.of' | t }}</span>
+                <span class="slider-counter--total hidden">{{ section.blocks.size }}</span>
+            </div>
+            {%- endif -%} {% endcomment %}
+            
+            {%- if section.settings.auto_rotate -%}
+              <button type="button" class="slideshow__autoplay slider-button hidden no-js-hidden{% if section.settings.auto_rotate == false %} slideshow__autoplay--paused{% endif %}" aria-label="{{ 'sections.slideshow.pause_slideshow' | t }}">
+                {%- render 'icon-pause' -%}
+                {%- render 'icon-play' -%}
+              </button>
+            {%- endif -%}
+            
+            <button type="button" class="slider-button slider-button--next" name="next" aria-label="{{ 'sections.slideshow.next_slideshow' | t }}" aria-controls="Slider-{{ section.id }}">{% render 'icon-caret' %}</button>
+          </div>
+        {%- endif -%}
+      </slideshow-component>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "🔰 Annoucement Bar",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "header",
+      "content": "Slideshow Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Auto Rotate",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "change_slides_speed",
+      "min": 3,
+      "max": 9,
+      "step": 2,
+      "unit": "s",
+      "label": "Speed",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement_bar",
+      "name": "Annoucement Bar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Welcome to our store",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_btn",
+          "label": "Show Button",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "round_corner",
+          "label": "Round Corner",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "btn_action",
+          "label": "Button Action",
+          "options": [
+            {
+              "value": "redirect-link",
+              "label": "Redirect to a link"
+            },
+            {
+              "value": "open-popup",
+              "label": "Open a popup"
+            }
+          ],
+          "default": "open-popup"
+        },
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Link",
+          "default": "/collections/all"
+        },
+        {
+          "type": "select",
+          "id": "hover_effect",
+          "label": "Hover Effect",
+          "options": [
+            {
+              "value": "lighten",
+              "label": "Lighten Effect"
+            },
+            {
+              "value": "color-switch",
+              "label": "Color Switch Effect"
+            },
+            {
+              "value": "slide",
+              "label": "Slide Effect"
+            },
+            {
+              "value": "shine",
+              "label": "Shine Effect"
+            }
+          ],
+          "default": "shine"
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Button Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "arrow",
+              "label": "Arrow"
+            },
+            {
+              "value": "send",
+              "label": "Send"
+            }
+          ],
+          "default": "send"
+        },
+        {
+          "type": "checkbox",
+          "id": "shadow_effect",
+          "label": "Enable Shadow Effect",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "auto_width",
+          "label": "Enable Auto Width",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "announcement_bar"
+      },
+      {
+        "type": "announcement_bar"
+      }
+    ]
+  }
+}
+{% endschema %}

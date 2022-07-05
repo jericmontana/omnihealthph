@@ -1,0 +1,1 @@
+.review *{overflow-anchor:none!important}@media screen and (max-width:749px){.review .section__review{margin-bottom:2rem}}.review .jdgm-all-reviews__footer{display:none!important}.review .jdgm-histogram__bar-content{background-color:rgba(var(--color-base-accent-2),.75)!important}.review:not(.review-product) .jdgm-widget-actions-wrapper{display:none!important}

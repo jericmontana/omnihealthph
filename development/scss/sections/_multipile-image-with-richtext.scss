@@ -1,0 +1,195 @@
+@import 'abstract/mixin';
+
+.multiple-image-with-richtext{
+    position: relative;
+    overflow: hidden;
+
+    .grid__item{
+        display: grid;
+
+        &>div{
+            grid-area: 1/1;
+        }
+    }
+
+    .section__information{
+        display: grid;
+        padding: 0rem 1rem;
+
+
+        .information--wrapper{
+
+            strong{
+                text-transform: uppercase;
+                font-weight: bold !important;
+
+                // From H2
+                font-size: calc(var(--font-heading-scale) * 2rem) !important;
+                @media only screen and (min-width: 750px) {
+                    & {
+                        font-size: calc(var(--font-heading-scale) * 2.4rem) !important;
+                    }
+                }
+            }
+
+            p{
+                margin: 0;
+                line-height: calc(1 + 0.6 / var(--font-body-scale));
+
+                // @include device('desktop'){
+                //     &{
+                //         font-size: 2rem;
+                //     }
+                // }
+
+                // @include device('tablet'){
+                //     &{
+                //         font-size: 1.8rem;
+                //     }
+                // }
+                // color: rgba(var(--color-base-accent-2),0.75);
+                
+                &:not(:first-child){
+                    margin-top: 1rem;
+                }
+
+                &:last-child{
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+        
+        & .tabcontent:not(:first-of-type){
+            display: none;
+        }
+
+        .tabcontent{
+            grid-area: 1/1;
+        }
+
+        h2{
+            margin-top: 0rem;
+            margin-bottom: 1.14rem;
+            // color: rgb(var(--color-base-accent-2));
+        }
+
+        @include device('tablet-up'){
+            &{
+                padding: 1rem;
+            }
+        }
+
+        @include device('mobile'){
+            &{
+                padding-top: 2rem;
+            }
+        }
+    }
+
+    .section__image{
+        position: relative;
+        display: grid;
+        padding: 0rem 2rem;
+        z-index: 1;
+
+        & .tabcontent:not(:first-of-type){
+            display: none;
+        }
+
+        .tabcontent{
+            grid-area: 1/1;
+        }
+
+        &>img{
+            grid-area: 1/1;
+            z-index: 0;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+
+        & div.image--wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        img{
+            z-index: 1;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+        @include device('tablet-up'){
+            &{
+                padding: 2rem;
+            }
+        }
+
+        .section__tab-controls{
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            top: 50%;
+            bottom: 50%;
+            padding: 0rem 1rem;
+            z-index: 3;
+        }
+
+        .tab-control{
+            width: 4rem;
+            height: 4rem;
+            color: #ffffff;
+            background-color: rgba(var(--color-base-accent-1),0.38);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.4rem;
+            overflow: hidden;
+
+            &--prev{
+                visibility: hidden;
+            }
+            
+
+            svg{
+                pointer-events: none;
+            }
+
+            span{
+                pointer-events: none;
+                font-size: 6rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: -1.4rem 0rem 0rem 0rem !important;
+                line-height: 1;
+                height: 4rem;
+                width: 4rem;
+                color: #ffffff;
+            }
+        }
+    }
+
+    
+
+    .image-first{
+        flex-direction: column-reverse;
+    }
+
+    @include device('desktop'){
+        .image-first{
+            flex-direction: row-reverse;
+        }
+    }
+
+    @include device('mobile'){
+        .grid{
+            flex-direction: column-reverse !important;
+        }
+    }
+}

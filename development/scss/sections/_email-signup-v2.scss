@@ -1,0 +1,60 @@
+@import 'abstract/mixin';
+@import 'abstract/animation';
+
+.email-signup-v2{
+    position: relative;
+    
+    .newsletter-form__field-wrapper{
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+
+
+        .field__button{
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .field{
+            text-align: center;
+            position: relative;
+            &::before, &::after{
+                display: none!important;
+            }
+            
+            &:not(:last-of-type){
+                margin-bottom: 2rem;
+            }
+            
+        }
+
+        .field__input {
+            height: 100%;
+            margin: 0;
+            padding-right: 1rem;
+            outline: none;
+
+            &:focus{
+                box-shadow: none;
+            }
+            border: 1px solid rgb(var(--color-foreground))!important;
+        }
+
+        .newsletter-form__message--error{
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+    
+    }
+
+    .newsletter-form{
+        max-width: 100%;
+    }
+
+    .section__header--subtitle{
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

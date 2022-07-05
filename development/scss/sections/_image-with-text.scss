@@ -1,0 +1,76 @@
+@import 'abstract/mixin';
+
+.image-with-text{
+    position: relative;
+    overflow: hidden;
+
+    .section__information{
+        padding: 0rem;
+
+        @include device('desktop'){
+            &{
+                padding: 2rem;
+            }
+        }
+
+        @include device('mobile'){
+            &{
+                padding-top: 2rem;
+            }
+        }
+
+        .section__header{
+            &--title, &--subtitle{
+                text-align: left;
+            }
+        }
+
+        .section__button{
+            justify-content: flex-start;
+        }
+    }
+
+    .section__image{
+        max-height: 500px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0rem;
+
+        img{
+            object-fit: cover;
+        }
+
+
+        @include device('desktop'){
+            &{
+                padding: 2rem;
+            }
+        }
+
+        .svg{
+            max-height: 210px;
+            width: auto;
+        }
+
+    }
+
+    .image-first{
+        flex-direction: column-reverse;
+    }
+    @include device('desktop'){
+        .image-first{
+            flex-direction: row-reverse;
+        }
+    }
+
+    .section__richtext{
+        text-align: justify;
+
+        // p{
+        //     font-weight: 600;
+        // }
+    }
+}

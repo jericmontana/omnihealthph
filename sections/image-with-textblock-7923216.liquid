@@ -1,0 +1,209 @@
+{{ 'section-image-with-textblock-7923216.css' | asset_url | stylesheet_tag }}
+
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .image-with-textblock--{{ section.id }} .section__container {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .image-with-textblock--{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+{%- assign header_blocks = section.blocks | where: 'type', 'header' -%}
+{%- assign image_blocks = section.blocks | where: 'type', 'image' -%}
+{%- assign richtext_blocks = section.blocks | where: 'type', 'richtext' -%}
+
+<div class="image-with-textblock image-with-textblock--{{ section.id }}">
+  <div class="section__container">
+    <div class="page-width">
+      {%- for block in header_blocks -%}
+      <div class="section__header center">
+          <h2 class="h1 {% if block.settings.title_uppercase %}uppercase{% endif %}">{{ block.settings.title | escape }}</h2>
+          <p class="h2">{{ block.settings.subtitle | escape }}</p>
+      </div>
+      {%- endfor -%}
+      <div class="grid grid--1-col grid--2-col-desktop {% for block in image_blocks %}{% if block.settings.image_first %}image-first{% endif %}{% endfor %}">
+          <div class="grid__item">
+              <div class="section__richtext">
+              {%- for block in richtext_blocks -%}
+                  <div class="richtext--block center">
+                      <h3 class="h2 uppercase">{{ block.settings.title }}</h3>
+                      <div class="richtext-description">
+                          {{ block.settings.description }}
+                      </div>
+                  </div>
+              {%- endfor -%}
+              </div>
+          </div>
+          <div class="grid__item">
+              <div class="section__image">
+              {%- for block in image_blocks -%}
+                  {%- if block.settings.image != blank -%}
+                  <img
+                      srcset="{%- if block.settings.image.width >= 165 -%}{{ block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+                      {%- if block.settings.image.width >= 360 -%}{{ block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                      {%- if block.settings.image.width >= 535 -%}{{ block.settings.image | image_url: width: 535 }} 535w,{%- endif -%}
+                      {%- if block.settings.image.width >= 750 -%}{{ block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                      {%- if block.settings.image.width >= 990 -%}{{ block.settings.image | image_url: width: 990 }} 990w,{%- endif -%}
+                      {%- if block.settings.image.width >= 1070 -%}{{ block.settings.image | image_url: width: 1070 }} 1070w,{%- endif -%}
+                      {%- if block.settings.image.width >= 1500 -%}{{ block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                      {{ block.settings.image | image_url }} {{ block.settings.image.width }}w"
+                      src="{{ block.settings.image | image_url }}"
+                      sizes="(max-width: 749px) 750px, ((min-width: 750px) and (max-width: 989px)) 990px, 1080px"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      title="{{ block.settings.image.alt | escape }}"
+                      loading="lazy"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                  >
+                  {%- else -%}
+                  {%- render 'no-image' -%}
+                  {%- endif -%}
+              {%- endfor -%}
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 IwTextBlock",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Nisi nibh tortor euismod"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "image_first",
+          "label": "Image First",
+          "default": false,
+          "info": "Desktop Only"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "name": "Richtext",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title",
+          "default": "<p>Nullam si a erat</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Hendrerit parturient tellus duis netus nibh lorem velit ullamcorper bibendum sociosqu primis convallis sollicitudin</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 IwTextBlock",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "image"
+        },
+        {
+          "type": "richtext"
+        },
+        {
+          "type": "richtext"
+        },
+        {
+          "type": "richtext"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

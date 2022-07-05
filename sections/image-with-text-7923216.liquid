@@ -1,0 +1,279 @@
+{{ 'section-image-with-text-7923216.css' | asset_url | stylesheet_tag }}
+
+{% assign use_as_default_padding = section.settings.use_as_default_padding %}
+{%- style -%}
+  {%- if use_as_default_padding -%}
+    .image-with-text--{{ section.id }} .section__container {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px !important;
+    }
+
+    @media screen and (min-width: 750px) {
+      .image-with-text--{{ section.id }} .section__container {
+        padding-top: {{ section.settings.padding_top }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom }}px !important;
+      }
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="image-with-text image-with-text--{{ section.id }} color-{{ section.settings.color_scheme }}">
+    <div class="section__container">
+        <div class="page-width">
+          <div class="grid grid--1-col grid--2-col-desktop {% if section.settings.image_first %}image-first{% endif %}">
+            <div class="grid__item">
+              <div class="section__information">
+                {%- assign header = section.blocks | where: 'type', 'header' -%}
+                {%- for block in header -%}
+                  {%- if block.settings.title != blank or block.settings.subtitle != blank -%}
+                  {%- render 'section-header',
+                    title: block.settings.title,
+                    subtitle: block.settings.subtitle,
+                    uppercase: block.settings.title_uppercase
+                  -%}
+                  {%- endif -%}
+                {%- endfor -%}
+
+                {%- assign richtext = section.blocks | where: 'type', 'richtext' -%}
+                {%- for block in richtext -%}
+                  <div class="section__richtext">
+                  {{ block.settings.richtext }}
+                  </div>
+                {%- endfor -%}
+
+                {%- assign button = section.blocks | where: 'type', 'button' -%}
+                {%- for block in button -%}
+                  <div class="section__button">
+                    {% render 'button',
+                      btn_label: block.settings.btn_label,
+                      btn_link: block.settings.btn_link,
+                      btn_size: "default",
+                      hover_effect: "lighten",
+                      icon_type: "none",
+                      round_corner: block.settings.round_corner,
+                      shadow_effect: block.settings.shadow_effect,
+                      auto_width: block.settings.auto_width
+                    %}
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+
+            <div class="grid__item">
+              {%- assign image = section.blocks | where: 'type', 'image' -%}
+              {%- for block in image -%}
+                <div class="section__image">
+                  {%- if block.settings.image != blank -%}
+                    <img
+                      srcset="{%- if block.settings.image.width >= 165 -%}{{ block.settings.image | image_url: width: 165 }} 165w,{%- endif -%}
+                      {%- if block.settings.image.width >= 360 -%}{{ block.settings.image | image_url: width: 360 }} 360w,{%- endif -%}
+                      {%- if block.settings.image.width >= 535 -%}{{ block.settings.image | image_url: width: 535 }} 535w,{%- endif -%}
+                      {%- if block.settings.image.width >= 750 -%}{{ block.settings.image | image_url: width: 750 }} 750w,{%- endif -%}
+                      {%- if block.settings.image.width >= 1070 -%}{{ block.settings.image | image_url: width: 1070 }} 1070w,{%- endif -%}
+                      {%- if block.settings.image.width >= 1500 -%}{{ block.settings.image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                      {{ block.settings.image | image_url }} {{ block.settings.image.width }}w"
+                      src="{{ block.settings.image | image_url }}"
+                      sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      title="{{ block.settings.image.alt | escape }}"
+                      loading="lazy"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                    >
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "🍊 Image with text",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color Scheme",
+      "info": "To change the card color scheme, update your theme settings."
+    },
+    {
+      "type": "checkbox",
+      "id": "image_first",
+      "label": "Image First",
+      "default": true,
+      "info": "Desktop Only"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_as_default_padding",
+      "label": "Set as default",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36,
+      "info": "Default Value is 36"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36,
+      "info": "Default Value is 36"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "name": "Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Header Settings"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Image with text"
+        },
+        {
+          "type": "checkbox",
+          "id": "title_uppercase",
+          "label": "Uppercase",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "btn_label",
+          "label": "Label",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "btn_link",
+          "label": "Link",
+          "default": "/collections/all"
+        },
+        {
+          "type": "checkbox",
+          "id": "round_corner",
+          "label": "Rounded Corner",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "shadow_effect",
+          "label": "Enable Shadow Effect",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "auto_width",
+          "label": "Enable Auto Width",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "name": "Richtext",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "richtext",
+          "label": "Richtext",
+          "default": "<p>Nisi per leo mauris consectetur sodales fringilla congue urna tincidunt dis lacus natoque interdum.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "🍊 Image with text",
+      "category": "a",
+      "blocks": [
+        {
+          "type": "header"
+        },
+        {
+          "type": "button"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

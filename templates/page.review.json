@@ -1,0 +1,86 @@
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner-7923216",
+      "blocks": {
+        "16469786612d2c6734-0": {
+          "type": "heading",
+          "settings": {
+            "title": "",
+            "title_uppercase": true,
+            "subtitle": "Let our customers speak for us."
+          }
+        },
+        "16469786612d2c6734-1": {
+          "type": "breadcrumb",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "16469786612d2c6734-0",
+        "16469786612d2c6734-1"
+      ],
+      "settings": {
+      }
+    },
+    "165665719824106dee": {
+      "type": "review-7923216",
+      "blocks": {
+        "1656657197164d7476-1": {
+          "type": "review",
+          "settings": {
+            "all_products": true,
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "1656657197164d7476-1"
+      ],
+      "settings": {
+        "use_as_default_padding": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "shopnow_banner": {
+      "type": "shopnow-banner",
+      "blocks": {
+        "header": {
+          "type": "header",
+          "settings": {
+            "apply_general_settings_header": true,
+            "title": "Visit Our Store",
+            "title_uppercase": false,
+            "subtitle": "Mus mauris vitae ultricies leo. Ac feugiat sed lectus vestibulum lacus laoreet non curabitur."
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "apply_general_settings_btn": true,
+            "btn_label": "Shop Now",
+            "btn_link": "shopify:\/\/collections\/all",
+            "btn_size": "default",
+            "hover_effect": "shine",
+            "icon_type": "arrow",
+            "shadow_effect": true,
+            "auto_width": false
+          }
+        }
+      },
+      "block_order": [
+        "header",
+        "button"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "165665719824106dee",
+    "shopnow_banner"
+  ]
+}

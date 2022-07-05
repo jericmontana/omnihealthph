@@ -1,0 +1,35 @@
+@import 'abstract/mixin';
+.pagination__list{
+    li{
+        position: relative;
+        a,span{
+            width: 4rem;
+            height: 4rem;
+            margin: auto;
+        }
+
+        a::after,span::after{
+            display: none!important;
+        }
+        
+        span.pagination__item--current{
+            background-color: rgb(var(--color-btn-bg)) !important;
+            color: rgb(var(--color-btn-lbl)) !important;
+            box-shadow: 4px 3px 18px -2px rgb(0 0 0 / 74%);
+        }
+        a,span:not(.pagination__item--current){
+            background-color: rgba(var(--color-btn-bg),0.5) !important;
+            color: rgb(var(--color-btn-lbl)) !important;
+        }
+
+        @include device('mobile'){
+            &{
+                a,span{
+                    width: 3.5rem;
+                    height: 3.5rem;
+                }
+
+            }
+        }
+    }
+}

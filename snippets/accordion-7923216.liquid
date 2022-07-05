@@ -1,0 +1,34 @@
+{% comment %}
+    Renders a accordion
+
+    Accepts:
+    - accordion_title: {String} Accordion title
+    - accordion_content: {String} Accordion content
+    - accordion_box_shadow: {Boolean} Add box shadow to the active accordion.
+    - accordion_title_color
+
+    Usage:
+    {% render 'accordion-7923216',
+        accordion_title: block.settings.accordion_title,
+        accordion_title_color: section.settings.accordion_title_color,
+        number: block.settings.number
+    %}
+    
+{% endcomment %}
+
+<div class="accordion">
+    <details {% if number == 1 %}open{% endif %}>
+        <summary class="summary__title">
+            <h3 class="accordion__title h3">{{ number }}. {{ accordion_title | escape }}</h3>
+            <div class="accordion__icon">
+                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-caret" viewBox="0 0 10 6">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z">
+                </svg>
+            </div>
+        </summary>
+        <div class="accordion__content-wrapper">
+            <div class="accordion__content">{{ accordion_content }}</div>
+        </div>
+    </details>
+    <span class="accordion__box-shadow"></span>
+</div>
