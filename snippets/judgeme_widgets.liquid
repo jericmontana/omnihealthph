@@ -4,7 +4,7 @@
 {% if widget_type == 'judgeme_review_widget' %}
 <div style='clear:both'></div>
 <div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}'
-data-from-snippet='{% if concierge_install != nil  %}{{ concierge_install }}{% else %}true{% endif %}'
+data-from-snippet='{% if concierge_install != nil %}{{ concierge_install }}{% else %}true{% endif %}'
 data-auto-install='{% if auto_install != nil %}{{ auto_install }}{% else %}false{% endif %}'>
   {{ product.metafields.judgeme.widget }}
 </div>
@@ -20,7 +20,7 @@ data-auto-install='{% if auto_install != nil %}{{ auto_install }}{% else %}false
 {% endif %}
 
 {% if widget_type == 'judgeme_all_reviews_text' %}
-<div class='jdgm-widget jdgm-all-reviews-text' data-from-snippet='{% if concierge_install != nil  %}{{ concierge_install }}{% else %}true{% endif %}' >
+<div class='jdgm-widget jdgm-all-reviews-text' data-from-snippet='{% if concierge_install != nil %}{{ concierge_install }}{% else %}true{% endif %}' >
   <a href="javascript:void(0)">
     <span class='jdgm-all-reviews-text__text' data-score="{{ shop.metafields.judgeme.all_reviews_rating }}" data-number-of-reviews="{{ shop.metafields.judgeme.all_reviews_count }}" data-locale="en">
       Customers rate us {{ shop.metafields.judgeme.all_reviews_rating | round: 1 }}/5 based on {{ shop.metafields.judgeme.all_reviews_count }} reviews.
