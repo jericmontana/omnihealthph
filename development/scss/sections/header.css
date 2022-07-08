@@ -61,6 +61,14 @@ $header_active_menu_color: var(--color-base-accent-1);
                     transform: rotate(-90deg);
                     transition: transform var(--duration-default) ease-out;
                 }
+
+                &:hover{
+                    color: rgb($header_active_menu_color);
+
+                    &+svg{
+                        color: rgb($header_active_menu_color);
+                    }
+                }
             }
 
             .header__menu-item:not(:last-child){
