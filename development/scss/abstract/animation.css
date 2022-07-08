@@ -1,0 +1,116 @@
+@keyframes shine{
+    0% {left: 0%; opacity: 0;}
+    45% {opacity: 0.38;}
+    80% {opacity: 0.0;}
+    100% {left: 90%;}
+}
+
+@keyframes loading {
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(0, 15px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* loading dots */
+@keyframes loading-dots-fadein{
+  100%{
+    opacity:1;
+    filter:none
+  }
+}
+
+@keyframes loading-dots-first-dot{
+  100%{
+    transform:translate(1em);
+    opacity:1;
+    filter:none
+  }
+}
+
+@keyframes loading-dots-middle-dots{
+  100%{
+    transform:translate(1em)
+  }
+}
+
+@keyframes loading-dots-last-dot{
+  100%{
+    transform:translate(2em);
+    opacity:0;
+    filter:alpha(opacity=0)
+  }
+}
+/* loading dots */
+
+@keyframes loading-square {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(68px, 0) rotate(360deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 100%;
+    }
+    100% {
+        opacity: 0%;
+        display: none;
+    }
+}
+
+/* Reusable Classes */
+.fade-out{
+    animation: fade-out 2.3s forwards;
+}
+
+@keyframes fade-in {
+  0% {
+      opacity: 0%;
+  }
+  100% {
+      opacity: 100%;
+  }
+}
+
+@keyframes fade-in-out {
+  0% {
+      opacity: 0%;
+  }
+  50% {
+      opacity: 100%;
+  }
+  100% {
+    opacity: 0%;
+  }
+}
+
+/* Reusable Classes */
+.fade-in{
+  animation: fade-in 2.3s ease;
+}
+
+
+/* For Pulse Effect */
+@keyframes pulse-effect {
+  0%{
+      transform: scale(0.5);
+  }
+  70%{
+      opacity: 1;
+  }
+  100%{
+      transform: scale(1.5);
+  }
+}

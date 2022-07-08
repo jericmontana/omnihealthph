@@ -1,0 +1,246 @@
+@import '../util/device.css';
+
+/* 
+From Theme
+--color-base-accent-1: {{ settings.colors_accent_1.red }}, {{ settings.colors_accent_1.green }}, {{ settings.colors_accent_1.blue }};
+--color-base-solid-button-labels: {{ settings.colors_solid_button_labels.red }}, {{ settings.colors_solid_button_labels.green }}, {{ settings.colors_solid_button_labels.blue }};
+*/
+:root{
+    --color-btn-bg: var(--color-base-accent-1);
+    --color-btn-lbl: var(--color-base-solid-button-labels);
+
+    --color-btn-bg-2: 207, 226, 243;
+}
+
+.btn{
+    position: relative;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 2;
+
+    background-color: rgb(var(--color-btn-bg));
+    color: rgb(var(--color-btn-lbl));
+    border: 2px solid rgb(var(--color-btn-bg));
+    
+    & svg{
+        width: 20px;
+        height: auto;
+        stroke: rgb(var(--color-btn-lbl));
+    }
+
+
+    &--disbaled{
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    &-auto-width{
+        width: auto !important;
+        max-width: none !important;
+    }
+
+    &.btn--xs{
+        padding: 5px 8px;
+        font-weight: 400;
+        max-width: 120px;
+
+        & svg{
+            margin-left: 1rem;
+        }
+    }
+
+    &.btn--default{
+        padding: 7px 10px;
+        font-weight: 400;
+        max-width: 180px;
+
+        & svg{
+            margin-left: 1.5rem;
+        }
+    }
+    
+    &.btn--medium{-size: 18px;
+        padding: 10px 10px;
+        font-weight: 400;
+        max-width: 260px;
+
+        & svg{
+            margin-left: 1.5rem;
+        }
+    }
+    
+    &.btn--large{-size: 23px;
+        padding: 13px 10px;
+        font-weight: 400;
+        max-width: 370px;
+
+        & svg{
+            margin-left: 1.5rem;
+        }
+    }
+    
+    &-he--lighten{
+        @media --desktop {
+            &:hover{
+                opacity: 0.8;
+            }
+        }
+    }
+    
+    &-he--color-switch{
+        @media --desktop {
+            &:hover{
+                background-color: rgb(var(--color-btn-lbl));
+                color: rgb(var(--color-btn-bg));
+            }
+
+            &:hover svg{
+                stroke: rgb(var(--color-btn-bg));
+            }
+        }
+    }
+
+    &-he--slide{
+        background-color: transparent;
+        color: rgb(var(--color-btn-lbl));
+        transition: color .45s cubic-bezier(.785, .135, .15, .86),border .45s cubic-bezier(.785, .135, .15, .86);
+        
+        &::before, &::after{
+          position: absolute;
+          content: "";
+          display: block;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          width: calc(100% + 2px);
+          height: calc(100% + 2px);
+          pointer-events: none;
+          border-radius: inherit;
+        }
+  
+        &::after{
+          z-index: -2;
+          background-color: rgb(var(--color-btn-lbl));
+        }
+  
+        &::before{
+          transform: scale(1,1);
+          transform-origin: left center;
+          z-index: -1;
+          background-color: rgb(var(--color-btn-bg));
+  
+          transition: transform .45s cubic-bezier(.785, .135, .15, .86);
+        }
+  
+        @media --desktop {
+            &:hover{
+
+                color: rgb(var(--color-btn-bg));
+                background-color: transparent!important;
+
+                &::before{
+                    transform-origin: right center;
+                    transform: scale(0,1);
+                }
+
+            }
+            &:hover svg{
+                stroke: rgb(var(--color-btn-bg));
+            }
+        }
+  
+        @media --mobile {
+          &{
+            background-color: rgb(var(--color-btn-bg));
+            color: rgb(var(--color-btn-lbl));
+          }
+          &::before, &::after{
+            display: none;
+          }
+        }
+        
+        @media --tablet{
+          &{
+            background-color: rgb(var(--color-btn-bg));
+            color: rgb(var(--color-btn-lbl));
+          }
+          &::before, &::after{
+            display: none;
+          }
+        }
+        
+    }
+    
+    &-he--shine{
+        @media --desktop {
+            &:hover{
+                & span{
+                    position: absolute;
+                    transform: skewX(-15deg);
+                    opacity: 0;
+                    top: 0;
+                    left: 0;
+                    width: 18%;
+                    height: calc(4px + 100%);
+                    background: linear-gradient(to right, rgba(var(--color-btn-lbl),0) 0%,rgba(var(--color-btn-lbl),0.03) 1%,rgba(var(--color-btn-lbl),0.6) 30%,rgba(var(--color-btn-lbl),0.85) 50%,rgba(var(--color-btn-lbl),0.85) 70%,rgba(var(--color-btn-lbl),0.85) 71%,rgba(var(--color-btn-lbl),0) 100%);
+                }
+                    
+                & span{
+                    animation: shine 1.8s infinite forwards;
+                }
+            }
+        }
+    }
+
+    &-he--bs{
+        @media --desktop {
+            &:hover{
+                box-shadow: 6px 8px 22px -2px rgb(0 0 0 / 74%) !important;
+                z-index: auto;
+            }
+        }
+    }
+
+    &-bs{
+        box-shadow: 6px 8px 22px -2px rgb(0 0 0 / 74%) !important;
+    }
+
+    &--round-corner{
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    &--copy{
+
+        width: auto;
+
+        &__tooltip{
+
+            pointer-events: none!important;
+
+            &:after{
+                position: absolute;
+                opacity: 0;
+                left: 0%;
+                top: 0%;
+                display: flex;
+                justify-content: center;
+                color: rgb(var(--color-btn-bg));
+                background-color: rgb(var(--color-btn-lbl));
+                content: attr(data-tooltip);
+                padding: 0.8rem 1rem;
+                animation: fade-in-out 2.3s ease forwards;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+    }
+}

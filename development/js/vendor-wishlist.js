@@ -11,11 +11,13 @@ const selectors = {
 document.addEventListener('DOMContentLoaded', () => {
   initButtons();
   initGrid();
+  updateWishlistBubble();
 });
 
 document.addEventListener('shopify-wishlist:updated', (event) => {
   // console.log('[Shopify Wishlist] Wishlist Updated ✅', event.detail.wishlist);
   initGrid();
+  updateWishlistBubble();
 });
 
 document.addEventListener('shopify-wishlist:init-product-grid', (event) => {
@@ -163,4 +165,23 @@ if(wishlistEmpty){
     }
   });
 
+}
+
+// For Wishlist Bubble
+const updateWishlistBubble = () =>{
+  const wishlistBubble = document.querySelectorAll(`.wishlist-count-bubble`);
+  const wishlistCount = getWishlist().length;
+
+  if(wishlistBubble){
+
+    wishlistBubble.forEach((e) => {
+      if(wishlistCount > 0 ){
+        e.classList.remove('hidden');
+        e.firstElementChild.innerHTML = `${wishlistCount}`;
+      }else{
+        e.classList.add('hidden');
+      }
+    })
+    
+  }
 }

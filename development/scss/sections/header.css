@@ -1,0 +1,119 @@
+#shopify-section-header {
+    z-index: 5;
+}
+
+.shopify-section-header-sticky {
+    position: sticky;
+    top: 0;
+}
+
+.shopify-section-header-hidden {
+    transform: translateY(-100%);
+}
+
+#shopify-section-header.animate {
+    transition: transform 0.15s ease-out;
+}
+
+.header--logo-middle-left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+$header_icon_size: 3rem;
+$header_active_menu_color: var(--color-base-accent-1);
+.header{
+
+    /* For Header */
+    &__heading{
+        margin: 0rem;
+        &-link{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            img{
+                width: 100%;
+                max-width: 200px;
+                height: auto;
+            }
+        }
+    }
+
+    /*For Menu*/
+    &__inline-menu{
+
+        .list-menu--inline{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            margin: 0rem;
+            padding: 0rem;
+
+            .header__menu-item{
+                color: rgb(var(--color-foreground));
+                position: relative;
+
+                .icon-caret{
+                    position: static;
+                    transform: rotate(-90deg);
+                    transition: transform var(--duration-default) ease-out;
+                }
+            }
+
+            .header__menu-item:not(:last-child){
+                margin-right: 2rem;
+            }
+
+            .header__active-menu-item {
+                color: rgb($header_active_menu_color);
+
+                &+svg{
+                    color: rgb($header_active_menu_color);
+                }
+            }
+
+            .list-menu__item--active {
+                text-decoration: none;
+                color: rgb($header_active_menu_color);
+
+                &+svg{
+                    color: rgb($header_active_menu_color);
+                }
+            }
+            
+            .list-menu__item--active:hover {
+                text-decoration: none;
+            }
+        }
+
+        details[open] > .header__menu-item .icon-caret {
+            transform: rotate(0deg);
+        }
+    }
+
+    /*For Icons*/
+    &__icons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .header__icon{
+            height: $header_icon_size;
+            width: $header_icon_size;
+            position: relative;
+            padding: 0.3rem;
+
+            svg{
+                height: auto;
+                width: 100%;
+            }
+        }
+
+        .header__icon:not(:only-child):not(:last-child){
+            margin-right: 0.5rem;
+        }
+    }
+}

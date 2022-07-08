@@ -5,7 +5,7 @@
     render 'icon-cart'
   endif
 -%} {% endcomment %}
-{% render 'icon-cart-2' %}
+{%- render 'heroicons', icon: 'shopping_cart_outline' -%}
 <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
 {%- if cart != empty -%}
   <div class="cart-count-bubble">
