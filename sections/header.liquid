@@ -3,7 +3,7 @@
 
 <sticky-header>
   {% comment %} For Displaying Lines {% endcomment %}
-  <div class="btn btn--default btn--xs btn--round-corner btn-lines" style="margin: 1rem auto">Line</div>
+  {% comment %} <div class="btn btn--default btn--xs btn--round-corner btn-lines" style="margin: 1rem auto">Line</div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const lineButton = document.querySelector('.btn-lines');
@@ -14,6 +14,7 @@
       })
     })
   </script>
+   {% endcomment %}
   <header class="header header--logo-middle-left page-width">
 
     {% comment %} Logo {% endcomment %}
@@ -37,18 +38,18 @@
 
     {% comment %} Navigation {% endcomment %}
     {%- if section.settings.menu != blank -%}
-      <nav class="header__inline-menu">
+      <nav class="header__inline-menu small-hide medium-hide">
         <ul class="list-menu list-menu--inline" role="list">
           {%- for link in section.settings.menu.links -%}
             <li>
               {%- if link.links != blank -%}
                 <details-disclosure>
                   <details>
-                    <summary class="header__menu-item list-menu__item">
-                      <span {%- if link.child_active %} class="h1 header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
+                    <summary class="header__menu-item header__menu-item--parent {% if forloop.last %}header__menu-item--last{% endif %} list-menu__item">
+                      <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
                       {% render 'icon-caret' %}
                     </summary>
-                    <ul class="header__submenu list-menu list-menu--disclosure" role="list" tabindex="-1">
+                    <ul class="header__submenu header__submenu--child list-menu list-menu--disclosure" role="list" tabindex="-1">
                       {%- for childlink in link.links -%}
                         <li>
                           {%- if childlink.links == blank -%}
@@ -57,13 +58,15 @@
                             </a>
                           {%- else -%}
                             <details>
-                              <summary class="header__menu-item list-menu__item">
-                                <span {%- if link.child_active %} class="header__active-menu-item"{% endif %}>{{ childlink.title | escape }}</span>
-                                {% render 'icon-caret' %}
+                              <summary class="header__menu-item header__menu-item--child list-menu__item">
+                                <span {% if childlink.child_active %}class="header__active-menu-item"{% endif %}>{{ childlink.title | escape }}</span>
+                                  {% render 'icon-plus' %}
+                                  {% render 'icon-minus' %}
                               </summary>
-                              <ul class="header__submenu list-menu">
+                              
+                              <ul class="header__submenu header__submenu--grandchild list-menu">
                                 {%- for grandchildlink in childlink.links -%}
-                                  <li>
+                                  <li class="menu-grandchild">
                                     <a href="{{ grandchildlink.url }}" class="header__menu-item list-menu__item {% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
                                       {{ grandchildlink.title | escape }}
                                     </a>
@@ -78,7 +81,7 @@
                   </details>
                 </details-disclosure>
               {%- else -%}
-                <a href="{{ link.url }}" class="header__menu-item list-menu__item"{% if link.current %} aria-current="page"{% endif %}>
+                <a href="{{ link.url }}" class="header__menu-item header__menu-item--parent {% if forloop.last %}header__menu-item--last{% endif %} list-menu__item"{% if link.current %} aria-current="page"{% endif %}>
                   <span {%- if link.current %} class="header__active-menu-item"{% endif %}>{{ link.title | escape }}</span>
                 </a>
               {%- endif -%}

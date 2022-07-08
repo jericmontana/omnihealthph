@@ -1,5 +1,24 @@
+@import '../util/device.css';
+
 #shopify-section-header {
     z-index: 5;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    box-shadow: 0rem 2px 8px -2px rgba(0,0,0,0.38);
+
+    @media --tablet{
+        &{
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+    }
+
+    @media --mobile{
+        &{
+            padding-top: 1.8rem;
+            padding-bottom: 1.8rem;
+        }
+    }
 }
 
 .shopify-section-header-sticky {
@@ -44,6 +63,36 @@ $header_active_menu_color: var(--color-base-accent-1);
     /*For Menu*/
     &__inline-menu{
 
+        line-height: calc(1 + 0.4 / var(--font-body-scale));
+
+        summary.header__menu-item--parent .icon-caret {
+            right: -1.3rem;
+            overflow: hidden;
+        }
+
+        summary .icon-plus, summary .icon-minus {
+            height: auto;
+            width: 1rem;
+            position: absolute;
+            right: 0rem;
+            top: calc(50% - .2rem);
+            overflow: hidden;
+            margin-right: -0.8rem;
+        }
+
+        details summary.header__menu-item--child .icon-minus{
+            display: none;
+        }
+
+        details[open] > summary.header__menu-item--child .icon-minus{
+            display: block !important;
+        }
+
+        details[open] > summary.header__menu-item--child .icon-plus{
+            display: none !important;
+        }
+
+
         .list-menu--inline{
             display: flex;
             justify-content: space-between;
@@ -57,7 +106,6 @@ $header_active_menu_color: var(--color-base-accent-1);
                 position: relative;
 
                 .icon-caret{
-                    position: static;
                     transform: rotate(-90deg);
                     transition: transform var(--duration-default) ease-out;
                 }
@@ -71,14 +119,22 @@ $header_active_menu_color: var(--color-base-accent-1);
                 }
             }
 
-            .header__menu-item:not(:last-child){
+            .header__menu-item--parent{
                 margin-right: 2rem;
+            }
+
+            summary.header__menu-item--parent{
+                margin-right: 3.3rem;
+            }
+
+            .header__menu-item--last,summary.header__menu-item--last{
+                margin-right: 0rem; 
             }
 
             .header__active-menu-item {
                 color: rgb($header_active_menu_color);
 
-                &+svg{
+                & ~ svg{
                     color: rgb($header_active_menu_color);
                 }
             }
@@ -94,6 +150,66 @@ $header_active_menu_color: var(--color-base-accent-1);
             
             .list-menu__item--active:hover {
                 text-decoration: none;
+            }
+
+            /* SubMenu */
+            .header__submenu{
+                padding: 0rem;
+            }
+
+            .header__submenu--child{
+                transform: translateY(-2rem);
+                transition: transform var(--duration-default) ease;
+            }
+
+            details[open] > .header__submenu--child {
+                transform: translateY(1rem);
+            }
+
+            /* Specific Styling */
+            .header__submenu--child{
+                border-radius: 1.4rem;
+                padding-top: 1.4rem;
+                padding-bottom: 1.4rem;
+                border: none;
+                background-color: #e4e4e4;
+
+                & > li{
+                    padding-left: 1.4rem;
+                    padding-right: 2.2rem;
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+                }
+
+                & > li:not(:last-child){
+                    border-bottom: 0.1rem dashed rgba(var(--color-base-accent-1),0.38);
+                }
+            }
+
+            .list-menu--disclosure{
+                width: 28rem;
+            }
+
+            .header__submenu--grandchild{
+                margin-left: -1.4rem;
+                margin-right: -2.2rem;
+                margin-bottom: -1rem;
+                margin-top: 1rem;
+                padding-top: 0.8rem;
+                padding-bottom: 0.8rem;
+                background-color: #f0f0f0;
+
+                & > li{
+                    padding-left: 1.8rem;
+                    padding-right: 2.2rem;
+                    padding-top: 1rem;
+                    padding-bottom: 1rem;
+                }
+            }
+
+            .header__menu-item--parent{
+                text-transform: uppercase;
+                font-weight: 700;
             }
         }
 
