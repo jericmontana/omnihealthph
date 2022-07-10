@@ -13,8 +13,8 @@
           bodyTag.classList.toggle('lined');
       })
     })
-  </script>
-   {% endcomment %}
+  </script> {% endcomment %}
+
   <header class="header header--logo-middle-left page-width">
 
     {% comment %} Logo {% endcomment %}
@@ -66,7 +66,7 @@
                               
                               <ul class="header__submenu header__submenu--grandchild list-menu">
                                 {%- for grandchildlink in childlink.links -%}
-                                  <li class="menu-grandchild">
+                                  <li>
                                     <a href="{{ grandchildlink.url }}" class="header__menu-item list-menu__item {% if grandchildlink.current %} list-menu__item--active{% endif %}"{% if grandchildlink.current %} aria-current="page"{% endif %}>
                                       {{ grandchildlink.title | escape }}
                                     </a>
@@ -94,9 +94,22 @@
     {% comment %} Icons {% endcomment %}
     <div class="header__icons">
 
-      <div class="header__icon header__icon--search link focus-inset" role="button">
-        {%- render 'heroicons', icon: 'search' -%}
-      </div>
+        <modal-opener data-modal="#PopupModal-predictivesearch-{{ section.id }}">
+          <button class="header__icon header__icon--search link focus-inset" type="button" aria-haspopup="dialog">
+            {%- render 'heroicons', icon: 'search' -%}
+          </button>
+        </modal-opener>
+        {% comment %} <details-disclosure>
+          <details>
+            <summary>
+              {%- render 'heroicons', icon: 'search' -%}
+            </summary>
+            <div class="header__search">
+              {% render 'predictive-search' %}
+            </div>
+          </details>
+        </details-disclosure> {% endcomment %}
+        
 
       {%- if shop.customer_accounts_enabled -%}
         <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset">
@@ -137,7 +150,20 @@
     </div>
   </header>
   {%- render 'cart-notification' -%}
-</sticky-header> 
+</sticky-header>
+
+{% comment %} For Header Modal Search {% endcomment %}
+<modal-dialog class="header-popup-modal" id="PopupModal-predictivesearch-{{ section.id }}">
+  <div role="dialog" aria-label="predictive-search" aria-modal="true" tabindex="-1">
+    <button id="ModalClose-{{ section.id }}" type="button" class="header-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{%- render 'heroicons', icon: 'close' -%}</button>
+    <div class="header-popup-modal__content">
+      <div class="header__predictivesearch">
+        {% render 'predictive-search' %}
+      </div>
+    </div>
+  </div>
+</modal-dialog>
+
 
 {% schema %}
 {

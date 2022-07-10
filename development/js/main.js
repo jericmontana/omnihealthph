@@ -986,6 +986,7 @@ class StickyHeader extends HTMLElement {
 
 customElements.define('sticky-header', StickyHeader);
 
+
 // Global END
 
 // window.addEventListener('load', () => {
