@@ -7660,12 +7660,15 @@ modal-dialog.popupmodal--thankyou .popupmodal--thankyou__toggle{
     margin: 0 auto;
     top: 0;
     left: 0;
-    overflow: auto;
     width: 100%;
     background: rgba(var(--color-base-text), 0.8);
     background: rgba(var(--color-foreground), 0.8);
     height: 100%;
     padding: 2rem;
+}
+
+.header-popup-modal--predictivesearch{
+    overflow: auto;
 }
 
 .header-popup-modal[open] {
@@ -7674,7 +7677,7 @@ modal-dialog.popupmodal--thankyou .popupmodal--thankyou__toggle{
     z-index: 101;
 }
 
-.header-popup-modal__toggle {
+.header-popup-modal__toggle--predictivesearch {
     background-color: rgb(var(--color-base-background-1));
     background-color: rgb(var(--color-background));
     border: 0.1rem solid rgba(255,255,255, 0.8);
@@ -7701,12 +7704,12 @@ modal-dialog.popupmodal--thankyou .popupmodal--thankyou__toggle{
     margin: 0 0 0 auto;
 }
 
-.header-popup-modal__toggle:hover {
+.header-popup-modal__toggle--predictivesearch:hover {
     color: rgba(var(--color-base-text), 0.95);
     color: rgba(var(--color-foreground), 0.95);
 }
 
-.header-popup-modal__toggle .icon {
+.header-popup-modal__toggle--predictivesearch .icon {
     height: auto;
     margin: 0;
     width: 100%;

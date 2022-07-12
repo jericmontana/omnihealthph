@@ -17,6 +17,15 @@
 
   <header class="header header--logo-middle-left page-width">
 
+    {% comment %} For Navigation {% endcomment %}
+    <div class="header__icons large-up-hide">
+      <modal-opener data-modal="#PopupModal-navbar-{{ section.id }}">
+        <button class="header__icon header__icon--search link focus-inset" type="button" aria-haspopup="dialog">
+          {%- render 'heroicons', icon: 'menu_alt_two' -%}
+        </button>
+      </modal-opener>
+    </div>
+
     {% comment %} Logo {% endcomment %}
     <h1 class="header__heading">
       <a href="{{ routes.root_url }}" title="{{ shop.name | escape }}" class="header__heading-link">
@@ -112,7 +121,7 @@
         
 
       {%- if shop.customer_accounts_enabled -%}
-        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset">
+        <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset small-hide medium-hide">
           {%- render 'heroicons', icon: 'user_outline' -%}
           <span class="visually-hidden">
             {%- liquid
@@ -153,9 +162,9 @@
 </sticky-header>
 
 {% comment %} For Header Modal Search {% endcomment %}
-<modal-dialog class="header-popup-modal" id="PopupModal-predictivesearch-{{ section.id }}">
+<modal-dialog class="header-popup-modal header-popup-modal--predictivesearch" id="PopupModal-predictivesearch-{{ section.id }}">
   <div role="dialog" aria-label="predictive-search" aria-modal="true" tabindex="-1">
-    <button id="ModalClose-{{ section.id }}" type="button" class="header-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{%- render 'heroicons', icon: 'close' -%}</button>
+    <button id="ModalClose-{{ section.id }}" type="button" class="header-popup-modal__toggle header-popup-modal__toggle--predictivesearch" aria-label="{{ 'accessibility.close' | t }}">{%- render 'heroicons', icon: 'close' -%}</button>
     <div class="header-popup-modal__content">
       <div class="header__predictivesearch">
         {% render 'predictive-search' %}
@@ -164,6 +173,17 @@
   </div>
 </modal-dialog>
 
+{% comment %} For Navbar Modal {% endcomment %}
+<modal-dialog class="header-popup-modal header-popup-modal--navbar large-up-hide" id="PopupModal-navbar-{{ section.id }}" data-breakpoint="tablet">
+  <div role="dialog" aria-label="header-navbar" aria-modal="true" tabindex="-1">
+    <div class="header-popup-modal__content">
+      <div>
+        <button id="ModalClose-{{ section.id }}" type="button" class="header-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{%- render 'heroicons', icon: 'close' -%}</button>
+        <h1>Always be good to others!</h1>
+      </div>
+    </div>
+  </div>
+</modal-dialog>
 
 {% schema %}
 {

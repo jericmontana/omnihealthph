@@ -458,7 +458,15 @@ class ModalDialog extends HTMLElement {
   show(opener) {
     this.openedBy = opener;
     const popup = this.querySelector('.template-popup');
-    document.body.classList.add('overflow-hidden');
+
+    // For Header NavBar
+    if(this.classList.contains('header-popup-modal--navbar')){
+      document.body.classList.add(`overflow-hidden-${this.dataset.breakpoint}`);
+    }else{
+      document.body.classList.add('overflow-hidden');
+    }
+    // document.body.classList.add('overflow-hidden');
+    
     this.setAttribute('open', '');
     if (popup) popup.loadContent();
     trapFocus(this, this.querySelector('[role="dialog"]'));
@@ -466,7 +474,14 @@ class ModalDialog extends HTMLElement {
   }
 
   hide() {
-    document.body.classList.remove('overflow-hidden');
+    // For Header NavBar
+    if(this.classList.contains('header-popup-modal--navbar')){
+      document.body.classList.remove(`overflow-hidden-${this.dataset.breakpoint}`);
+    }else{
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // document.body.classList.remove('overflow-hidden');
     this.removeAttribute('open');
     removeTrapFocus(this.openedBy);
     window.pauseAllMedia();
