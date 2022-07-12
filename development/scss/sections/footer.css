@@ -1,4 +1,4 @@
-@import 'abstract/mixin';
+@import '../util/device.css';
 
 footer.footer{
 
@@ -21,7 +21,7 @@ footer.footer{
         justify-content: space-between;
         pointer-events: none;
 
-        @include device('mobile'){
+       @media --mobile {
             pointer-events: all;
         }
 
@@ -31,7 +31,7 @@ footer.footer{
             transition: transform 0.2s ease-in-out;
             display: none;
 
-            @include device('mobile'){
+           @media --mobile {
                 &{
                     display: block;
                 }
@@ -39,7 +39,7 @@ footer.footer{
         }
     }
 
-    @include device('mobile'){
+   @media --mobile {
         .link-list--content{
             height: 0px;
             display: none;
@@ -54,7 +54,7 @@ footer.footer{
         text-align: left;
         text-transform: uppercase;
 
-        @include device('tablet-up'){
+       @media --tablet-up {
             &{
                 text-align: center;
             }
@@ -84,7 +84,7 @@ footer.footer{
         text-align: left;
         width: 100%;
 
-        @include device('tablet-up'){
+       @media --tablet-up {
             &{
                 text-align: center;
             }
@@ -94,10 +94,10 @@ footer.footer{
         padding-bottom: 1rem;
     }
 
-    // Email Signup
+    /* Email Signup */
     .footer-block--email-signup{
         max-width: 40rem;
-        @include device('tablet-up'){
+       @media --tablet-up {
             &{
                 margin-left: auto;
                 margin-right: auto;
@@ -107,13 +107,13 @@ footer.footer{
         .footer-block__details-content{
             margin-bottom: 1.5rem;
 
-            @include device('desktop'){
+            @media --desktop {
                 &{
                     text-align: justify;
                 }
             }
 
-            @include device('tablet'){
+            @media --tablet {
                 &{
                     text-align: center;
                 }
@@ -122,7 +122,7 @@ footer.footer{
 
 
         .newsletter-form__field-wrapper{
-            @include device('mobile'){
+           @media --mobile {
                 &{
                     max-width: 100%;
                 }

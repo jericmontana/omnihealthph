@@ -1,1 +1,25 @@
-.featured-collection{overflow:hidden;position:relative}.featured-collection .grid__item{display:grid}.featured-collection .grid__item+div{grid-area:1/1}@media screen and (min-width:750px) and (max-width:989px){.featured-collection .grid--3-col-tablet .grid__item{max-width:calc(33.33% - var(--grid-desktop-horizontal-spacing)*2/3)}}.featured-collection .section__header{margin-bottom:2rem}
+.featured-collection{
+    position: relative;
+    overflow: hidden;
+
+}
+
+    .featured-collection .grid__item{
+        display: grid;
+    }
+
+    .featured-collection .grid__item+div{
+            grid-area: 1/1;
+        }
+
+    @media screen and (min-width: 750px) and (max-width: 989px) {
+    .featured-collection .grid--3-col-tablet .grid__item {
+        max-width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+    }
+    }
+
+    /* For Specific Styling */
+
+    .featured-collection .section__header{
+        margin-bottom: 2rem;
+    }

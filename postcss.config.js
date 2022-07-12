@@ -7,6 +7,6 @@ module.exports = {
         require('postcss-preset-env'),
         require('autoprefixer')({overrideBrowserslist: ["last 4 version"]}),
         // require('autoprefixer'),
-        require('cssnano')
+        // require('cssnano')
     ]
 }

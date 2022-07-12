@@ -1,4 +1,4 @@
-@import 'abstract/mixin';
+@import '../util/device.css';
 
 .section--image-banner-slideshow{
 
@@ -17,7 +17,7 @@
             align-items: flex-start;
             flex-direction: column;
 
-            @include device('mobile'){
+            @media --mobile {
                 &{
                     padding-left: 3.5rem;
                 }
@@ -45,7 +45,7 @@
         margin-left: 1rem;
 
         .btn.btn--default{
-            @include device('mobile'){
+            @media --mobile {
                 &{
                     padding: 2px 2px;
                     max-width: 120px;
@@ -63,14 +63,14 @@
             font-weight: 600;
             color: #323232;
 
-            @include device('tablet'){
+            @media --tablet {
                 &{
                     font-size: calc(var(--font-heading-scale) * 2.5rem);
                 }
             }
 
 
-            @include device('mobile'){
+            @media --mobile {
                 &{
                     font-size: calc(var(--font-heading-scale) * 1.8rem);
                 }
@@ -79,12 +79,12 @@
             img{
                 max-width: 168px;
                 margin-top: 10px;
-                @include device('tablet'){
+                @media --tablet {
                     &{
                         max-width: 300px;
                     }
                 }
-                @include device('desktop'){
+                @media --desktop {
                     &{
                         max-width: 500px;
                     }
@@ -98,13 +98,13 @@
         text-align: center;
         margin-top: 4rem;
 
-        @include device('tablet'){
+        @media --tablet {
             &{
                 margin-top: 1rem;
             }
         }
 
-        @include device('mobile'){
+        @media --mobile {
             &{
                 margin-top: 0rem;
             }
@@ -113,7 +113,7 @@
         & img{
             margin-bottom: -2rem;
 
-            @include device('mobile'){
+            @media --mobile {
                 &{
                     max-width: 50px;
                     margin-bottom: -1rem;
@@ -128,13 +128,13 @@
                 margin: 0;
                 font-size: 1.4rem;
 
-                @include device('tablet'){
+                @media --tablet {
                     &{
                         font-size: 1rem;
                     }
                 }
 
-                @include device('mobile'){
+                @media --mobile {
                     &{
                         font-size: 0.6rem;
                     }

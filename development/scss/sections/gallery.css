@@ -16,11 +16,10 @@
         h2{
             margin: 0;
             font-weight: 700;
-            // text-shadow: 1px 2px 0px rgba(255, 255, 255, 1);
         }
     }
 
-    // For Video Gallery
+    /* For Video Gallery */
     .gallery--video{
         display: flex;
         justify-content: center;

@@ -236,8 +236,8 @@ label.unavailable{
     text-decoration: line-through !important;
     text-decoration-color: rgba(255, 0, 0, 0.5)!important;
     text-decoration-thickness: 2px !important;
-    opacity: 0.5;
-    filter: blur(2px);
+    opacity: 0.7;
+    filter: blur(3px);
 }
 
 /* For Color */

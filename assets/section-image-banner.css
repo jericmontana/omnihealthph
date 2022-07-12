@@ -1,1 +1,170 @@
-.section--hb{position:relative}.section--hb .section__bg-container{padding-top:60px}@media screen and (max-width:989px){.section--hb .section__bg-container{padding-top:20px}}.section--hb__kicker{font-size:23px;margin-bottom:0!important;margin-top:0;text-align:center}@media screen and (min-width:990px){.section--hb__kicker{font-size:30px}}.section--hb__heading{font-size:35px;font-weight:700;line-height:42px;margin-bottom:25px!important;margin-top:0;text-align:center;text-transform:uppercase}.section--hb__heading p{color:rgb(var(--color-base-accent-1));margin:0;padding:0}.section--hb__heading strong{color:rgb(var(--color-foreground));font-family:BrittanySignature!important;font-size:32px!important;font-weight:400!important;line-height:0!important;text-transform:none!important}@media screen and (max-width:989px){.section--hb__heading{padding-top:1rem}}.section--hb__subheading{font-size:inherit;font-weight:400;margin-bottom:50px!important;margin-top:0;text-align:center}.section--hb__button{padding-bottom:30px}@media screen and (max-width:989px){.section--hb__button a{margin-left:auto;margin-right:auto}}.section--hb__button .btn--default{max-width:230px}.section--hb__button,.section--hb__heading,.section--hb__kicker,.section--hb__subheading{width:100%}.section--hb__text{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.section--hb__image,.section--hb__text{-webkit-box-pack:center;-ms-flex-pack:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-ms-flexbox;display:flex;height:100%;justify-content:center;width:100%}.section--hb__image{position:relative}.section--hb__image img{max-width:550px;width:100%}@media screen and (max-width:989px){.section--hb__image{margin-top:-3.5rem}}@media screen and (min-width:990px){.section--hb .section__bg-container{padding-top:50px}.section--hb__heading{font-size:calc(60px*var(--font-base--banner__heading));font-weight:700;line-height:calc(70px*var(--font-base--banner__heading))}.section--hb__heading strong{font-size:calc(60px*var(--font-base--banner__heading))!important;text-transform:none!important}.section--hb__button,.section--hb__heading,.section--hb__kicker,.section--hb__subheading{text-align:left}}
+.section--hb{
+    position: relative;
+    
+}
+
+    .section--hb .section__bg-container{
+        padding-top: 60px;
+    }
+
+    @media screen and (max-width: 989px) {
+            .section--hb .section__bg-container {
+                padding-top: 20px;
+            }
+        }
+
+    .section--hb__kicker{
+
+        margin-bottom: 0px !important;
+    }
+
+    .section--hb__kicker{
+        margin-top: 0;
+        text-align: center;
+        font-size: 23px;
+    }
+
+    @media screen and (min-width: 990px) {
+            .section--hb__kicker{
+                font-size: 30px;
+            }
+            
+        }
+
+    .section--hb__heading{
+        margin-bottom: 25px !important;
+    }
+
+    .section--hb__heading{
+        margin-top: 0;
+        font-size: 35px;
+        font-weight: 700;
+        line-height: 42px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .section--hb__heading p{
+            padding: 0;
+            margin: 0;
+            color: rgb(var(--color-base-accent-1));
+        }
+
+    .section--hb__heading strong{
+            font-family: 'BrittanySignature' !important;
+            font-weight: 400 !important;
+            text-transform: none !important;
+            font-size: 32px !important;
+            line-height: 0 !important;
+        }
+
+    .section--hb__heading strong{
+            color: rgb(var(--color-foreground));
+        }
+
+    @media screen and (max-width: 989px) {
+            .section--hb__heading{
+                padding-top: 1rem;
+            }
+        }
+
+    .section--hb__subheading{
+        margin-bottom: 50px !important;
+    }
+
+    .section--hb__subheading{
+        margin-top: 0;
+        font-size: inherit;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    .section--hb__button{
+        padding-bottom: 30px;
+    }
+
+    @media screen and (max-width: 989px) {
+            .section--hb__button a{
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+    .section--hb__button .btn--default{
+            max-width: 230px;
+        }
+
+    .section--hb__kicker, .section--hb__heading, .section--hb__subheading, .section--hb__button{
+        width: 100%;
+    }
+
+    /* Text and Image Container div*/
+
+    .section--hb__text{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
+
+    .section--hb__image{
+        position: relative;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
+
+    .section--hb__image img{
+            width: 100%;
+            max-width: 550px;
+        }
+
+    @media screen and (max-width: 989px) {
+            .section--hb__image {
+                margin-top: -3.5rem;
+            }
+        }
+
+    @media screen and (min-width: 990px) 
+    {
+        .section--hb .section__bg-container{
+            padding-top: 50px;
+        }
+
+        .section--hb__heading{
+            font-weight: 700;
+            font-size: calc(60px * var(--font-base--banner__heading));
+            line-height: calc(70px * var(--font-base--banner__heading));
+        }
+
+            .section--hb__heading strong{
+                font-size: calc(60px * var(--font-base--banner__heading))!important;
+                text-transform: none !important;
+            }
+
+
+        .section--hb__kicker, .section--hb__heading, .section--hb__subheading, .section--hb__button{
+            text-align: left;
+        }
+
+
+    }

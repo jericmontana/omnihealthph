@@ -50,7 +50,7 @@
             {% assign category = forloop.index0 %}
 
             <fieldset class="js product-form__input">
-                <legend class="form__label">Choose your {% if product.vendor == '8ight Stella' and option.name == 'Color' %}Frame{% endif %} {{ option.name | downcase }}:</legend>
+                <legend class="form__label">Choose your {{ option.name | downcase }}:</legend>
 
                 {% for value in option.values %}
 

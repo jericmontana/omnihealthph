@@ -1,4 +1,4 @@
-@import 'abstract/mixin';
+@import '../util/device.css';
 
 .section--hb{
     position: relative;
@@ -6,7 +6,7 @@
     & .section__bg-container{
         padding-top: 60px;
 
-        @include device('mobile-tablet'){
+        @media --mobile-tablet {
             & {
                 padding-top: 20px;
             }
@@ -20,22 +20,14 @@
         margin-top: 0;
         text-align: center;
 
-        // Edited
         margin-bottom: 0px !important;
         font-size: 23px;
-        @include device('desktop'){
+        @media --desktop {
             &{
                 font-size: 30px;
             }
             
         }
-        
-        // Original
-        // margin-bottom: 15px !important;
-        // font-size: inherit;
-        // font-weight: 700;
-        // text-transform: uppercase;
-       
     }
 
     &__heading{
@@ -62,10 +54,9 @@
             color: rgb(var(--color-foreground));
         }
 
-        @include device('mobile-tablet'){
+        @media --mobile-tablet {
             &{
                 padding-top: 1rem;
-                // padding-bottom: 2rem;
             }
         }
     }
@@ -79,10 +70,8 @@
     }
 
     &__button{
-        // padding-bottom: 20px;
-        // TODO TOEDIT TODELETE
         padding-bottom: 30px;
-        @include device('mobile-tablet'){
+        @media --mobile-tablet {
             & a{
                 margin-left: auto;
                 margin-right: auto;
@@ -121,14 +110,14 @@
             max-width: 550px;
         }
 
-        @include device('mobile-tablet'){
+        @media --mobile-tablet {
             & {
                 margin-top: -3.5rem;
             }
         }
     }
 
-    @include device('desktop')
+    @media --desktop 
     {
         & .section__bg-container{
             padding-top: 50px;
@@ -150,9 +139,6 @@
             text-align: left;
         }
 
-        // &__image{
-        //     justify-content: flex-end;
-        // }
 
     }
     
