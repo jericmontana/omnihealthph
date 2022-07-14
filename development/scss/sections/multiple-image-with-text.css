@@ -1,0 +1,181 @@
+@import '../util/device.css';
+
+.multiple-image-with-text{
+    position: relative;
+    overflow: hidden;
+
+    .grid__item{
+        display: flex;
+
+        &>div{
+            flex: 1;
+        }
+    }
+
+    .section__information{
+        display: grid;
+        padding: 0rem 1rem;
+
+        .information--wrapper{
+            h2{
+                font-weight: 700;
+            }
+
+            @media --mobile {
+                & h2{
+                    text-align: center;
+                }
+            }
+
+            p{
+                margin: 0;
+                line-height: calc(1 + 0.5 / var(--font-body-scale));
+
+                @media --desktop {
+                    &{
+                        font-size: 1.95rem;
+                    }
+                }
+
+                @media --tablet {
+                    &{
+                        font-size: 1.8rem;
+                    }
+                }
+                
+                &:not(:first-child){
+                    margin-top: 1rem;
+                }
+
+                &:last-child{
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+        
+        & .tabcontent:not(:first-of-type){
+            display: none;
+        }
+
+        .tabcontent{
+            grid-area: 1/1;
+        }
+
+        h2{
+            margin-top: 0rem;
+            margin-bottom: 1.14rem;
+        }
+
+        @media --tablet-up {
+            &{
+                padding: 1rem;
+            }
+        }
+
+        @media --mobile {
+            &{
+                padding-top: 2rem;
+            }
+        }
+    }
+
+    .section__image{
+        position: relative;
+        display: grid;
+        padding: 0rem 2rem;
+        z-index: 1;
+
+        & .tabcontent:not(:first-of-type){
+            display: none;
+        }
+
+        .tabcontent{
+            grid-area: 1/1;
+        }
+
+        &>img{
+            grid-area: 1/1;
+            z-index: 0;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+
+        & div.image--wrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        img{
+            z-index: 1;
+            object-fit: cover;
+            object-position: center center;
+        }
+
+        @media --tablet-up {
+            &{
+                padding: 2rem;
+            }
+        }
+
+        .section__tab-controls{
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            top: 50%;
+            bottom: 50%;
+            padding: 0rem 1rem;
+            z-index: 3;
+        }
+
+        .tab-control{
+            width: 4rem;
+            height: 4rem;
+            color: rgb(var(--color-base-accent-2));
+            background-color: rgba(var(--color-base-accent-1),0.38);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.4rem;
+            overflow: hidden;
+
+            &--prev{
+                visibility: hidden;
+            }
+
+            svg{
+                pointer-events: none;
+            }
+
+            span{
+                pointer-events: none;
+                font-size: 6rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: -1.4rem 0rem 0rem 0rem !important;
+                line-height: 1;
+                height: 4rem;
+                width: 4rem;
+                color: #ffffff;
+            }
+        }
+    }
+
+    
+
+    .image-first{
+        flex-direction: column-reverse;
+    }
+
+    @media --desktop {
+        .image-first{
+            flex-direction: row-reverse;
+        }
+    }
+}

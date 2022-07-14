@@ -1,0 +1,25 @@
+.section__content-wave{
+    display: grid;
+    position: relative;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 100%;
+    max-width: 2880px;
+
+    .section__content-wave--desktop, .section__content-wave--mobile{
+        grid-area: 1/1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    & img{
+        width: auto;
+        height: 100%;
+    }
+ 
+}

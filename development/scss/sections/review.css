@@ -1,18 +1,31 @@
-.review *{
+@import '../util/device.css';
+
+.review{
+    *{
         overflow-anchor: none !important;
     }
-    @media screen and (max-width: 749px) {
-            .review .section__review{
+    
+    .section__review{
+
+        @media --mobile {
+            &{
                  margin-bottom: 2rem;
             }
         }
-    .review .jdgm-all-reviews__footer{
+    }
+
+    
+    .jdgm-all-reviews__footer{
         display: none!important;
     }
+    
     /* For Color */
-    .review .jdgm-histogram__bar-content{
+    .jdgm-histogram__bar-content{
         background-color: rgba(var(--color-base-accent-2), 0.75) !important;
     }
-.review:not(.review-product) .jdgm-widget-actions-wrapper{
+}
+.review:not(.review-product){
+    .jdgm-widget-actions-wrapper{
         display: none!important;
     }
+}

@@ -1,1 +1,102 @@
-.image-slider{overflow:hidden;position:relative}.image-slider .grid__item{-webkit-box-pack:center;-ms-flex-pack:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:grid;justify-content:center}.image-slider .grid__item+*{grid-area:1/1}.image-slider .section__image{-webkit-box-pack:center;-ms-flex-pack:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:grid;justify-content:center;overflow:hidden;position:relative}.image-slider .section__image ul{margin-left:-.9rem;margin-right:-.9rem;padding-left:1rem;padding-right:1rem}.image-slider .section__image .slider-buttons{-webkit-box-pack:justify;-ms-flex-pack:justify;-webkit-box-align:center;-ms-flex-align:center;align-items:center;bottom:0;display:-webkit-box;display:-ms-flexbox;display:flex;justify-content:space-between;left:0;pointer-events:none;position:absolute;right:0;top:0;width:100%}.image-slider .section__image .slider-buttons .slider-button{background-color:rgba(var(--color-base-accent-1),.38);color:#fff;margin:.1rem;padding:.14rem;pointer-events:all}.image-slider .section__image .slider-buttons .slider-button[disabled=disabled]{color:rgba(var(--color-base-accent-1),.1)}.image-slider .section__image .slider-buttons .slider-button svg{height:.9rem;width:auto}.image-slider .section__image~*{grid-area:1/1}.image-slider--image{-webkit-box-pack:center;-ms-flex-pack:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-ms-flexbox;display:flex;justify-content:center;padding-left:1rem;padding-right:1rem;position:relative;width:100%}.image-slider--image img{-o-object-fit:cover;object-fit:cover;-o-object-position:center center;object-position:center center}
+.image-slider{
+    position: relative;
+    overflow: hidden;
+
+}
+
+    .image-slider .grid__item{
+        display: grid;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
+
+    .image-slider .grid__item+*{
+            grid-area: 1/1;
+        }
+
+    .image-slider .section__image{
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
+
+    .image-slider .section__image ul{
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin-left: -0.9rem;
+            margin-right: -0.9rem;
+        }
+
+    .image-slider .section__image .slider-buttons{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            pointer-events: none;
+        }
+
+    .image-slider .section__image .slider-buttons .slider-button{
+                pointer-events: all;
+                padding: 0.14rem;
+                margin: 0.1rem;
+                
+                color: #ffffff;
+                background-color: rgba(var(--color-base-accent-1),0.38);
+            }
+
+    .image-slider .section__image .slider-buttons .slider-button[disabled='disabled']{
+                    color: rgba(var(--color-base-accent-1),0.1);
+                }
+
+    .image-slider .section__image .slider-buttons .slider-button svg{
+                    height: 0.9rem;
+                    width: auto;
+                }
+
+    .image-slider .section__image~*{
+            grid-area: 1/1;
+        }
+
+    .image-slider--image{
+        position: relative;
+        width: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .image-slider--image img{
+            -o-object-fit: cover;
+               object-fit: cover;
+            -o-object-position: center center;
+               object-position: center center;
+        }

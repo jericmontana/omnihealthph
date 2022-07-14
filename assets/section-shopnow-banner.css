@@ -1,1 +1,58 @@
-.shopnow-banner{margin-bottom:2rem}.shopnow-banner .grid{background-position:50%;background-repeat:no-repeat;background-size:cover;-webkit-box-shadow:0 0 18px -8px rgba(0,0,0,.74);box-shadow:0 0 18px -8px rgba(0,0,0,.74);margin:0!important;min-height:210px;padding:3rem 1.5rem}@media screen and (min-width:750px){.shopnow-banner .grid{padding:3.5rem 5rem}}.shopnow-banner .grid__item{-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-ms-flexbox;display:flex}.shopnow-banner .section__header{margin-bottom:0;text-align:center}@media screen and (min-width:750px){.shopnow-banner .section__header{text-align:left}}.shopnow-banner .section__button{margin-top:1rem;width:100%}@media screen and (min-width:750px){.shopnow-banner .section__button{-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;margin-top:0}}
+.shopnow-banner{
+    margin-bottom: 2rem;
+}
+
+    .shopnow-banner .grid{
+        margin: 0!important;
+    }
+
+    .shopnow-banner .grid{
+        padding: 3rem 1.5rem;
+        -webkit-box-shadow: 0px 0px 18px -8px rgba(0, 0, 0, 0.74);
+                box-shadow: 0px 0px 18px -8px rgba(0, 0, 0, 0.74);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        min-height: 210px;
+    }
+
+    @media screen and (min-width: 750px) {
+            .shopnow-banner .grid{
+                padding: 3.5rem 5rem;
+            }
+        }
+
+    .shopnow-banner .grid__item{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+    }
+
+    .shopnow-banner .section__header{
+        margin-bottom: 0;
+
+        text-align: center;
+    }
+
+    @media screen and (min-width: 750px) {
+            .shopnow-banner .section__header{
+                text-align: left;
+            }
+        }
+
+    .shopnow-banner .section__button{
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    @media screen and (min-width: 750px) {
+            .shopnow-banner .section__button{
+                -webkit-box-pack: end;
+                    -ms-flex-pack: end;
+                        justify-content: flex-end;
+                margin-top: 0;
+            }
+        }

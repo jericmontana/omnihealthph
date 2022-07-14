@@ -1,0 +1,82 @@
+@import '../util/device.css';
+
+.image-slider{
+    position: relative;
+    overflow: hidden;
+
+    .grid__item{
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        
+        &+*{
+            grid-area: 1/1;
+        }
+    }
+
+    .section__image{
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+
+        ul{
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin-left: -0.9rem;
+            margin-right: -0.9rem;
+        }
+
+        .slider-buttons{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+
+            .slider-button{
+                pointer-events: all;
+                padding: 0.14rem;
+                margin: 0.1rem;
+                
+                color: #ffffff;
+                background-color: rgba(var(--color-base-accent-1),0.38);
+
+                &[disabled='disabled']{
+                    color: rgba(var(--color-base-accent-1),0.1);
+                }
+                
+                svg{
+                    height: 0.9rem;
+                    width: auto;
+                }
+            }
+        }
+
+        &~*{
+            grid-area: 1/1;
+        }
+    }
+
+    &--image{
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        img{
+            object-fit: cover;
+            object-position: center center;
+        }
+    }
+
+}
