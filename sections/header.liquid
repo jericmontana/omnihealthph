@@ -100,6 +100,15 @@
       </nav>
     {%- endif -%}
 
+    {% comment %} For Signup Button {% endcomment %}
+    <div class="header__signupbutton">
+      <modal-opener data-modal="#PopupModal-signup-{{ section.id }}">
+        <button class="btn btn--default btn-he--lighten link focus-inset" type="button" aria-haspopup="dialog">
+          Get 100 Off
+        </button>
+      </modal-opener>
+    </div>
+
     {% comment %} Icons {% endcomment %}
     <div class="header__icons">
 
@@ -160,6 +169,63 @@
   </header>
   {%- render 'cart-notification' -%}
 </sticky-header>
+
+{% comment %} For Navbar Modal {% endcomment %}
+<modal-dialog class="header-popup-modal header-popup-modal--signup" id="PopupModal-signup-{{ section.id }}">
+  <div role="dialog" aria-label="header-signup" aria-modal="true" tabindex="-1">
+    <div class="header-popup-modal__content">
+      <div>
+        <button id="ModalClose-{{ section.id }}" type="button" class="header-popup-modal__toggle" aria-label="{{ 'accessibility.close' | t }}">{%- render 'heroicons', icon: 'close' -%}</button>
+        <div class="section__signup-form">
+          {% form 'customer', class: 'newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter, newsletter-header">
+          <div class="newsletter-form__field-wrapper center">
+              <div class="field field--input">
+                  <input
+                      id="NewsletterForm--{{ section.id }}"
+                      type="email"
+                      name="contact[email]"
+                      class="field__input"
+                      value="{{ form.email }}"
+                      aria-required="true"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      autocomplete="email"
+                      {% if form.errors %}
+                      autofocus
+                      aria-invalid="true"
+                      aria-describedby="Newsletter-error--{{ section.id }}"
+                      {% elsif form.posted_successfully? %}
+                      aria-describedby="Newsletter-success--{{ section.id }}"
+                      {% endif %}
+                      placeholder="{{ section.settings.placeholder | escape | default: 'Email Address'}}"
+                      required
+                  >
+                  <label class="field__label" for="NewsletterForm--{{ section.id }}">
+                      {{ section.settings.placeholder | escape | default: 'Email Address'}}
+                  </label>
+              </div>
+
+              {%- if form.errors -%}
+                  <small class="newsletter-form__message newsletter-form__message--error form__message center" id="Newsletter-error--{{ section.id }}">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</small>
+              {%- endif -%}
+
+              <div class="field">
+                  <button type="submit" data-targetopener="TYPopup-{{ section.id }}" class="field__button field__button--with-ty btn btn--medium btn-he--lighten btn-bs btn--round-corner" name="commit" id="Subscribe">
+                      {{ section.settings.btn_lbl | escape | default: 'Join Now' }}
+                  </button>
+              </div>
+
+              {%- if form.posted_successfully? -%}
+                  {%- render 'thank-you-7923216' -%}                       
+              {%- endif -%}
+          </div>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+</modal-dialog>
 
 {% comment %} For Header Modal Search {% endcomment %}
 <modal-dialog class="header-popup-modal header-popup-modal--predictivesearch" id="PopupModal-predictivesearch-{{ section.id }}">

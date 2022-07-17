@@ -7677,7 +7677,7 @@ modal-dialog.popupmodal--thankyou .popupmodal--thankyou__toggle{
     z-index: 101;
 }
 
-.header-popup-modal__toggle--predictivesearch {
+.header-popup-modal__toggle {
     background-color: rgb(var(--color-base-background-1));
     background-color: rgb(var(--color-background));
     border: 0.1rem solid rgba(255,255,255, 0.8);
@@ -7704,12 +7704,12 @@ modal-dialog.popupmodal--thankyou .popupmodal--thankyou__toggle{
     margin: 0 0 0 auto;
 }
 
-.header-popup-modal__toggle--predictivesearch:hover {
+.header-popup-modal__toggle:hover {
     color: rgba(var(--color-base-text), 0.95);
     color: rgba(var(--color-foreground), 0.95);
 }
 
-.header-popup-modal__toggle--predictivesearch .icon {
+.header-popup-modal__toggle .icon {
     height: auto;
     margin: 0;
     width: 100%;

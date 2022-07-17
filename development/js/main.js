@@ -1152,9 +1152,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // alert(localStorage.getItem('activated-ty-modalpopup'));
         }))
     }
-})
 
-document.addEventListener('DOMContentLoaded', () => {
     const buttonCopy = document.querySelectorAll('.btn--copy');
     if(buttonCopy){
         buttonCopy.forEach(e => e.addEventListener('click', () => {
@@ -1169,6 +1167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }))
     }
 })
+
 // For Copy to Clipboard
 // function myFunction() {
 //     /* Get the text field */
@@ -1302,19 +1301,3 @@ const tabularMultiple = () => {
 
 
 }
-
-
-// // For Adding Lines
-// document.addEventListener('DOMContentLoaded', () => {
-//     const lineButton = document.querySelector('.btn-lines');
-//     const bodyTag = document.querySelector('body');
-
-//     // bodyTag.classList.toggle('lined');
-    
-//     if(!lineButton) return;
-//     lineButton.addEventListener('click', () => {
-//         bodyTag.classList.toggle('lined');
-//     })
-// })
-
-
