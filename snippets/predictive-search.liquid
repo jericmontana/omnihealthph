@@ -27,7 +27,7 @@
         type="search"
         name="q"
         value=""
-        placeholder="{{ 'general.search.search' | t }}"
+        placeholder="Quick Search"
         {%- if settings.predictive_search_enabled -%}
             role="combobox"
             aria-expanded="false"
@@ -41,9 +41,9 @@
             spellcheck="false"
         {%- endif -%}
         >
-        <label class="field__label" for="{{ predictive_search_id | default: 'predictive-search-' | append: section.id }}">{{ 'general.search.search' | t }}</label>
+        <label class="field__label" for="{{ predictive_search_id | default: 'predictive-search-' | append: section.id }}">Quick Search</label>
         <input type="hidden" name="options[prefix]" value="last">
-        <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+        <button class="search__button field__button" aria-label="Quick Search">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>

@@ -1157,13 +1157,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if(buttonCopy){
         buttonCopy.forEach(e => e.addEventListener('click', () => {
             const copyText =  document.getElementById(`${e.dataset.targettext}`);
+            const targetButton = document.querySelector(`${e.dataset.button}`)
+
             navigator.clipboard.writeText(copyText.innerText);
             e.classList.add('btn--copy__tooltip');
             
             setInterval(() => {
                 e.classList.remove('btn--copy__tooltip');
-            }, 3000);
+            }, 2000);
 
+            setInterval(() => {
+              targetButton.classList.remove('hidden');
+            }, 800);
+            
         }))
     }
 })

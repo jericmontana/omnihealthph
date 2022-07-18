@@ -1,7 +1,7 @@
-<modal-opener class="hidden popupmodal--thankyou__opener-{{ section.id }}" data-modal="#PopupModal-{{ section.id }}">
+<modal-opener class="hidden popupmodal--thankyou__opener-{{ section.id }}" data-modal="#PopupModal-ty-{{ section.id }}">
     <button id="TYPopup-{{ section.id }}" type="button" aria-haspopup="dialog"></button>
 </modal-opener>
-<modal-dialog id="PopupModal-{{ section.id }}" class="popupmodal--thankyou">
+<modal-dialog id="PopupModal-ty-{{ section.id }}" class="popupmodal--thankyou">
     <div role="dialog" aria-modal="true" class="popupmodal--thankyou__content" tabindex="-1" style="{% unless settings.ty_bg_image == blank %}background-image: url('{{ settings.ty_bg_image | image_url }}');{% endunless %}
                     {% unless settings.ty_bg_color == blank %}background-color: {{ settings.ty_bg_color }};{% endunless %}
                     background-blend-mode: {{ settings.ty_bg_blend }};">
@@ -21,20 +21,60 @@
 
                 <div class="popupmodal--thankyou__button">
 
-                    <div role="button" class="btn btn--default btn-he--bs btn--round-corner btn--copy" data-targettext="popupmodal--thankyou__discount-code-{{ section.id }}" data-tooltip="✔">
+                    <div role="button" class="btn btn--default btn-he--bs btn--round-corner btn--copy" data-button='#btn-ty-popup-{{section.id}}' data-targettext="popupmodal--thankyou__discount-code-{{ section.id }}" data-tooltip="✔">
                         <span>copy</span>
                     </div>
 
-                    {% render 'button',
-                        btn_label: settings.ty_btn_label,
-                        btn_link: settings.ty_btn_link,
-                        btn_size: "default",
-                        hover_effect: "lighten",
-                        icon_type: "none",
-                        round_corner: true,
-                        shadow_effect: true,
-                        auto_width: false
-                    %}
+                    {%-liquid
+                    assign btn_label = settings.ty_btn_label
+                    assign btn_link = settings.ty_btn_link
+                    assign btn_size = "default"
+                    assign hover_effect = "lighten"
+                    assign icon_type = "none"
+                    assign round_corner = true
+                    assign shadow_effect = true
+                    assign auto_width = false
+                  -%}
+
+                    {% case btn_size %}
+                        {% when "default" %}
+                            {%- assign btn_size_class = "btn--default" -%}
+                        {% when "medium" %}
+                            {%- assign btn_size_class = "btn--medium" -%}
+                        {% when "large" %}
+                            {%- assign btn_size_class = "btn--large" -%}
+                    {% endcase %}
+                    
+                    {% case hover_effect %}
+                        {% when "lighten" %}
+                            {%- assign btn_he_class = "btn-he--lighten" -%}
+                        {% when "color-switch" %}
+                            {%- assign btn_he_class = "btn-he--color-switch" -%}
+                        {% when "slide" %}
+                            {%- assign btn_he_class = "btn-he--slide" -%}
+                        {% when "shine" %}
+                            {%- assign btn_he_class = "btn-he--shine" -%}
+                    {% endcase %}
+                    
+                    {%- liquid
+                        if btn_link contains 'collections'
+                            assign link_title = btn_link | split: '/' | last | append: ' collections' | strip
+                        else
+                            assign link_title = btn_link | split: '/' | last | strip
+                        endif
+                    -%}
+                    <a id="btn-ty-popup-{{section.id}}" class="btn hidden {{ btn_size_class }} {% if round_corner %}btn--round-corner{% endif %} {% if btn_link != blank %}{{ btn_he_class }}{% else %}btn--disbaled{% endif %} {% if shadow_effect %}btn-bs{% endif %} {% if auto_width %}btn-auto-width{% endif %}"
+                        {% if btn_link != blank %}
+                            href="{{ btn_link }}"
+                            title="{{ link_title }}"
+                        {% endif %}
+                        role="button">
+                        {{ btn_label | escape }}
+                        {% render 'icon-button', icon_type: icon_type %}
+                        {% if hover_effect == 'shine' %}
+                        <span></span>
+                        {% endif %}
+                    </a>
 
                 </div>
             </div>

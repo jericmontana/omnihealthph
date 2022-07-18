@@ -6464,7 +6464,8 @@ modal-dialog.popupmodal--thankyou .popupmodal--thankyou__content{
                 transform: none;
         overflow: hidden;
         left: 0;
-
+        padding: 2rem;
+        
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
@@ -7717,25 +7718,93 @@ modal-dialog.popupmodal--thankyou .popupmodal--thankyou__toggle{
 
 .header-popup-modal__content{
     width: 100%;
-    max-width: 77rem;
-    margin-top: 4rem;
     margin-left: auto;
     margin-right: auto;
     position: relative;
 }
 
+.header-popup-modal--predictivesearch .header-popup-modal__content{
+        max-width: 77rem;
+        margin-top: 4rem;
+    }
+
 @media screen and (max-width: 749px){
-        .header-popup-modal__content{
+        .header-popup-modal--predictivesearch{
             margin-top: 2rem;
         }
     }
 
-.header-popup-modal__content .predictive-search{
+.header-popup-modal--predictivesearch .predictive-search{
         top: calc(100% + 0.2rem);
         border-width: 0.2rem;
         border-color: rgb(var(--color-base-text));
         border-color: rgb(var(--color-foreground));
     }
+
+.header-popup-modal[open].header-popup-modal--signup{
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+
+.header-popup-modal[open].header-popup-modal--signup{
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.header-popup-modal--signup .header-popup-modal__toggle{
+        position: absolute;
+        right: 0rem;
+        margin: 0.8rem;
+    }
+
+.header-popup-modal--signup .header-popup-modal__content{
+        padding: 2rem;
+        max-width: 420px;
+    }
+
+.header-popup-modal--signup .header-popup-modal__content h2, .header-popup-modal--signup .header-popup-modal__content p{
+            margin: 0rem;
+        }
+
+.header-popup-modal--signup .header-popup-modal__content .signup-title{
+            margin-top: 0.8rem;
+            line-height: calc(1 + 0.2 / max(1, var(--font-heading-scale)));
+        }
+
+.header-popup-modal--signup .header-popup-modal__content .signup-subtitle{
+            font-size: 1.6rem;
+            line-height: calc(1 + 0.5 / var(--font-body-scale));
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+.header-popup-modal--signup .header-popup-modal__content .signup-disclaimer{
+            margin-top: 2rem;
+            font-size: 1.3rem;
+            line-height: calc(1 + 0.5 / var(--font-body-scale));
+        }
+
+.header-popup-modal--signup .header-popup-modal__content .newsletter-form__message{
+            -webkit-box-pack: start !important;
+                -ms-flex-pack: start !important;
+                    justify-content: flex-start !important;
+        }
+
+.header-popup-modal--signup .header-popup-modal__content .newsletter-form__message{
+            width: 100%;
+        }
+
+.header-popup-modal--signup .header-popup-modal__content .btn--default{
+            padding: 12px 5px;
+            font-weight: 700;
+            max-width: 100%;
+            margin-top: 2rem;
+        }
 
 /* Main Product Beg */
 
