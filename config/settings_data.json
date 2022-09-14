@@ -5,10 +5,10 @@
     "colors_text": "#121212",
     "colors_outline_button_labels": "#121212",
     "social_twitter_link": "",
-    "social_facebook_link": "https://www.facebook.com/oswellph",
-    "social_instagram_link": "https://www.instagram.com/oswell.inc.ph/",
-    "social_youtube_link": "https://www.youtube.com/channel/UClfvbBkua6NxJsWQ4-iM90g",
-    "favicon": "shopify://shop_images/Oswell_Logo.png",
+    "social_facebook_link": "https:\/\/www.facebook.com\/oswellph",
+    "social_instagram_link": "https:\/\/www.instagram.com\/oswell.inc.ph\/",
+    "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UClfvbBkua6NxJsWQ4-iM90g",
+    "favicon": "shopify:\/\/shop_images\/Oswell_Logo.png",
     "fg_color": "#0b5394",
     "bg_color": "#cfe2f3",
     "use_as_default_padding": true,
@@ -18,18 +18,18 @@
     "title_uppercase": false,
     "subtitle": "Don't just look good, start feeling good & radiate a vibrant feel from the inside out.",
     "banner_bg_color": "#f2dfd0",
-    "banner_bg_image": "shopify://shop_images/Marble_White.png",
+    "banner_bg_image": "shopify:\/\/shop_images\/Marble_White.png",
     "banner_bg_blend": "luminosity",
     "banner_btn_label": "Shop Now",
     "banner_hover_effect": "lighten",
     "banner_icon_type": "none",
-    "wave_desktop_image": "shopify://shop_images/Wave_2880x250_e34c55cd-59dc-486c-b379-2d2b33b535ed.png",
-    "wave_mobile_image": "shopify://shop_images/Wave_1080x94_4ab1ae6d-17e1-47d7-875a-e7e8bae1f34d.png",
+    "wave_desktop_image": "shopify:\/\/shop_images\/Wave_2880x250_e34c55cd-59dc-486c-b379-2d2b33b535ed.png",
+    "wave_mobile_image": "shopify:\/\/shop_images\/Wave_1080x94_4ab1ae6d-17e1-47d7-875a-e7e8bae1f34d.png",
     "ty_discount_code": "OSWELL100P",
     "ty_bg_color": "#f2dfd0",
-    "ty_bg_image": "shopify://shop_images/Marble_White.png",
+    "ty_bg_image": "shopify:\/\/shop_images\/Marble_White.png",
     "ty_bg_blend": "luminosity",
-    "checkout_logo_image": "shopify://shop_images/Oswell_Logo.png",
+    "checkout_logo_image": "shopify:\/\/shop_images\/Oswell_Logo.png",
     "checkout_logo_position": "center",
     "checkout_logo_size": "small",
     "checkout_sidebar_background_color": "#0e5396",
@@ -39,15 +39,9 @@
       "header": {
         "type": "header",
         "settings": {
-          "color_scheme": "background-1",
-          "logo": "shopify://shop_images/Oswell_Logo.png",
+          "logo": "shopify:\/\/shop_images\/Oswell_Logo.png",
           "logo_width": 100,
-          "logo_position": "middle-left",
-          "menu": "main-menu",
-          "show_line_separator": true,
-          "enable_sticky_header": true,
-          "margin_bottom": 0,
-          "btn_label": "Get P100 Off"
+          "menu": "main-menu"
         }
       },
       "footer": {
@@ -56,7 +50,7 @@
           "footer-0": {
             "type": "image",
             "settings": {
-              "image": "shopify://shop_images/Oswell_Logo.png",
+              "image": "shopify:\/\/shop_images\/Oswell_Logo.png",
               "image_width": 100,
               "alignment": "center"
             }
@@ -79,7 +73,7 @@
             "type": "email_signup",
             "settings": {
               "heading": "Join OSwell VIP List",
-              "subtext": "<p>Be the first one to know about our latest promotions and exclusive offers and get a discount on your first purchase.</p>"
+              "subtext": "<p>Be the first one to know about our latest promotions and exclusive offers and get a discount on your first purchase.<\/p>"
             }
           }
         },
@@ -121,7 +115,7 @@
               "round_corner": false,
               "btn_action": "open-popup",
               "btn_label": "Shop Now",
-              "btn_link": "shopify://collections/all",
+              "btn_link": "shopify:\/\/collections\/all",
               "hover_effect": "shine",
               "icon_type": "send",
               "shadow_effect": true,
@@ -136,7 +130,7 @@
               "round_corner": true,
               "btn_action": "open-popup",
               "btn_label": "Subscribe",
-              "btn_link": "shopify://pages/lash-guide",
+              "btn_link": "shopify:\/\/pages\/lash-guide",
               "hover_effect": "shine",
               "icon_type": "send",
               "shadow_effect": true,
@@ -166,7 +160,7 @@
           "r_btn_link": "",
           "s_btn_action": "redirect-link",
           "s_btn_label": "Get 10% Off",
-          "s_btn_link": "shopify://pages/vip-club"
+          "s_btn_link": "shopify:\/\/pages\/vip-club"
         }
       },
       "announcement-bar": {
@@ -179,7 +173,7 @@
               "uppercase": false,
               "size": "h3",
               "color_scheme": "accent-1",
-              "link": "shopify://collections/all"
+              "link": "shopify:\/\/collections\/all"
             }
           }
         },
@@ -192,34 +186,7 @@
     },
     "content_for_index": [
 
-    ],
-    "blocks": {
-      "12120936241911852800": {
-        "type": "shopify://apps/judge-me-product-reviews/blocks/reviews_tab/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": true,
-        "settings": {
-          "position": "right"
-        }
-      },
-      "sticky-cart-by-uplinkly": {
-        "type": "shopify://apps/sticky-cart-by-uplinkly/blocks/sticky-cart/25fba6ad-75e4-408b-a261-b223e0c71c8b",
-        "disabled": true,
-        "settings": {
-        }
-      },
-      "sticky-cart-animator-by-uplinkly": {
-        "type": "shopify://apps/sticky-cart-by-uplinkly/blocks/cart-animator/25fba6ad-75e4-408b-a261-b223e0c71c8b",
-        "disabled": true,
-        "settings": {
-        }
-      },
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-product-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {
-        }
-      }
-    }
+    ]
   },
   "presets": {
     "Default": {

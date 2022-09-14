@@ -1,7 +1,86 @@
 {
   "sections": {
+    "166311628706916540": {
+      "type": "image-slider-7923216",
+      "blocks": {
+        "16631162874f95ac3a-0": {
+          "type": "header",
+          "settings": {
+            "title": "Proin enim taciti dapibus",
+            "title_uppercase": false,
+            "subtitle": "Lacus in dui sollicitudin risus suspendisse sed placerat ad pharetra ipsum letius mattis vel"
+          }
+        },
+        "16631162874f95ac3a-1": {
+          "type": "slider",
+          "settings": {
+            "columns_desktop": 3,
+            "columns_tablet": 3,
+            "columns_mobile": 1,
+            "slider": "everywhere"
+          }
+        },
+        "16631162874f95ac3a-2": {
+          "type": "image",
+          "settings": {
+          }
+        },
+        "16631162874f95ac3a-3": {
+          "type": "image",
+          "settings": {
+          }
+        },
+        "16631162874f95ac3a-4": {
+          "type": "image",
+          "settings": {
+          }
+        },
+        "0021836e-f3af-46a5-9d2e-1dbf48aeea57": {
+          "type": "image",
+          "settings": {
+          }
+        },
+        "7655f050-27a9-40c3-bd41-de41b7ef27dc": {
+          "type": "image",
+          "settings": {
+          }
+        },
+        "e6c1bc6e-38b6-4620-bded-9d1c7d6e6619": {
+          "type": "image",
+          "settings": {
+          }
+        },
+        "34aa95ca-d0e1-4911-a815-3c5e91bfab30": {
+          "type": "image",
+          "settings": {
+          }
+        },
+        "4a19a0de-c062-4a4d-b786-7344a62fd136": {
+          "type": "image",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "16631162874f95ac3a-0",
+        "16631162874f95ac3a-1",
+        "16631162874f95ac3a-2",
+        "16631162874f95ac3a-3",
+        "16631162874f95ac3a-4",
+        "0021836e-f3af-46a5-9d2e-1dbf48aeea57",
+        "7655f050-27a9-40c3-bd41-de41b7ef27dc",
+        "e6c1bc6e-38b6-4620-bded-9d1c7d6e6619",
+        "34aa95ca-d0e1-4911-a815-3c5e91bfab30",
+        "4a19a0de-c062-4a4d-b786-7344a62fd136"
+      ],
+      "settings": {
+        "use_as_default_padding": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
   },
   "order": [
-
+    "166311628706916540"
   ]
 }
